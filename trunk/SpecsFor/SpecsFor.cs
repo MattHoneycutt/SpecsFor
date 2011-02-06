@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Moq;
 using NUnit.Framework;
 using StructureMap;
@@ -10,8 +12,19 @@ namespace SpecsFor
 	public abstract class SpecsFor<T> : ITestState<T> where T: class
 	{
 		protected MoqAutoMocker<T> Mocker;
+		protected List<IContext<T>> Contexts = new List<IContext<T>>();
 
-		public T SUT { get; set; } 
+		protected SpecsFor()
+		{
+			
+		}
+
+		protected SpecsFor(Type[] contexts)
+		{
+			Given(contexts);
+		}
+
+		public T SUT { get; set; }
 
 		/// <summary>
 		/// Gets the mock for the specified type from the underlying container. 
@@ -54,7 +67,7 @@ namespace SpecsFor
 
 		protected virtual void Given()
 		{
-
+			Contexts.ForEach(c => c.Initialize(this));
 		}
 
 		protected virtual void AfterEachSpec()
@@ -64,27 +77,18 @@ namespace SpecsFor
 
 		protected abstract void When();
 
-		//TODO: Might not keep this...
 		protected void Given<TContext>() where TContext : IContext<T>, new()
 		{
-			(new TContext()).Initialize(this);
+			Contexts.Add(new TContext());
 		}
 
 		protected void Given(Type[] context)
 		{
+			var contexts = (from c in context
+			                select Activator.CreateInstance(c))
+							.Cast<IContext<T>>();
+
+			Contexts.AddRange(contexts);
 		}
 	}
-
-	//These interfaces are part of SpecsFor V2 prototyping and may/may not survive 
-	public interface IContext<T>
-	{
-		void Initialize(ITestState<T> state);
-	}
-
-	public interface ITestState<T>
-	{
-		T SUT { get; set; }
-		Mock<TMock> GetMockFor<TMock>() where TMock : class;
-	}
-
 }

@@ -52,6 +52,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GivenAttribute.cs" />
+    <Compile Include="IContext.cs" />
+    <Compile Include="InvalidContextException.cs" />
+    <Compile Include="ITestState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecsFor.cs" />
   </ItemGroup>
