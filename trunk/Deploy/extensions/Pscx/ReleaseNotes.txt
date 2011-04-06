@@ -1,0 +1,236 @@
+PowerShell Community Extensions 2.0 Release Notes
+April 10, 2010
+
+The primary purpose of the Pscx 2.0 release is to convert from the previous 
+approach of using a PSSnapin and scripts over to a completely module-based 
+approach.  As a consequence, Pscx 2.0 only works with Windows PowerShell 2.0. 
+If you need support for Windows PowerShell 1.0, you can still download the 
+Pscx 1.2 release.  The other major change is that Pscx no longer uses an MSI 
+installer.  In fact, the "install" is merely an xcopy deployment of the Pscx 
+module into your modules folder (~\Documents\WindowsPowerShell\Modules).  
+
+
+NOTES ABOUT XCOPY DEPLOYMENT
+
+Files downloaded from the web are usually blocked on Windows including the 
+Pscx-2.0.zip file.  If you do not unblock the ZIP file first then each of the 
+files extracted from the ZIP will also be blocked.  This will cause numerous 
+errors when you import Pscx like this:
+
+Import-Module : The following error occurred while loading the extended type 
+data file:
+Microsoft.PowerShell, C:\Users\Keith\Documents\WindowsPowerShell\Modules\Pscx\
+TypeData\Pscx.FeedStore.Type.ps1xml : File skipped because of the following 
+validation exception: File C:\Users\Keith\Documents\WindowsPowerShell\Modules\
+Pscx\TypeData\Pscx.FeedStore.Type.ps1xml cannot be loaded. The file C:\Users\
+Keith\Documents\WindowsPowerShell\Modules\Pscx\TypeData\Pscx.FeedStore.Type.ps
+1xml is not digitally signed. The script will not execute on the system. 
+Please see "get-help about_signing" for more details...
+
+To avoid these errors follow the unblocking directions below.
+
+
+UNBLOCKING THE PSCX-2.0.ZIP FILE:
+
+1. Locate the Pscx-2.0.zip file in Windows Explorer.
+2. Right-click on the file and select "Properties".
+3. On the General tab of the Properties dialog, locate the "Unblock" button in
+   the lower right-hand corner and press.
+
+
+COPYING THE PSCX MODULE INTO YOUR MODULE DIR
+
+Once you have unblocked the Pscx-2.0.zip, extract the contents of the ZIP file
+to your $env:Home\Documents\WindowsPowerShell\Modules folder.  If this folder 
+doesn't exist then you will need to create it.  If you want Pscx to be avaible
+to all users on a computer, then extract the files to $PSHome\Modules instead.
+
+
+UPGRADING FROM EARLIER VERSIONS OF PSCX
+
+Pscx 2.0 does not automatically upgrade Pscx 1.2.  You should consider 
+uninstalling earlier versions of Pscx although they can technically be
+installed on same machine with Pscx 2.0.  The major cleanup required in moving
+from earlier versions to Pscx 2.0 is removing all of the Pscx related script
+from your profile.  You will only need the command to import Pscx in your
+profile as discussed below.
+
+
+IMPORTING THE PSCX MODULE
+
+Importing the Pscx module is very easy.  Just execute:
+
+C:\PS> Import-Module Pscx
+
+If you want to import Pscx in your profile, all you have to do is add the 
+command above to your profile.  Pscx can be customized in terms of 
+preference variables and what nested modules are automatically loaded.  In the
+root dir of the Pscx module there is a file named Pscx.UserPreferences.ps1.  
+It shows the default values for the preference variable and which nested 
+modules are loaded by default.  If you want to change any of these, copy this 
+file to your WindowsPowerShell dir or your home dir, edit it and then pass 
+the path to this modified Pscx.UserPreferences.ps1 file to Import-Module e.g.:
+
+C:\PS> Import-Module Pscx -arg ~\Pscx.UserPreferences.ps1
+
+Pscx will now be imported with your preferences.
+
+
+WINDOWS EXPLORER CONTEXT MENU ITEM - "Open PowerShell Here"
+
+Since Pscx no longer uses an installer, if you want to enable the Windows 
+Explorer context menu item that opens a PowerShell prompt on any drive or 
+folder you will need to execute the Enable-OpenPowerShellHere command.
+
+
+NEW CMDLETS
+    ConvertTo-Metric
+    Get-AlternateDataStream
+    Test-AlternateDataStream
+    Remove-AlternateDataStream
+    Unblock-File
+    Get-LoremIpsum (lorem)
+    Get-TypeName (gtn)
+    Get-Uptime
+    Get-FileTail (tail) - renamed Tail-File to use approved verb
+    Receive-MSMQueue    - renamed from Receive-MSMQMessage
+    Send-MSMQueue       - renamed from Send-MSMQMessage
+    Set-BitmapSize      - renamed from Resize-Bitmap
+    Test-Script
+
+NEW FUNCTIONS
+    Dismount-VHD
+    Mount-VHD
+    Enable-OpenPowerShellHere
+    Invoke-BatchFile
+    Invoke-Elevated (su)
+    Invoke-GC
+    Invoke-Method (call)
+    Resolve-ErrorRecord (rver)   - renamed from Resolve-Error
+    Resolve-HResult (rvhr)       - renamed from Get-ExceptionForHR
+    Resolve-WindowsError (rvwer) - renamed from Get-ExceptionForWin32
+    Show-Tree
+
+UPDATED AND SHORTENED LIST OF ALIASES
+    ?:            Invoke-Ternary
+    ??            Invoke-NullCoalescing
+    call          Invoke-Method
+    cvxml         Convert-Xml
+    e             Edit-File
+    ehp           Edit-HostProfile
+    ep            Edit-Profile
+    fhex          Format-Hex
+    fxml          Format-Xml
+    gcb           Get-Clipboard
+    gpv           Get-PropertyValue
+    gtn           Get-TypeName
+    ln            New-HardLink
+    lorem         Get-LoremIpsum
+    nho           New-HashObject
+    ocb           Out-Clipboard
+    ql            QuoteList
+    qs            QuoteString
+    Resize-Bitmap Set-BitmapSize
+    rver          Resolve-ErrorRecord
+    rvhr          Resolve-HResult
+    rvwer         Resolve-WindowsError
+    skip          Skip-Object
+    sls           Select-String
+    sro           Set-ReadOnly
+    srts          Search-Transcript
+    su            Invoke-Elevated
+    swr           Set-Writable
+    tail          Get-FileTail
+    touch         Set-FileTime
+    
+REMOVED:
+    Get-Random, Select-Xml and Start-Process
+        These cmdlets have been moved to the Pscx.Deprecated module.  
+        If you require the Pscx versions instead of the ones now built-in 
+        PowerShell, import the Pscx.Deprecated module.
+        
+    Import-VisualStudioVars.ps1
+        This file has been replaced by the more generic Invoke-BatchFile which
+        migrates environment variable changes made by the batch file to the 
+        PowerShell session e.g.:
+    
+        $vcargs = ?: {$Pscx:Is64BitProcess} {'amd64'} {'x86'}
+        $VS90VCVarsBatchFile = "${env:VS90COMNTOOLS}..\..\VC\vcvarsall.bat"
+        Invoke-BatchFile $VS90VCVarsBatchFile $vcargs
+        
+    Get-HelpMatch     - Get-Help now searches within topic content.
+    Get-Url           - Use Get-HttpResource.
+    Get-WebService    - Use New-WebServiceProxy.
+    Import-Assembly   - Use Add-Type.    
+    New-GenericObject - Use New-Object which handles generics better in 2.0.
+
+    Connect-VirtualServer
+    Get-Manager
+    Export-History
+    Import-History
+    Select-History
+    Scroll-Table
+    Scroll-Text
+    Test-Scroll
+
+	Obsoleted Aliases
+	    egp, eghp, ephy, galpscx, gcmpscx, gdrpscx, gvs, help, hrexc, iphy, 
+	    mail, man, pager, ping, ra, rehash, rnd, saps, start, up and winexc.
+        
+MISC UPDATES:
+    cd
+		Supports unquoted paths with spaces unless special PowerShell 
+		characters are in path e.g.:
+
+		C:\PS> cd c:\program files
+
+		is valid while:
+		 
+		C:\PS> cd c:\program files(x86) 
+
+		is not because PowerShell tries to evaluate the contents of 
+		the parens '(x86)' and fails.
+		
+    Test-Xml
+        Added EnableDtd paremeter to allow testing of XML files using doc 
+        type definitions.
+        
+    Get-Help
+        Added -Object and -Member parameters for getting help on .NET 
+        types and members.
+        
+    Accelerators
+        Pscx adds two new accelarators [wmidatetime] and [wmitimespan] which 
+        can be used to convert .NET DateTime and TimeSpan values into their
+        WMI equivalents e.g.:
+        
+        C:\PS> [wmidatetime](get-date)
+        20100411113710.551365-360
+        
+        C:\PS> [wmitimespan]((get-date) - (get-date).AddHours(-1))
+        00000000010000.000000:000
+        
+        Note that converting from a WMI datetime or WMI timespan to the .NET
+        equivalent can be accomplished by simply type casting e.g.:
+        
+        C:\PS> [datetime]'20100409131034.881722-360'
+        Friday, April 09, 2010 1:10:34 PM
+        
+        You can also use [accelerators] as a shortcut to find all the 
+        accelerators available in PowerShell e.g.:
+        
+        C:\PS> [accelerators]::get
+
+		Key                    Value
+		---                    -----
+		int                    System.Int32
+		long                   System.Int64
+		string                 System.String
+		char                   System.Char
+		bool                   System.Boolean
+		byte                   System.Byte
+		double                 System.Double
+		...
+		wmidatetime            Pscx.TypeAccelerators.WmiDateTime
+		wmitimespan            Pscx.TypeAccelerators.WmiTimeSpan
+			

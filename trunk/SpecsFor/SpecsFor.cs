@@ -19,6 +19,16 @@ namespace SpecsFor
 			
 		}
 
+		protected TContextType GetContext<TContextType>() where TContextType : IContext<T>
+		{
+			return (TContextType)Contexts.FirstOrDefault(c => c.GetType() == typeof(TContextType));
+		}
+
+		protected TContextType GetContext<TContextType>(Func<IEnumerable<TContextType>, TContextType> search) where TContextType : IContext<T>
+		{
+			return search((IEnumerable<TContextType>)Contexts.Where(c => c.GetType() == typeof(TContextType)));
+		}
+
 		protected SpecsFor(Type[] contexts)
 		{
 			Given(contexts);
