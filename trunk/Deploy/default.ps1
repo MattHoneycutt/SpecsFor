@@ -51,6 +51,8 @@ task Pack -depends Build {
 	cp "$NuSpecFileName" "$NuGetPackDir"
 	mkdir "$NuGetPackDir\lib"
 	cp "$SpecsForOutput\SpecsFor.dll" "$NuGetPackDir\lib"
+	mkdir "$NuGetPackDir\LiveTemplates"
+	cp "$BaseDir\Resharper Templates\*" "$NuGetPackDir\LiveTemplates\"
 	
 	$Spec = [xml](get-content "$NuGetPackDir\$NuSpecFileName")
 	$Spec.package.metadata.version = ([string]$Spec.package.metadata.version).Replace("{MinorVersion}",$Version)

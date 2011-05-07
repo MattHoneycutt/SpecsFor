@@ -87,7 +87,7 @@
         </Variables>
         <CustomProperties />
       </Template>
-      <Template uid="0c5a2e8f-a73a-4d95-bdcc-3fd55073204a" shortcut="when" description="Creates a spec class (test fixture) within a spec file. " text="&#xD;&#xA;[SpecsFor.Given()]&#xD;&#xA;public class when_$SPEC$ : SpecsFor.SpecsFor&lt;$SUT$&gt;&#xD;&#xA;{&#xD;&#xA;	public when_$SPEC$(Type[] context) : base(context){}&#xD;&#xA;&#xD;&#xA;	protected override void When()&#xD;&#xA;	{&#xD;&#xA;		$END$&#xD;&#xA;	}&#xD;&#xA;}" reformat="False" shortenQualifiedReferences="True">
+      <Template uid="0c5a2e8f-a73a-4d95-bdcc-3fd55073204a" shortcut="when" description="Creates a spec class (test fixture) within a spec file. " text="&#xD;&#xA;public class when_$SPEC$ : SpecsFor.SpecsFor&lt;$SUT$&gt;&#xD;&#xA;{&#xD;&#xA;	protected override void Given()&#xD;&#xA;	{&#xD;&#xA;	}&#xD;&#xA;&#xD;&#xA;	protected override void When()&#xD;&#xA;	{&#xD;&#xA;		$END$&#xD;&#xA;	}&#xD;&#xA;}" reformat="False" shortenQualifiedReferences="True">
         <Context>
           <CSharpContext context="TypeMember" minimumLanguageVersion="2.0" />
         </Context>
@@ -100,7 +100,7 @@
       </Template>
     </LiveTemplates>
     <FileTemplates>
-      <Template uid="b59a8a5c-ce26-4c07-a139-f87f3c53065c" shortcut="" description="Specs" text="namespace $NAMESPACE$&#xD;&#xA;{&#xD;&#xA;	public class $CLASS$&#xD;&#xA;	{&#xD;&#xA;		public static class given&#xD;&#xA;		{&#xD;&#xA;			public abstract class $some_context$ : LazyDeveloperGroup.RageFeed.TestHelpers.SpecsFor&lt;$SUT$&gt;&#xD;&#xA;			{&#xD;&#xA;				$END$&#xD;&#xA;			}&#xD;&#xA;		}&#xD;&#xA;	}	&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
+      <Template uid="b59a8a5c-ce26-4c07-a139-f87f3c53065c" shortcut="" description="Specs" text="namespace $NAMESPACE$&#xD;&#xA;{&#xD;&#xA;	public class $CLASS$&#xD;&#xA;	{&#xD;&#xA;		$END$&#xD;&#xA;	}	&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
         <Context>
           <ProjectLanguageContext language="CSharp" />
         </Context>
@@ -108,8 +108,6 @@
         <Variables>
           <Variable name="NAMESPACE" expression="fileDefaultNamespace()" initialRange="-1" />
           <Variable name="CLASS" expression="getFileNameWithoutExtension()" initialRange="-1" />
-          <Variable name="SUT" expression="" initialRange="0" />
-          <Variable name="some_context" expression="" initialRange="0" />
         </Variables>
         <CustomProperties>
           <Property key="FileName" value="Class" />
