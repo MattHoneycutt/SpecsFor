@@ -3,9 +3,10 @@ properties {
 	$SolutionFile = "$BaseDir\SpecsFor.sln"
 	$OutputDir = "$BaseDir\Deploy\Package\"
 	$SpecsForOutput = "$BaseDir\Deploy\Package\_PublishedApplications\SpecsFor"
-	$Version = (Get-SvnInfo $BaseDir).Revision
+	$Version = "1.0.$((Get-SvnInfo $BaseDir).Revision)"
 	$Debug="false"
 	
+	$NuGetPackageName = "SpecsFor"
 	$NuGetPackDir = "$OutputDir" + "Pack"
 	$NuSpecFileName = "SpecsFor.nuspec"
 	
@@ -55,7 +56,7 @@ task Pack -depends Build {
 	cp "$BaseDir\Resharper Templates\*" "$NuGetPackDir\LiveTemplates\"
 	
 	$Spec = [xml](get-content "$NuGetPackDir\$NuSpecFileName")
-	$Spec.package.metadata.version = ([string]$Spec.package.metadata.version).Replace("{MinorVersion}",$Version)
+	$Spec.package.metadata.version = ([string]$Spec.package.metadata.version).Replace("{Version}",$Version)
 	$Spec.Save("$NuGetPackDir\$NuSpecFileName")
 
 	exec { nuget pack "$NuGetPackDir\$NuSpecFileName" }
@@ -63,6 +64,7 @@ task Pack -depends Build {
 
 task Publish -depends Pack {
 	$PackageName = gci *.nupkg
-	exec { nuget delete $PackageName "$Versions" -NoPrompt } -EA SilentlyContinue
+	#We don't care if deleting fails..
+	nuget delete $NuGetPackageName $Version -NoPrompt
 	exec { nuget push $PackageName }
 }
