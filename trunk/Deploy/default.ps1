@@ -21,7 +21,7 @@ task Init {
 	cls
 }
 
-task Clean {
+task Clean -depends Init {
 	if (Test-Path $OutputDir) {
 		ri $OutputDir -Recurse
 	}
@@ -58,11 +58,11 @@ task Pack -depends Build {
 	$Spec.package.metadata.version = ([string]$Spec.package.metadata.version).Replace("{MinorVersion}",$Version)
 	$Spec.Save("$NuGetPackDir\$NuSpecFileName")
 
-	#exec { msdeploy "-verb:sync" "-source:contentPath=$OutputWebDir" "-dest:contentPath=$TargetDir" }
 	exec { nuget pack "$NuGetPackDir\$NuSpecFileName" }
 }
 
 task Publish -depends Pack {
 	$PackageName = gci *.nupkg
+	exec { nuget delete $PackageName "$Versions" -NoPrompt } -EA SilentlyContinue
 	exec { nuget push $PackageName }
 }

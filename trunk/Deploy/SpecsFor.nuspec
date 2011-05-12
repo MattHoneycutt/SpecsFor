@@ -11,7 +11,7 @@
 		<description>SpecsFor is another Behavior-Driven Development framework that focuses on ease of use for *developers* by minimizing testing friction.</description>
 		<tags>testing tdd bdd specs</tags>
 		<dependencies>
-			<dependency id="NUnit" version="2.5.9.10348" />
+			<dependency id="NUnit" version="2.5.10.11092" />
 			<dependency id="Moq" version="4.0.10827" />
 			<dependency id="structuremap" version="2.6.2" />
 			<dependency id="structuremap.automocking" version="2.6.2.0" />
