@@ -1,0 +1,776 @@
+﻿TOPIC
+    PowerShell Community Extensions (version 2.0.0.0)
+
+SHORT DESCRIPTION
+    Describes the Windows PowerShell Community Extensions (PSCX) module and 
+    how to use the contained cmdlets and functions.
+
+LONG DESCRIPTION
+    PowerShell Community Extensions is a PowerShell module that provides a
+    number of widely useful cmdlets.  PSCX is not affiliated with Microsoft 
+    or the Windows PowerShell team at Microsoft.  We are a few (at the moment)
+    passionate PowerShell users who wanted more cmdlets than Microsoft was 
+    able to deliver in v1 and v2.  So we have taken it upon ourselves to
+    create some of those cmdlets and make them available to the community.
+        
+POWERSHELL COMPATIBILITY
+    Since PSCX 2.0 is module based, it only works on Windows PowerShell 2.0.  
+    There are three PSCX cmdlets that override PowerShell 2.0 built-in cmdlets
+    with the same names. Those cmdlets are:
+    
+    Get-Random
+    Start-Process
+    Select-Xml
+    
+    These cmdlets are provided via the Pscx.Deprecated module.  If you have
+    scripts that require the PSCX version of these cmdlets then import
+    the Pscx.Deprecated module.  If you import this module, these three 
+    PSCX cmdlets will hide the built-in ones.  If you would prefer to use the 
+    built-in versions in certain places, you can access them as shown below:
+    
+    Microsoft.PowerShell.Utility\Get-Random
+    Microsoft.PowerShell.Management\Start-Process
+    Microsoft.PowerShell.Utility\Select-Xml
+    
+    In order to get the help topic for these built-in cmdlets, use the 
+    qualified name when accessing help e.g.:
+    
+    PS> Get-Help Microsoft.PowerShell.Utility\Select-Xml -Full
+    
+    Finally, there is an alias defined for the Start-Process by PowerShell.
+    Since the Pscx.Deprecated\Start-Process overrides the built-in 
+    Start-Process, the alias will now resolve to the 
+    Pscx.Deprecated\Start-Process. If you want to redirect the start alias
+    back to the built-in Start-Process cmdlet, execute the following:
+    
+    PS> Set-Alias start Microsoft.PowerShell.Management\Start-Process 
+        -Option AllScope
+    
+PREFERENCE VARIABLES
+    Previous versions of PSCX used global variables to store preference 
+    information and variables created by PSCX functions.  Those have been 
+    moved to the PSCX settings provider.  PSCX will no longer create any 
+    variables in your global variable scope.  All PSCX preference settings 
+    are now specified using the Pscx.UserPreferencs.ps1 file.  The file is 
+    located in the root of the PSCX module folder.  Its default values 
+    indicate the defaults used if no preference file is specified during 
+    import of the PSCX module.  If you want to change any of the defaults, 
+    then copy this file to your home dir, edit it and then import PSCX using 
+    the -ArgumentList to specify the path to your updated 
+    Pscx.UserPreferences.ps1 file e.g.:
+    
+    Import-Module Pscx -arg ~\Pscx.UserPreferences.ps1
+    
+    The preference variables and default values are:
+    
+    ShowModuleLoadDetails = $false # Display module load details during 
+                                   # Import-Module.
+    
+    CD_GetChildItem = $false       # Display the contents of new provider 
+                                   # location after using cd (Set-LocationEx).
+                                   # Mutually exclusive with 
+                                   # CD_EchoNewLocation.
+                                   
+    CD_EchoNewLocation = $true     # Display new provider location after using 
+                                   # cd (Set-LocationEx).
+                                   # Mutually exclusive with CD_GetChildItem.
+    
+    TextEditor = 'Notepad.exe'     # Default text editor used by the Edit-File
+                                   # function.
+    
+    PromptTheme = 'Modern'         # Prompt string and window title updates.  
+                                   # To enable, first set the ModulesToImport 
+                                   # setting for Prompt below to $true.
+                                   # Then set this value to one of: 'Modern', 
+                                   # 'WinXP' or 'Jachym'.
+    
+    PageHelpUsingLess = $true      # Pscx replaces PowerShell's More function.
+                                   # When this setting is set to $true, 
+                                   # less.exe is used to page items piped to 
+                                   # the More function. Less.exe is powerful 
+                                   # paging app that allows advanced 
+                                   # navigation and search. Press 'h' to 
+                                   # access help inside less.exe and 'q' to 
+                                   # exit less.exe. Set this setting to $false
+                                   # to use more.com for paging.
+                                   
+    SmtpFrom = $null               # These settings are used by the PSCX 
+                                   # Send-SmtpMail cmdlet.
+    SmtpHost = $null               # Specify a default SMTP server.
+    SmtpPort = $null               # Specify a default port number.  If not 
+                                   # specified port 25 is used.
+                                   
+    FileSizeInUnits = $false       # Pscx can prepend format data for the 
+                                   # display of file information. If this 
+                                   # value is set to $true, file sizes are 
+                                   # displayed in using KB,MG,GB and TB units.
+                                      
+
+CMDLETS
+    To see what cmdlets are provided by PSCX, execute the alias "gcmpscx" at
+    the PowerShell prompt.  The current PSCX cmdlets are listed below:
+
+    Get-ADObject
+        Search for objects in the Active Directory/Global Catalog. 
+        
+    Invoke-AdoCommand
+        Execute a SQL query against an ADO.NET datasource. 
+        
+    Get-AdoConnection
+        Create an ADO connection to any database supported by .NET on the current 
+        machine. You can enumerate available ADO.NET Data Providers with the 
+        Get-AdoDataProvider Cmdlet.Data connections to supported providers are 
+        constructed using provider-agnostic common parameters like Server, 
+        Username, Password etc. 
+        
+    Get-AdoDataProvider
+        List all registered ADO.NET Data Providers on the current machine. 
+        
+    Get-AlternateDataStream
+        Gets the alternate data streams in an NTFS file. Use the List parameter 
+        to list all the alternate data streams. 
+        
+    Remove-AlternateDataStream
+        Removes the specified alternate data streams from an NTFS file. 
+        
+    Test-AlternateDataStream
+        Tests for the existence of the specified alternate data stream from an 
+        NTFS file. 
+        
+    Invoke-Apartment
+        
+    Expand-Archive
+        Expands a compressed archive file, or ArchiveEntry object, to its 
+        constituent file(s). 
+        
+    Read-Archive
+        Enumerates compressed archives such as 7z or rar, emitting ArchiveEntry 
+        objects representing records in the archive.Read-Archive is used to list 
+        the contents of a compressed archive containing one or more compressed 
+        file(s). The format of the file being read can be overriden with the 
+        Format parameter, for example to enumerate the contents of a 
+        self-extracting archive (EXE).Read-Archive is useful if you wish to 
+        perform filtering using standard pipeline Where-Object and/or 
+        ForEach-Object cmdlets before piping ArchiveEntry objects to 
+        Expand-Archive. 
+        
+    Test-Assembly
+        Tests whether or not the specified file is a .NET assembly. 
+        
+    ConvertFrom-Base64
+        Converts base64 encoded string to byte array. 
+        
+    ConvertTo-Base64
+        Converts byte array or specified file contents to base64 string. By 
+        default, this cmdlet inserts line breaks every 76 characters and outputs 
+        the result in a single string. For very large files, you may run into 
+        OutOfMemoryExceptions. In this case, use the -Stream parameter which will 
+        generate multiple string outputs that, combined together, result in the 
+        equivalent base 64 text. 
+        
+    Export-Bitmap
+        Exports a bitmap object to a specified file format. 
+        
+    Import-Bitmap
+        Loads bitmap files. 
+        
+    Set-BitmapSize
+        Sets the size of the specified bitmap. 
+        
+    Format-Byte
+        Turns numbers into nicely formatted byte count, using the highest 
+        possible unit. 
+        
+    Write-BZip2
+        Create BZIP2 format archive files from pipline or parameter input. 
+        
+    Get-Clipboard
+        Gets data from the clipboard. 
+        
+    Out-Clipboard
+        Formats text via Out-String before placing in clipboard. Can also place 
+        string in clipboard as a file. 
+        
+    Set-Clipboard
+        Puts the specified object into the system clipboard. 
+        
+    Write-Clipboard
+        Writes objects to the clipboard using their string representation, 
+        bypassing the default PowerShell formatting. 
+        
+    Get-DhcpServer
+        Gets a list of authorized DHCP servers. 
+        
+    Get-DomainController
+        Gets all domain controllers at the specified scope. 
+        
+    Get-DriveInfo
+        Gets disk usage information on the system's disk drives. 
+        
+    Get-EnvironmentBlock
+        Lists the environment blocks stored on the environment block stack. 
+        
+    Pop-EnvironmentBlock
+        Pops the environment block and restores the state of all environment 
+        variables to the values stored in the environment block. 
+        
+    Push-EnvironmentBlock
+        Stores the state of all environment variables into an environment block 
+        and pushes that onto the environment block stack. 
+        
+    Unblock-File
+        Unblock the file so that it can be used locally. 
+        
+    Get-FileTail
+        This implentation efficiently tails the cotents of a file by reading 
+        lines from the end rather then processing the entire file. This behavior 
+        is crucial for efficiently tailing large log files and large log files 
+        over a network. You can also specify the Wait parameter to have the 
+        cmdlet wait and display new content as it is written to the file. Use 
+        Ctrl+C to break out of the wait loop. Note that if an encoding is not 
+        specified, the cmdlet will attempt to auto-detect the encoding by reading 
+        the first character from the file. If no character haven't been written 
+        to the file yet, the cmdlet will default to using Unicode encoding. You 
+        can override this behavior by explicitly specifying the encoding via the 
+        Encoding parameter. 
+        
+    Set-FileTime
+        Sets a file or folder's created and last accessed/write times. 
+        
+    Get-FileVersionInfo
+        Attempts to get the FileVersionInfo object for the specified path. 
+        Usually only executable files include file version information. 
+        
+    Get-ForegroundWindow
+        Returns the hWnd or handle of the window in the foreground on the current 
+        desktop. See also Set-ForegroundWindow. 
+        
+    Set-ForegroundWindow
+        Given an hWnd or window handle, brings that window to the foreground. 
+        Useful for restoring a window to uppermost after an application which 
+        seizes the foreground is invoked. See also Get-ForegroundWindow 
+        
+    Write-GZip
+        Create GNU ZIP (GZIP) format files from pipeline or parameter input. 
+        
+    New-Hardlink
+        Creates filesystem hard links. The hardlink and the target must reside on 
+        the same NTFS volume. 
+        
+    Get-Hash
+        Gets the hash value for the specified file or byte array via the 
+        pipeline. The default hash algorithm is MD5, although you can specify 
+        other algorithms using the -Algorithm parameter (MD5, SHA1, SHA256, 
+        SHA384, SHA512 and RIPEMD160). This cmdlet emits a HashInfo object that 
+        has properties for Path, Algorithm, HashString and Hash. 
+        
+    Format-Hex
+        The Format-Hex command displays the contents of the specified files in 
+        hex format. This cmdlet will also accept pipeline input in the form of a 
+        byte stream. The output can be controlled via various parameters to 
+        indicate the number of columns that should be displayed or alternatively 
+        you can specify the width of the output. The header, address and ASCII 
+        portions of the display can also be turned off individually. The offset 
+        and count can also be specified via parameters to control where in the 
+        input to start displaying and how much to display. 
+        
+    Ping-Host
+        Sends ICMP echo requests to network hosts. 
+        
+    Resolve-Host
+        Resolves host names to IP addresses. 
+        
+    Get-HttpResource
+        Gets an HTTP resource or optionally the headers associated with the 
+        resource. 
+        
+    New-Junction
+        Creates NTFS directory junctions. 
+        
+    Get-LoremIpsum
+        
+    ConvertTo-MacOs9LineEnding
+        Converts the line endings in the specified file to Mac OS9 and earlier 
+        style line endings "\r". You can convert a single file to a new file 
+        name. Or you can convert multiple files and specify a destination 
+        directory. By default, this cmdlet will overwrite existing files unless 
+        you specify -NoClobber. If you want to force the overwrite of read only 
+        files use the -Force option. 
+        
+    ConvertTo-Metric
+        
+    Get-MountPoint
+        Returns all mount points defined for a specific root path. 
+        
+    Remove-MountPoint
+        Removes a mount point, dismounting the current media if any. If used 
+        against the root of a fixed drive, removes the drive letter assignment. 
+        
+    Clear-MSMQueue
+        Purges all messages from a queue 
+        
+    Get-MSMQueue
+        Returns a list of all queues matching the filter parameters 
+        
+    New-MSMQueue
+        Creates a new queue object with the defined properties 
+        
+    Receive-MSMQueue
+        Receives the first message available in the queue. This call is 
+        synchronous, and blocks the current thread of execution and waits until 
+        either a message is available in the queue, or the time-out expires. 
+        
+    Send-MSMQueue
+        Wraps an object in a Message, and places it onto the defined queue. 
+        
+    Test-MSMQueue
+        
+    Skip-Object
+        Skips the specified number of objects at the beginning of a sequence 
+        and/or the end of a sequence. 
+        
+    Get-OpticalDriveInfo
+        Get information on optical drive capabilities on the local machine. 
+        
+    Add-PathVariable
+        Adds the specified paths to the end of the named, path-oriented 
+        environment variable by taking the paths specified by the Value parameter 
+        and concatenating them into a semi-colon separated string. The paths can 
+        be prepended to the environment variable by using the -Prepend switch 
+        parameter. 
+        
+    Get-PathVariable
+        Gets the specified path-oriented environment variable and outputs an 
+        array of strings. One string for each path. The environment variable 
+        string is split a semi-colon and you can option specify that empty paths 
+        be removed and unnecessary quotes be removed from each path. 
+        
+    Set-PathVariable
+        Sets the specified path-oriented environment variable by taking the paths 
+        specified by the Value parameter and concatenating them into a semi-colon 
+        separated string. 
+        
+    Get-PEHeader
+        The PE header for Windows executables includes various useful bits of 
+        information including the image base address, subsystem, linker version, 
+        etc. 
+        
+    Get-Privilege
+        Lists privileges held by the session and their current status. 
+        
+    Set-Privilege
+        Adjusts privileges associated with a user (identity). 
+        
+    Get-PSSnapinHelp
+        Generates a XML file containing all documentation data. 
+        
+    Get-ReparsePoint
+        Gets NTFS reparse point data. 
+        
+    Remove-ReparsePoint
+        Removes NTFS reparse junctions and symbolic links. 
+        
+    Test-Script
+        Determines whether a PowerShell script has any syntax errors using the 
+        PowerShell script tokenizer. 
+        
+    New-Shortcut
+        Creates shell shortcuts. 
+        
+    Get-ShortPath
+        Gets the short, 8.3 name for the given path. This cmdlet emits a 
+        ShortPathInfo object that contains a ShortPath property as well as a Path 
+        property which contains the original long path. 
+        
+    Send-SmtpMail
+        Sends email via specified SMTP server to specified recipients. This 
+        cmdlet checks for existence of several preference that if set can make 
+        this cmdlet much easier to use. Those preference variables are: * 
+        $PscxSmtpHostPreference="smtp.example.net" * $PscxSmtpPortPreference=587 
+        * $PscxSmtpFromPreference="john_doe@example.net" 
+        
+    Join-String
+        Joins an array of strings into a single string. 
+        
+    Split-String
+        Splits a single string into an array of strings. 
+        
+    New-Symlink
+        Creates filesystem symbolic links. Requires Microsoft Windows Vista or 
+        later. 
+        
+    Get-TabExpansion
+        This command provides access to the PSCX tab expansion engine. If you are 
+        not using the PSCX profile, call this command from your TabExpansion 
+        function. 
+        
+    Start-TabExpansion
+        Initializes the caches used by Get-TabExpansion. These may include the 
+        .NET namespace and type cache, the WMI class cache, and more. 
+        
+    Write-Tar
+        Create Tape Archive (TAR) format files from pipeline or parameter input. 
+        
+    Disconnect-TerminalSession
+        Disconnects a specific remote desktop session on a system running 
+        Terminal Services/Remote Desktop 
+        
+    Get-TerminalSession
+        Gets information on terminal services sessions. 
+        
+    Stop-TerminalSession
+        Logs off a specific remote desktop session on a system running Terminal 
+        Services/Remote Desktop 
+        
+    Get-TypeName
+        Get-TypeName displays the typename of the input object. Normally you 
+        would use Get-Member to determine this but if you are only interested in 
+        the type name this filter produces much less output. Also, since 
+        Get-Member accumulates multiple instances of the same type into a single 
+        output record for that type, you don't get any sense of how many objects 
+        of that type are traversing the pipeline. With Get-TypeName, you will see 
+        the type name of *every* object passed into it. NOTE: If you specify any 
+        arguments then all pipeline input is ignored. This is due to the fact 
+        that PowerShell executes the Process function even if there isn't any 
+        input so it is impossible to distinguish between $null pipeline input and 
+        no pipeline input. NOTE: the type name is displayed directly to the host 
+        so that it doesn't interfere with pipeline operations. If you want the 
+        original object to pass thru, use the PassThru parameter. 
+        
+    ConvertTo-UnixLineEnding
+        Converts the line endings in the specified file to Unix line endings 
+        "\n". You can convert a single file to a new file name. Or you can 
+        convert multiple files and specify a destination directory. By default, 
+        this cmdlet will overwrite existing files unless you specify -NoClobber. 
+        If you want to force the overwrite of read only files use the -Force 
+        option. 
+        
+    Get-Uptime
+        Gets the operating system's uptime and last bootup time. 
+        
+    Test-UserGroupMembership
+        Tests whether or not a user (current user by default) is a member of the 
+        specified group name. This can be used to test whether a user is admin or 
+        elevated to admin. 
+        
+    Set-VolumeLabel
+        Modifies the label shown in Windows Explorer for a particular disk 
+        volume. 
+        
+    ConvertTo-WindowsLineEnding
+        Converts the line endings in the specified file to Windows line endings 
+        "\r\n". You can convert a single file to a new file name. Or you can 
+        convert multiple files and specify a destination directory. By default, 
+        this cmdlet will overwrite existing files unless you specify -NoClobber. 
+        If you want to force the overwrite of read only files use the -Force 
+        option. 
+        
+    Convert-Xml
+        Performs XSLT transforms on the specified XML file or XmlDocument. Use 
+        the EnableScript parameter to enable script embedded in the XSLT file. 
+        
+    Format-Xml
+        Pretty print for XML files and XmlDocument objects. 
+        
+    Test-Xml
+        Tests for well formedness and optionally validates against XML Schema. It 
+        doesn't handle specifying the targetNamespace. To see validation error 
+        messages, specify the -Verbose flag. 
+        
+    Write-Zip
+        Create ZIP format archive files from pipline or parameter input. 
+        
+
+PROVIDERS
+    AssemblyCache
+        PSCX Provider: Provides access to the .NET Global Assembly Cache and the 
+        assemblies it contains. The assemblies are exposed as AssemblyName 
+        objects. 
+        
+    DirectoryServices
+        PSCX Provider: Provides access to LDAP servers like Active Directory or 
+        AD Lightweight Directory Services. 
+        
+    FeedStore
+        PSCX Provider: Provides access to the Internet Explorer 7 RSS feed store. 
+        
+FUNCTIONS
+    Add-DirectoryLength
+        Calculates the sizes of the specified directory and adds that size as a 
+        "Length" NoteProperty to the input DirectoryInfo object. 
+        
+    Add-ShortPath
+        Adds the file or directory's short path as a "ShortPath" NoteProperty to 
+        each input object. 
+        
+    Dismount-VHD
+        Dismounts a Virtual Hard Drive (VHD) file. 
+        
+    Edit-File (e)
+        Opens up the specified text file in a text editor. 
+        
+    Edit-HostProfile (ehp)
+        Opens the current user's profile for the current host in a text editor. 
+        
+    Edit-Profile (ep)
+        Opens the current user's "all hosts" profile in a text editor. 
+        
+    Enable-OpenPowerShellHere
+        Creates the registry entries required to create Windows Explorer context 
+        menu "Open PowerShell Here" for both Directories and Drives 
+        
+    Get-Help
+        Displays information about Windows PowerShell commands and concepts. 
+        
+    Get-Help
+        Displays information about Windows PowerShell commands and concepts. 
+        
+    Get-Help
+        Displays information about Windows PowerShell commands and concepts. 
+        
+    Get-PropertyValue (gpv)
+        Gets the specified property's value from each input object. 
+        
+    Get-ScreenCss
+        Generate CSS header for HTML "screen shot" of the host buffer. 
+        
+    Get-ScreenHtml
+        Functions to generate HTML "screen shot" of the host buffer. 
+        
+    Get-ViewDefinition
+        Gets the possible alternate views for the specified object. 
+        
+    Invoke-BatchFile
+        Invokes the specified batch file and retains any environment variable 
+        changes it makes. 
+        
+    Invoke-Elevated (su)
+        Runs the specified command in an elevated context. 
+        
+    Invoke-GC (igc)
+        Invokes the .NET garbage collector to clean up garbage objects. 
+        
+    Invoke-Method (call)
+        Function to call a single method on an incoming stream of piped objects. 
+        
+    Invoke-NullCoalescing (??)
+        Similar to the C# ?? operator e.g. name = value ?? String.Empty 
+        
+    Invoke-Reflector (rf)
+        Quickly load Reflector, with the specified Type or Command selected. 
+        
+    Invoke-Ternary (?:)
+        Similar to the C# ? : operator e.g. name = (value != null) ? String.Empty 
+        : value 
+        
+    less
+        Less provides better paging of output from cmdlets. 
+        
+    Mount-VHD
+        Mounts a Virtual Hard Drive (VHD) file. 
+        
+    New-HashObject (nho)
+        Create a PSObject from a dictionary such as a hashtable. 
+        
+    Out-Speech
+        Outputs text as spoken words. 
+        
+    QuoteList (ql)
+        Convenience function for creating an array of strings without requiring 
+        quotes or commas. 
+        
+    QuoteString (qs)
+        Creates a string from each parameter by concatenating each item using 
+        $OFS as the separator. 
+        
+    Resolve-ErrorRecord (rver)
+        Resolves the PowerShell error code to a textual description of the error. 
+        
+    Resolve-HResult (rvhr)
+        Resolves the hresult error code to a textual description of the error. 
+        
+    Resolve-WindowsError (rvwer)
+        Resolves a Windows error number a textual description of the error. 
+        
+    Set-LocationEx
+        CD function that tracks location history allowing easy navigation to 
+        previous locations. 
+        
+    Set-ReadOnly (sro)
+        Sets a file's read only status to true making it read only. 
+        
+    Set-Writable (swr)
+        Sets a file's read only status to false making it writable. 
+        
+    Show-Tree
+        Shows the specified path as a tree. 
+        
+    Stop-RemoteProcess
+        Stops a process on a remote machine. 
+        
+PSCX ALIASES
+    To see what aliases get created by PSCX, execute "Get-Command -type Alias -module Pscx*" at
+    the PowerShell prompt.  The current PSCX defined aliases are listed below:
+
+    ?:            : alias for Invoke-Ternary filter
+    ??            : alias for Invoke-NullCoalescing filter
+    call          : alias for Invoke-Method function
+    cvxml         : alias for Convert-Xml cmdlet
+    e             : alias for Edit-File function
+    ehp           : alias for Edit-HostProfile function
+    ep            : alias for Edit-Profile function
+    fhex          : alias for Format-Hex cmdlet
+    fxml          : alias for Format-Xml cmdlet
+    gcb           : alias for Get-Clipboard cmdlet
+    gpv           : alias for Get-PropertyValue filter
+    gtn           : alias for Get-TypeName cmdlet
+    igc           : alias for Invoke-GC function
+    ln            : alias for New-HardLink cmdlet
+    lorem         : alias for Get-LoremIpsum cmdlet
+    nho           : alias for New-HashObject filter
+    ocb           : alias for Out-Clipboard cmdlet
+    ql            : alias for QuoteList function
+    qs            : alias for QuoteString function
+    Resize-Bitmap : alias for Set-BitmapSize cmdlet
+    rf            : alias for Invoke-Reflector function
+    rver          : alias for Resolve-ErrorRecord function
+    rvhr          : alias for Resolve-HResult function
+    rvwer         : alias for Resolve-WindowsError function
+    skip          : alias for Skip-Object cmdlet
+    sls           : alias for Select-String cmdlet
+    sro           : alias for Set-ReadOnly function
+    su            : alias for Invoke-Elevated function
+    swr           : alias for Set-Writable function
+    tail          : alias for Get-FileTail cmdlet
+    touch         : alias for Set-FileTime cmdlet
+
+UTILITY APPLICATIONS
+    Less-394
+        Less-394 is a paging utility that PSCX installs. PSCX further provides
+        a replacement "help" function that can uses the installed less.exe to 
+        page help output. If you use either the "man" alias (an alias to help) 
+        or the help function, the output will be paged using the PSCX "less"
+        function which uses less.exe. By default, PSCX's "less" function will 
+        use Less.exe to page its input.  If you want to temporarily avoid 
+        using Less for paging when viewing help topics, you can use Get-Help 
+        directly e.g.:
+        
+        PS> Get-Help Get-PSDrive -Full
+        
+        The primary commands you need to know in order to use less.exe are:
+        Press 'q' to exit less.exe.  Press '/<some_term>[enter] to search the
+        help topic for a specific term.  Press 'h' to get more help on how to 
+        use less.exe.
+        
+        If you want to permanently suppress the usage of Less and revert back
+        to PowerShell's default pager (more.com) set the 'PageHelpUsingLess' 
+        preference variable to $false in your Pscx.UserPreferences.ps1 file.
+        See the PREFERENCES VARIABLES section above for more information on
+        customing PSCX.
+               
+        Using Less to browse help topics is significantly nicer than the 
+        default paging in PowerShell. PSCX does not however redefine 
+        PowerShell's "more" function to use Less because the way PowerShell 
+        interops with legacy applications causes all output to be rendered to 
+        text before it is sent to a legacy application. That makes commands 
+        like the following take too much time to generate any output:
+        
+        PS> gci $env:windir -rec | less
+        
+    EchoArgs
+        This is a simple legacy console application that can be very useful 
+        when you are troubleshooting the invocation of a legacy application
+        with complex parameters.  The typical problem is that you may think 
+        the parameters are being passed literally to the legacy application 
+        when in fact PowerShell is parsing the parameters via its standard
+        parameter parsing and then passing the result to the legacy 
+        application e.g.:
+        
+        PS> echoargs a /b -c -d:user /e:foo.cs;405
+        Arg 0 is <a>
+        Arg 1 is </b>
+        Arg 2 is <-c>
+        Arg 3 is <-d:user>
+        Arg 4 is </e:foo.cs>
+
+        405
+        
+        Notice that ';' is the statement separator in PowerShell so the '405' 
+        part of the parameter '/e:foo.cs;405' is not even considered a 
+        parameter to the legacy application.  These sort of problems are 
+        typically solved by quoting the arguments to legacy applications e.g.:
+        
+        5> echoargs a /b -c -d:user '/e:foo.cs;405'
+        Arg 0 is <a>
+        Arg 1 is </b>
+        Arg 2 is <-c>
+        Arg 3 is <-d:user>
+        Arg 4 is </e:foo.cs;405>
+
+MISCELLANOUS FEATURES
+    If you want to add an "Open PowerShell Prompt" context menu item to 
+    Windows Explorer for folders and drives, execute:
+    
+    PS> Enable-OpenPowerShellHere
+
+FEEDBACK
+    Please submit any feedback, including defects and enhancement requests, 
+    to either the discussions forums at:
+
+    http://pscx.codeplex.com/Thread/List.aspx
+
+    or via the Issue Tracker at:
+
+    http://pscx.codeplex.com/WorkItem/List.aspx
+
+    We are also interested in suggestions you may have for cmdlets.  Over
+    time, we hope to be able to add some custom providers but that greatly
+    depends on recruiting some more developers for the PSCX project.
+
+CONTRIBUTING TO PSCX
+    If you are:
+    
+    A) A software developer with experience programming in C# 
+    B) Passionate about Windows PowerShell 
+    C) Interested in contributing your coding talents to the project, please
+       drop me an email at:
+    
+       r_keith_hill@hotmail.com.
+
+CREDITS
+	This is a list of people and/or groups who have directly or indirectly
+	helped by offering significant suggestions, code or linkable binaries
+	without which PSCX would be a lesser product. In no particular order:
+	
+	Wintellect 
+	http://www.wintellect.com/
+	
+	Mike Krueger/John Reilly #ZipLib
+	http://www.icsharpcode.net/OpenSource/SharpZipLib/
+	
+	Igor Pavlov / 7-Zip
+	http://www.7-zip.org/ 
+	
+	The nUnit Team
+	http://www.nunit.org/
+	
+	Eugene Sichkar
+	http://www.nomad-net.info/
+	
+	Richard Deeming / Trinet.Core.IO.Ntfs
+	http://www.codeproject.com/KB/cs/ntfsstreams.aspx
+	
+SEE ALSO
+    For more information, most of the cmdlets have help associated with 
+    them e.g.:
+    
+    PS> help Get-Clipboard
+    
+    The definitive information on a cmdlet's parameters can be obtained
+    by executing:
+    
+    PS> Get-Command Get-Clipboard -syntax
+    
+    or more tersely:
+    
+    PS> gcm get-clipboard -syn
