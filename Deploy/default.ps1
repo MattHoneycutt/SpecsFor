@@ -3,7 +3,8 @@ properties {
 	$SolutionFile = "$BaseDir\SpecsFor.sln"
 	$OutputDir = "$BaseDir\Deploy\Package\"
 	$SpecsForOutput = "$BaseDir\Deploy\Package\_PublishedApplications\SpecsFor"
-	$Version = "1.0.$((Get-SvnInfo $BaseDir).Revision)"
+	#Gets the number of commits since the last tag. 
+	$Version = "1.1." + (git describe --tags --long).split('-')[1]
 	$Debug="false"
 	
 	$NuGetPackageName = "SpecsFor"
@@ -52,8 +53,8 @@ task Pack -depends Build {
 	cp "$NuSpecFileName" "$NuGetPackDir"
 	mkdir "$NuGetPackDir\lib"
 	cp "$SpecsForOutput\SpecsFor.dll" "$NuGetPackDir\lib"
-	mkdir "$NuGetPackDir\LiveTemplates"
-	cp "$BaseDir\Resharper Templates\*" "$NuGetPackDir\LiveTemplates\"
+	mkdir "$NuGetPackDir\Templates\"
+	cp "$BaseDir\Templates\*" "$NuGetPackDir\Templates\"
 	
 	$Spec = [xml](get-content "$NuGetPackDir\$NuSpecFileName")
 	$Spec.package.metadata.version = ([string]$Spec.package.metadata.version).Replace("{Version}",$Version)
