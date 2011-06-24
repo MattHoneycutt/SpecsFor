@@ -12,7 +12,6 @@ properties {
 	$NuSpecFileName = "SpecsFor.nuspec"
 	
 	$ArchiveDir = "$OutputDir" + "Archive"
-	
 }
 
 $framework = '4.0'
@@ -38,23 +37,29 @@ task Build -depends Init,Clean {
 
 task Archive -depends Build {
 	mkdir $ArchiveDir
+	
 	cp "$SpecsForOutput\Moq.dll" "$ArchiveDir"
 	cp "$SpecsForOutput\nunit.framework.dll" "$ArchiveDir"
 	cp "$SpecsForOutput\SpecsFor.dll" "$ArchiveDir"
 	cp "$SpecsForOutput\StructureMap.AutoMocking.dll" "$ArchiveDir"
 	cp "$SpecsForOutput\StructureMap.dll" "$ArchiveDir"
 	
-	gci $ArchiveDir | Write-Zip -OutputPath specsfor.zip -FlattenPaths
+	cp "$BaseDir\Templates" "$ArchiveDir" -Recurse
+	Remove-Item -Force "$ArchiveDir\Templates\.gitignore"
+
+	Write-Zip -Path "$ArchiveDir\*" -OutputPath specsfor.zip
 }
 
 task Pack -depends Build {
 
 	mkdir $NuGetPackDir
 	cp "$NuSpecFileName" "$NuGetPackDir"
+
 	mkdir "$NuGetPackDir\lib"
 	cp "$SpecsForOutput\SpecsFor.dll" "$NuGetPackDir\lib"
-	mkdir "$NuGetPackDir\Templates\"
-	cp "$BaseDir\Templates\*" "$NuGetPackDir\Templates\"
+
+	cp "$BaseDir\Templates" "$NuGetPackDir" -Recurse
+	Remove-Item -Force "$NuGetPackDir\Templates\.gitignore"
 	
 	$Spec = [xml](get-content "$NuGetPackDir\$NuSpecFileName")
 	$Spec.package.metadata.version = ([string]$Spec.package.metadata.version).Replace("{Version}",$Version)
