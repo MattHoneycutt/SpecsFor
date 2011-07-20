@@ -9,7 +9,7 @@
     </Variables>
     <CustomProperties />
   </Template>
-  <Template uid="0c5a2e8f-a73a-4d95-bdcc-3fd55073204a" shortcut="when" description="Creates a spec class (test fixture) within a spec file. " text="&#xD;&#xA;public class when_$SPEC$ : given.$the_default_state$&#xD;&#xA;{&#xD;&#xA;	protected override void When()&#xD;&#xA;	{&#xD;&#xA;		$END$&#xD;&#xA;	}&#xD;&#xA;}" reformat="False" shortenQualifiedReferences="True">
+  <Template uid="0c5a2e8f-a73a-4d95-bdcc-3fd55073204a" shortcut="when" description="Creates a spec class (test fixture) within a spec file. " text="public class when_$SPEC$ : given.$the_default_state$&#xD;&#xA;{&#xD;&#xA;	protected override void When()&#xD;&#xA;	{&#xD;&#xA;		$END$&#xD;&#xA;	}&#xD;&#xA;}" reformat="False" shortenQualifiedReferences="True">
     <Context>
       <CSharpContext context="TypeMember" minimumLanguageVersion="2.0" />
     </Context>
