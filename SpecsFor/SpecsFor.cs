@@ -74,11 +74,9 @@ namespace SpecsFor
 		{
 			AfterEachSpec();
 
-			var disposable = SUT as IDisposable;
-
-			if (disposable != null)
+			if (SUT != null && SUT is IDisposable)
 			{
-				disposable.Dispose();
+				((IDisposable)SUT).Dispose();
 			}
 		}
 
