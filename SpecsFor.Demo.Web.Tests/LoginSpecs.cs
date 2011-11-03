@@ -24,8 +24,6 @@ namespace SpecsFor.Demo.Web.UITests
 					.SetFieldValue(m => m.UserName, "bad@user.com")
 					.SetFieldValue(m => m.Password, "BadPass")
 					.Submit();
-
-				SUT.WaitForComplete();
 			}
 
 			[Test]
@@ -54,8 +52,6 @@ namespace SpecsFor.Demo.Web.UITests
 					.SetFieldValue(m => m.UserName, "mhoneycutt")
 					.SetFieldValue(m => m.Password, "Testing")
 					.Submit();
-
-				SUT.WaitForComplete();
 			}
 
 			[Test]

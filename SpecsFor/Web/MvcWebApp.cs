@@ -2,27 +2,48 @@
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Web.Routing;
-using MvcContrib.TestHelper.Fakes;
-using WatiN.Core;
-using Microsoft.Web.Mvc;
 using MvcContrib.TestHelper;
+using MvcContrib.TestHelper.Fakes;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.IE;
+using Microsoft.Web.Mvc;
+using OpenQA.Selenium.Remote;
 
 namespace SpecsFor.Web
 {
-	public class MvcWebApp : IE
+	//TODO: Refactor this so it doesn't inherit directly from IE, but instead
+	//		can work with any browser. 
+	public class MvcWebApp : InternetExplorerDriver
 	{
 		public static string BaseUrl = "http://localhost";
+
+		public MvcWebApp() : base(GetCapabilities())
+		{
+			
+		}
+
+		private static DesiredCapabilities GetCapabilities()
+		{
+			//This hackiness is needed to work around the way IE is configured at FIS.  I've not encountered any problems *yet*, but 
+			//we might in the future.  Who knows... 
+			var capabilities = new DesiredCapabilities();
+			capabilities.SetCapability(InternetExplorerDriver.IntroduceInstabilityByIgnoringProtectedModeSettings, true);
+
+			return capabilities;
+		}
 
 		public FormHelper<T> FindFormFor<T>()
 		{
 			return new FormHelper<T>(this);
 		}
 
-		public Element ValidationSummary
+		public IWebElement ValidationSummary
 		{ 
 			get
 			{
-				return Element(Find.ByClass("validation-summary-errors"));
+				return FindElement(By.ClassName("validation-summary-errors"));
 			}
 		}
 
@@ -49,7 +70,20 @@ namespace SpecsFor.Web
 
 			var url = helper.BuildUrlFromExpression(action);
 
-			GoTo(BaseUrl + url);
+			Navigate().GoToUrl(BaseUrl + url);
+		}
+
+		private bool HasQuit;
+
+		protected override void Dispose(bool disposing)
+		{
+			if (!HasQuit)
+			{
+				HasQuit = true;
+				Quit();
+			}
+
+			base.Dispose(disposing);
 		}
 	}
 
@@ -66,9 +100,9 @@ namespace SpecsFor.Web
 		{
 			var name = ExpressionHelper.GetExpressionText(property);
 
-			var field = _webApp.TextField(Find.ByName(name));
+			var field = _webApp.FindElement(By.Name(name));
 
-			field.TypeText(value);
+			field.SendKeys(value);
 
 			return this;
 		}
@@ -76,7 +110,7 @@ namespace SpecsFor.Web
 		public void Submit()
 		{
 			//TODO: Probably not the best way to find a form...
-			_webApp.Forms[0].Submit();
+			_webApp.FindElement(By.TagName("form")).Submit();
 		}
 	}
 }

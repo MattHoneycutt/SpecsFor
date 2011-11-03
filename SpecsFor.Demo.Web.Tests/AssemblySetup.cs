@@ -1,5 +1,6 @@
 ﻿using System.Web.Routing;
 using NUnit.Framework;
+using OpenQA.Selenium.IE;
 using SpecsFor.Web;
 
 namespace SpecsFor.Demo.Web.UITests
