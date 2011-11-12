@@ -14,11 +14,6 @@ namespace SpecsFor
 		protected MoqAutoMocker<T> Mocker;
 		protected List<IContext<T>> Contexts = new List<IContext<T>>();
 
-		protected SpecsFor()
-		{
-			
-		}
-
 		protected TContextType GetContext<TContextType>() where TContextType : IContext<T>
 		{
 			return (TContextType)Contexts.FirstOrDefault(c => c.GetType() == typeof(TContextType));
@@ -27,6 +22,11 @@ namespace SpecsFor
 		protected TContextType GetContext<TContextType>(Func<IEnumerable<TContextType>, TContextType> search) where TContextType : IContext<T>
 		{
 			return search((IEnumerable<TContextType>)Contexts.Where(c => c.GetType() == typeof(TContextType)));
+		}
+
+		protected SpecsFor()
+		{
+			
 		}
 
 		protected SpecsFor(Type[] contexts)
@@ -46,7 +46,7 @@ namespace SpecsFor
 			return Mock.Get(Mocker.Get<TMock>());
 		}
 
-		[SetUp]
+		[TestFixtureSetUp]
 		public virtual void SetupEachSpec() 
 		{
 			Mocker = new MoqAutoMocker<T>();
@@ -80,12 +80,15 @@ namespace SpecsFor
 			Contexts.ForEach(c => c.Initialize(this));
 		}
 
+		protected virtual void When()
+		{
+
+		}
+
 		protected virtual void AfterEachSpec()
 		{
 			
 		}
-
-		protected abstract void When();
 
 		protected void Given<TContext>() where TContext : IContext<T>, new()
 		{
