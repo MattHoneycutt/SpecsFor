@@ -62,7 +62,7 @@
     <Compile Include="InvalidContextException.cs" />
     <Compile Include="ITestState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShouldExtensions\LooksLikeExtensions.cs" />
+    <Compile Include="ShouldExtensions\Looks.cs" />
     <Compile Include="SpecsFor.cs" />
   </ItemGroup>
   <ItemGroup>

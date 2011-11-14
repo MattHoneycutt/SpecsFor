@@ -58,7 +58,7 @@
   <ItemGroup>
     <Compile Include="GivenAttributeSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShouldExtensions\LooksLikeExtensionsSpecs.cs" />
+    <Compile Include="ShouldExtensions\LooksSpecs.cs" />
     <Compile Include="SpecsForSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
