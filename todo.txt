@@ -1,4 +1,2 @@
 TODO: 
-- Add a startup message that informs users of what to put in their project for a binding redirect.
-- Add a call to create the binding redirects.
 - Semantic versioning
