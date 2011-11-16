@@ -9,7 +9,7 @@ properties {
 	
 	$NuGetPackageName = "SpecsFor"
 	$NuGetPackDir = "$OutputDir" + "Pack"
-	$NuSpecFileName = "SpecsFor.nuspec"
+	$NuSpecFileName = "NuGet\SpecsFor.nuspec"
 	
 	$ArchiveDir = "$OutputDir" + "Archive"
 }
