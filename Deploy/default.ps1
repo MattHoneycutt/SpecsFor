@@ -1,17 +1,14 @@
 properties {
 	$BaseDir = Resolve-Path "..\"
 	$SolutionFile = "$BaseDir\SpecsFor.sln"
-	$OutputDir = "$BaseDir\Deploy\Package\"
-	$SpecsForOutput = "$BaseDir\Deploy\Package\_PublishedApplications\SpecsFor"
-	#Gets the number of commits since the last tag. 
-	$Version = "1.1." + (git describe --tags --long).split('-')[1]
-	$Debug="false"
+	$SpecsForOutput = "$BaseDir\SpecsFor\bin\Debug"
+	$ProjectPath = "$BaseDir\SpecsFor\SpecsFor.csproj"	
+	$ArchiveDir = "$BaseDir\Deploy\Archive"
+	
+	#TODO: Once NuGet fully supports semantic versioning, this can go away.
+	$Version = $null
 	
 	$NuGetPackageName = "SpecsFor"
-	$NuGetPackDir = "$OutputDir" + "Pack"
-	$NuSpecFileName = "NuGet\SpecsFor.nuspec"
-	
-	$ArchiveDir = "$OutputDir" + "Archive"
 }
 
 $framework = '4.0'
@@ -20,11 +17,15 @@ task default -depends Pack,Archive
 
 task Init {
 	cls
+	if ($Version = $null) {
+		$Version = Read-Host -Prompt "Please enter the version number"
+	}
 }
 
 task Clean -depends Init {
-	if (Test-Path $OutputDir) {
-		ri $OutputDir -Recurse
+	
+	if (Test-Path $ArchiveDir) {
+		ri $ArchiveDir -Recurse
 	}
 	
 	ri SpecsFor.*.nupkg
@@ -32,7 +33,7 @@ task Clean -depends Init {
 }
 
 task Build -depends Init,Clean {
-	exec { msbuild $SolutionFile "/p:OutDir=$OutputDir" }
+	exec { msbuild $SolutionFile }
 }
 
 task Archive -depends Build {
@@ -43,6 +44,8 @@ task Archive -depends Build {
 	cp "$SpecsForOutput\SpecsFor.dll" "$ArchiveDir"
 	cp "$SpecsForOutput\StructureMap.AutoMocking.dll" "$ArchiveDir"
 	cp "$SpecsForOutput\StructureMap.dll" "$ArchiveDir"
+	cp "$SpecsForOutput\Should.dll" "$ArchiveDir"
+	cp "$SpecsForOutput\ExpectedObjects.dll" "$ArchiveDir"
 	
 	cp "$BaseDir\Templates" "$ArchiveDir" -Recurse
 	Remove-Item -Force "$ArchiveDir\Templates\.gitignore"
@@ -52,20 +55,7 @@ task Archive -depends Build {
 
 task Pack -depends Build {
 
-	mkdir $NuGetPackDir
-	cp "$NuSpecFileName" "$NuGetPackDir"
-
-	mkdir "$NuGetPackDir\lib"
-	cp "$SpecsForOutput\SpecsFor.dll" "$NuGetPackDir\lib"
-
-	cp "$BaseDir\Templates" "$NuGetPackDir" -Recurse
-	Remove-Item -Force "$NuGetPackDir\Templates\.gitignore"
-	
-	$Spec = [xml](get-content "$NuGetPackDir\$NuSpecFileName")
-	$Spec.package.metadata.version = ([string]$Spec.package.metadata.version).Replace("{Version}",$Version)
-	$Spec.Save("$NuGetPackDir\$NuSpecFileName")
-
-	exec { nuget pack "$NuGetPackDir\$NuSpecFileName" }
+	exec { nuget pack "$ProjectPath" -Version "$Version" }
 }
 
 task Publish -depends Pack {

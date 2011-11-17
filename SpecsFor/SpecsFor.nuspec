@@ -2,7 +2,7 @@
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 		<id>SpecsFor</id>
-		<version>{Version}</version>
+		<version>$version$</version>
 		<authors>Matt Honeycutt</authors>
 		<owners>Matt Honeycutt</owners>
 		<licenseUrl>http://specsfor.codeplex.com/license</licenseUrl>
@@ -10,13 +10,8 @@
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>SpecsFor is another Behavior-Driven Development framework that focuses on ease of use for *developers* by minimizing testing friction.</description>
 		<tags>testing tdd bdd specs</tags>
-		<dependencies>
-			<dependency id="NUnit" version="2.5.10.11092" />
-			<dependency id="Moq" version="4.0.10827" />
-			<dependency id="structuremap" version="2.6.3" />
-			<dependency id="structuremap.automocking" version="2.6.3" />
-			<dependency id="Should" version="1.1.12.0" />
-			<dependency id="ExpectedObjects" version="1.0.0.2" />
-		</dependencies>
 	</metadata>
+	<files>
+		<file src="Tools\**\*.*" target="tools" />
+	</files>
 </package>
