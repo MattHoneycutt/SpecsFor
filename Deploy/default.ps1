@@ -6,7 +6,7 @@ properties {
 	$ArchiveDir = "$BaseDir\Deploy\Archive"
 	
 	#TODO: Once NuGet fully supports semantic versioning, this can go away.
-	$Version = $null
+	$Version = Read-Host -Prompt "Please enter the version number"
 	
 	$NuGetPackageName = "SpecsFor"
 }
@@ -17,9 +17,6 @@ task default -depends Pack,Archive
 
 task Init {
 	cls
-	if ($Version = $null) {
-		$Version = Read-Host -Prompt "Please enter the version number"
-	}
 }
 
 task Clean -depends Init {
