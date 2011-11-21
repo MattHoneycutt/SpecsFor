@@ -1,6 +1,7 @@
 #Deployment files
 Deploy/Package
 Deploy/*.nupkg
+Deploy/Archive
 #ignore thumbnails created by windows
 Thumbs.db
 #Ignore files build by Visual Studio
