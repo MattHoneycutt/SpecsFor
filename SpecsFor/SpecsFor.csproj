@@ -75,7 +75,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShouldExtensions\Looks.cs" />
     <Compile Include="SpecsFor.cs" />
+    <Compile Include="Web\Browser.cs" />
+    <Compile Include="Web\FormHelper.cs" />
     <Compile Include="Web\MvcWebApp.cs" />
+    <Compile Include="Web\SpecsForMvcConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

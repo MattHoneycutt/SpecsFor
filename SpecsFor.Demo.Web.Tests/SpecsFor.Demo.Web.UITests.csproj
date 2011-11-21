@@ -70,7 +70,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblySetup.cs" />
+    <Compile Include="DemoWebAppConfig.cs" />
     <Compile Include="LoginSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -5,33 +5,22 @@ using System.Web.Routing;
 using MvcContrib.TestHelper;
 using MvcContrib.TestHelper.Fakes;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.IE;
 using Microsoft.Web.Mvc;
-using OpenQA.Selenium.Remote;
 
 namespace SpecsFor.Web
 {
-	//TODO: Refactor this so it doesn't inherit directly from IE, but instead
-	//		can work with any browser. 
-	public class MvcWebApp : InternetExplorerDriver
+	public class MvcWebApp : IDisposable
 	{
 		public static string BaseUrl = "http://localhost";
+		public static Func<IWebDriver> BrowserFactory = Web.Browser.InternetExplorer.Factory;
 
-		public MvcWebApp() : base(GetCapabilities())
+		private bool _hasQuit;
+
+		public IWebDriver Browser { get; private set; }
+
+		public MvcWebApp()
 		{
-			
-		}
-
-		private static DesiredCapabilities GetCapabilities()
-		{
-			//This hackiness is needed to work around the way IE is configured at FIS.  I've not encountered any problems *yet*, but 
-			//we might in the future.  Who knows... 
-			var capabilities = new DesiredCapabilities();
-			capabilities.SetCapability(InternetExplorerDriver.IntroduceInstabilityByIgnoringProtectedModeSettings, true);
-
-			return capabilities;
+			Browser = BrowserFactory();
 		}
 
 		public FormHelper<T> FindFormFor<T>()
@@ -43,7 +32,7 @@ namespace SpecsFor.Web
 		{ 
 			get
 			{
-				return FindElement(By.ClassName("validation-summary-errors"));
+				return Browser.FindElement(By.ClassName("validation-summary-errors"));
 			}
 		}
 
@@ -52,7 +41,7 @@ namespace SpecsFor.Web
 			get
 			{
 				//Strip the host, port, etc. off the route.
-				var url = this.Url.Replace(BaseUrl, "~");
+				var url = Browser.Url.Replace(BaseUrl, "~");
 
 				return url.Route();
 			}
@@ -70,47 +59,18 @@ namespace SpecsFor.Web
 
 			var url = helper.BuildUrlFromExpression(action);
 
-			Navigate().GoToUrl(BaseUrl + url);
+			Browser.Navigate().GoToUrl(BaseUrl + url);
 		}
 
-		private bool HasQuit;
-
-		protected override void Dispose(bool disposing)
+		public void Dispose()
 		{
-			if (!HasQuit)
+			if (!_hasQuit)
 			{
-				HasQuit = true;
-				Quit();
+				_hasQuit = true;
+				Browser.Quit();
 			}
 
-			base.Dispose(disposing);
-		}
-	}
-
-	public class FormHelper<T>
-	{
-		private readonly MvcWebApp _webApp;
-
-		public FormHelper(MvcWebApp webApp)
-		{
-			_webApp = webApp;
-		}
-
-		public FormHelper<T> SetFieldValue(Expression<Func<T, object>> property, string value)
-		{
-			var name = ExpressionHelper.GetExpressionText(property);
-
-			var field = _webApp.FindElement(By.Name(name));
-
-			field.SendKeys(value);
-
-			return this;
-		}
-
-		public void Submit()
-		{
-			//TODO: Probably not the best way to find a form...
-			_webApp.FindElement(By.TagName("form")).Submit();
+			Browser.Dispose();
 		}
 	}
 }
