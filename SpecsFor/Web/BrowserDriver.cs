@@ -5,14 +5,14 @@ using OpenQA.Selenium.Remote;
 
 namespace SpecsFor.Web
 {
-	public class Browser
+	public class BrowserDriver
 	{
 		private readonly Func<IWebDriver> _browserFactory;
-		public static readonly Browser InternetExplorer;
+		public static readonly BrowserDriver InternetExplorer;
 
-		static Browser()
+		static BrowserDriver()
 		{
-			InternetExplorer = new Browser(() =>
+			InternetExplorer = new BrowserDriver(() =>
 			                               	{
 			                               		var capabilities = new DesiredCapabilities();
 			                               		capabilities.SetCapability(InternetExplorerDriver.IntroduceInstabilityByIgnoringProtectedModeSettings, true);
@@ -21,12 +21,12 @@ namespace SpecsFor.Web
 			                               	});
 		}
 
-		private Browser(Func<IWebDriver> browserFactory)
+		private BrowserDriver(Func<IWebDriver> browserFactory)
 		{
 			_browserFactory = browserFactory;
 		}
 
-		public IWebDriver Factory()
+		public IWebDriver CreateDriver()
 		{
 			return _browserFactory();
 		}

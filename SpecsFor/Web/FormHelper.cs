@@ -27,7 +27,8 @@ namespace SpecsFor.Web
 
 		public void Submit()
 		{
-			//TODO: Probably not the best way to find a form...
+			//TODO: Probably not the best way to find the target form.  If we have multiple
+			//		forms on a page, this will break down.  I'm open to suggestions.
 			_webApp.Browser.FindElement(By.TagName("form")).Submit();
 		}
 	}

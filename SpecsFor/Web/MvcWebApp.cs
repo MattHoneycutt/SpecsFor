@@ -11,16 +11,22 @@ namespace SpecsFor.Web
 {
 	public class MvcWebApp : IDisposable
 	{
-		public static string BaseUrl = "http://localhost";
-		public static Func<IWebDriver> BrowserFactory = Web.Browser.InternetExplorer.Factory;
+		public static string BaseUrl { get; set; }
+		public static BrowserDriver Driver { get; set; }
 
 		private bool _hasQuit;
 
 		public IWebDriver Browser { get; private set; }
 
+		static MvcWebApp()
+		{
+			BaseUrl = "http://localhost";
+			Driver = BrowserDriver.InternetExplorer;
+		}
+
 		public MvcWebApp()
 		{
-			Browser = BrowserFactory();
+			Browser = Driver.CreateDriver();
 		}
 
 		public FormHelper<T> FindFormFor<T>()
@@ -40,17 +46,12 @@ namespace SpecsFor.Web
 		{
 			get
 			{
-				//Strip the host, port, etc. off the route.
+				//Strip the host, port, etc. off the route.  The routing helpers
+				//expect the URL to look like "~/virtual/path"
 				var url = Browser.Url.Replace(BaseUrl, "~");
 
 				return url.Route();
 			}
-		}
-
-		private class FakeViewDataContainer : IViewDataContainer
-		{
-			private ViewDataDictionary _viewData = new ViewDataDictionary();
-			public ViewDataDictionary ViewData { get { return _viewData; } set { _viewData = value; } }
 		}
 
 		public void NavigateTo<TController>(Expression<Action<TController>> action) where TController : Controller
@@ -64,6 +65,8 @@ namespace SpecsFor.Web
 
 		public void Dispose()
 		{
+			//Not all of the web drivers have implemented IDisposable correctly.  Some will dispose
+			//but won't actually exit.  This wrapper fixes that inconsistent behavior. 
 			if (!_hasQuit)
 			{
 				_hasQuit = true;

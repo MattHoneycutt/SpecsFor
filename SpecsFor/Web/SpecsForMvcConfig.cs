@@ -10,9 +10,9 @@ namespace SpecsFor.Web
 		private string _pathForIISExpress;
 		private Process _iisProcess;
 
-		protected void UseBrowser(Browser browser)
+		protected void UseBrowser(BrowserDriver driver)
 		{
-			MvcWebApp.BrowserFactory = browser.Factory;
+			MvcWebApp.Driver = driver.CreateDriver;
 		}
 
 		protected void BuildRoutesUsing(Action<RouteCollection> configAction)

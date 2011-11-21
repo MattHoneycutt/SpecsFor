@@ -10,7 +10,7 @@ namespace SpecsFor.Demo.Web.UITests
 		{
 			UseIISExpressWith(Project("SpecsFor.Demo.Web"));
 			BuildRoutesUsing(r => MvcApplication.RegisterRoutes(r));
-			UseBrowser(Browser.InternetExplorer);
+			UseBrowser(BrowserDriver.InternetExplorer);
 
 			//TODO: Open questions to be answered:
 			//1) How do we point the app at a database for testing?
