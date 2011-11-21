@@ -12,7 +12,7 @@ namespace SpecsFor.Web
 
 		protected void UseBrowser(BrowserDriver driver)
 		{
-			MvcWebApp.Driver = driver.CreateDriver;
+			MvcWebApp.Driver = driver;
 		}
 
 		protected void BuildRoutesUsing(Action<RouteCollection> configAction)
@@ -54,7 +54,14 @@ namespace SpecsFor.Web
 			                   	? startInfo.EnvironmentVariables["programfiles(x86)"]
 			                   	: startInfo.EnvironmentVariables["programfiles"];
 
-			startInfo.FileName = programfiles + "\\IIS Express\\iisexpress.exe";
+			var iisExpress = programfiles + "\\IIS Express\\iisexpress.exe";
+
+			if (!File.Exists(iisExpress))
+			{
+				throw new FileNotFoundException(string.Format("Did not find iisexpress.exe at {0}. Ensure that IIS Express is installed to the default location.", iisExpress));
+			}
+
+			startInfo.FileName = iisExpress;
 
 			_iisProcess = new Process { StartInfo = startInfo };
 			_iisProcess.Start();
