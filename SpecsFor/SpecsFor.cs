@@ -69,10 +69,17 @@ namespace SpecsFor
 		{
 		}
 
-		[TearDown]
+		[TestFixtureTearDown]
 		public virtual void TearDown()
 		{
 			AfterEachSpec();
+
+			var disposable = SUT as IDisposable;
+
+			if (disposable != null)
+			{
+				disposable.Dispose();
+			}
 		}
 
 		protected virtual void Given()

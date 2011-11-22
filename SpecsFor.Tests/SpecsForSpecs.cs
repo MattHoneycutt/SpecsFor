@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using Should;
 
 namespace SpecsFor.Tests
@@ -51,6 +52,26 @@ namespace SpecsFor.Tests
 			public void then_the_given_should_still_only_be_executed_once()
 			{
 				_givenCount.ShouldEqual(1);
+			}
+		}
+		
+		public class when_tearing_down_after_a_test_given_SUT_implements_IDisposable : SpecsFor<IDisposable>
+		{
+			protected override void InitializeClassUnderTest()
+			{
+				SUT = GetMockFor<IDisposable>().Object;
+			}
+
+			protected override void When()
+			{
+				TearDown();
+			}
+
+			[Test]
+			public void then_it_should_call_Dispose()
+			{
+				GetMockFor<IDisposable>()
+					.Verify(d => d.Dispose());
 			}
 		}
 	}
