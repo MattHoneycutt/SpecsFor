@@ -1,4 +1,4 @@
-namespace SpecsFor.Tests.TestObjects
+namespace SpecsFor.Demo.Domain
 {
 	public class Car
 	{

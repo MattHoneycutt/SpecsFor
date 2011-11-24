@@ -61,9 +61,26 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CarSpecs.cs" />
+    <Compile Include="BDD.Inheritance\OrderProcessorSpecs.cs" />
+    <Compile Include="BDD.Composition\ValidatingOrderProcessorSpecs.cs" />
+    <Compile Include="BDD.Attributes\ValidatingOrderProcessorSpecs.cs" />
+    <Compile Include="Domain\IInventory.cs" />
+    <Compile Include="Domain\Invoice.cs" />
+    <Compile Include="Domain\InvoiceProcessor.cs" />
+    <Compile Include="Domain\InvoiceSubmissionResult.cs" />
+    <Compile Include="Domain\InvoiceSubmittedEvent.cs" />
+    <Compile Include="Domain\IPublisher.cs" />
+    <Compile Include="Domain\IValidator.cs" />
+    <Compile Include="Domain\OrderProcessor.cs" />
+    <Compile Include="Domain\OrderResult.cs" />
+    <Compile Include="Domain\OrderSubmitted.cs" />
+    <Compile Include="Domain\ValidatingOrderProcessor.cs" />
+    <Compile Include="OldSchoolTests\OrderProcessorSpecs.cs" />
+    <Compile Include="Domain\Order.cs" />
+    <Compile Include="PlainBDD\OrderProcessorSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestObjects\Car.cs" />
+    <Compile Include="Domain\Car.cs" />
+    <Compile Include="ShouldExtensions\InvoiceProcessorSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
