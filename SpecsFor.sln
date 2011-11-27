@@ -13,9 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resharper Templates", "Resh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsFor.Demo", "SpecsFor.Demo\SpecsFor.Demo.csproj", "{995CD0A1-83EB-4C62-9865-A99B346D1EB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsFor.Mvc.Demo", "SpecsFor.Demo.Web\SpecsFor.Mvc.Demo.csproj", "{026E903E-2381-49BE-A252-0AB5955CF7AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsFor.Mvc.Demo", "SpecsFor.Mvc.Demo\SpecsFor.Mvc.Demo.csproj", "{026E903E-2381-49BE-A252-0AB5955CF7AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsFor.Mvc.Demo.AcceptanceTests", "SpecsFor.Demo.Web.Tests\SpecsFor.Mvc.Demo.AcceptanceTests.csproj", "{33E0F03F-B72C-439A-86DE-740839973529}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsFor.Mvc.Demo.AcceptanceTests", "SpecsFor.Mvc.Demo.AcceptanceTests\SpecsFor.Mvc.Demo.AcceptanceTests.csproj", "{33E0F03F-B72C-439A-86DE-740839973529}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsFor.Mvc", "SpecsFor.Mvc\SpecsFor.Mvc.csproj", "{0B88D196-CA69-44CC-8F4E-E66FC6874C78}"
 EndProject

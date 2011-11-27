@@ -63,7 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SpecsFor.Demo.Web\SpecsFor.Mvc.Demo.csproj">
+    <ProjectReference Include="..\SpecsFor.Mvc.Demo\SpecsFor.Mvc.Demo.csproj">
       <Project>{026E903E-2381-49BE-A252-0AB5955CF7AB}</Project>
       <Name>SpecsFor.Mvc.Demo</Name>
     </ProjectReference>

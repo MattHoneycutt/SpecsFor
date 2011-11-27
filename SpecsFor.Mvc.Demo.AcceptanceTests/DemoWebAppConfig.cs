@@ -7,7 +7,7 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 	{
 		public DemoWebAppConfig()
 		{
-			UseIISExpressWith(Project("SpecsFor.Demo.Web"));
+			UseIISExpressWith(Project("SpecsFor.Mvc.Demo"));
 			BuildRoutesUsing(r => MvcApplication.RegisterRoutes(r));
 			UseBrowser(BrowserDriver.InternetExplorer);
 
