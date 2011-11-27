@@ -9,53 +9,15 @@ properties {
 	$Version = Read-Host -Prompt "Please enter the version number"
 	
 	$NuGetPackageName = "SpecsFor.Mvc"
+	$ZipFiles =  @("$SpecsForOutput\Ionic.Zip.dll", 
+		"$SpecsForOutput\Microsoft.Web.Mvc.dll",
+		"$SpecsForOutput\MvcContrib.TestHelper.dll",
+		"$SpecsForOutput\Newtonsoft.Json.dll",
+		"$SpecsForOutput\Rhino.Mocks.dll",
+		"$SpecsForOutput\SpecsFor.Mvc.dll",
+		"$SpecsForOutput\SpecsFor.Mvc.pdb",
+		"$SpecsForOutput\WebDriver.dll")
+	$ZipName = "SpecsFor.Mvc.zip"
 }
 
-$framework = '4.0'
-
-task default -depends Pack,Archive
-
-task Init {
-	cls
-}
-
-task Clean -depends Init {
-	
-	if (Test-Path $ArchiveDir) {
-		ri $ArchiveDir -Recurse
-	}
-	
-	ri SpecsFor.*.nupkg
-	ri specsfor*.zip -ea SilentlyContinue
-}
-
-task Build -depends Init,Clean {
-	exec { msbuild $SolutionFile }
-}
-
-task Archive -depends Build {
-	mkdir $ArchiveDir
-	
-	cp "$SpecsForOutput\Ionic.Zip.dll" "$ArchiveDir"
-	cp "$SpecsForOutput\Microsoft.Web.Mvc.dll" "$ArchiveDir"
-	cp "$SpecsForOutput\MvcContrib.TestHelper.dll" "$ArchiveDir"
-	cp "$SpecsForOutput\Newtonsoft.Json.dll" "$ArchiveDir"
-	cp "$SpecsForOutput\Rhino.Mocks.dll" "$ArchiveDir"
-	cp "$SpecsForOutput\SpecsFor.Mvc.dll" "$ArchiveDir"
-	cp "$SpecsForOutput\SpecsFor.Mvc.pdb" "$ArchiveDir"
-	cp "$SpecsForOutput\WebDriver.dll" "$ArchiveDir"
-	
-	Write-Zip -Path "$ArchiveDir\*" -OutputPath "SpecsFor.Mvc.zip"
-}
-
-task Pack -depends Build {
-
-	exec { nuget pack "$ProjectPath" -Version "$Version" }
-}
-
-task Publish -depends Pack {
-	$PackageName = gci *.nupkg
-	#We don't care if deleting fails..
-	nuget delete $NuGetPackageName $Version -NoPrompt
-	exec { nuget push $PackageName }
-}
+. .\common.ps1
