@@ -10,7 +10,8 @@ if ((Get-Module pscx) -eq $null) {
 	$loadedPscx = $true;
 }
 
-invoke-psake -taskList Publish,Archive
+invoke-psake SpecsFor.ps1 -taskList Pack,Archive
+invoke-psake SpecsFor.Mvc.ps1 -taskList Pack,Archive
 
 if ($loadedPscx) { 
 	remove-module pscx

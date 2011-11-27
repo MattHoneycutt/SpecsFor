@@ -26,7 +26,7 @@ task Clean -depends Init {
 	}
 	
 	ri SpecsFor.*.nupkg
-	ri specsfor.zip -ea SilentlyContinue
+	ri specsfor*.zip -ea SilentlyContinue
 }
 
 task Build -depends Init,Clean {
