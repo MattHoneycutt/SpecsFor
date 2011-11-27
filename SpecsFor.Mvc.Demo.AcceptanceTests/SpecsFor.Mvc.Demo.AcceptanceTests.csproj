@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="DemoWebAppConfig.cs" />
     <Compile Include="LoginSpecs.cs" />
+    <Compile Include="LoginSpecsWithoutSpecsForMvc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
