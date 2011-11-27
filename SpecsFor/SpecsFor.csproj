@@ -33,8 +33,6 @@
   <ItemGroup>
     <Reference Include="ExpectedObjects">
       <HintPath>..\packages\ExpectedObjects.1.0.0.2\lib\ExpectedObjects.dll</HintPath>
-    <Reference Include="Ionic.Zip">
-      <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -54,9 +52,6 @@
       <HintPath>..\packages\structuremap.automocking.2.6.3\lib\StructureMap.AutoMocking.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GivenAttribute.cs" />

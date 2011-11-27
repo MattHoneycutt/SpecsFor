@@ -72,20 +72,15 @@ namespace SpecsFor
 		[TestFixtureTearDown]
 		public virtual void TearDown()
 		{
-			Console.WriteLine("Cleaning up specs.");
-
 			try
 			{
 				AfterEachSpec();
 			}
 			finally
 			{
-				Console.WriteLine("Checking for IDisposable...");
 				if (SUT != null && SUT is IDisposable)
 				{
-					Console.WriteLine("Disposing.");
 					((IDisposable)SUT).Dispose();
-					Console.WriteLine("Done!");
 				}				
 			}
 		}
