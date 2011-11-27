@@ -1,11 +1,10 @@
 ﻿using NUnit.Framework;
-using SpecsFor.Demo.Web.Controllers;
-using SpecsFor.Demo.Web.Models;
-using SpecsFor.Mvc;
 using Should;
 using MvcContrib.TestHelper;
+using SpecsFor.Mvc.Demo.Controllers;
+using SpecsFor.Mvc.Demo.Models;
 
-namespace SpecsFor.Demo.Web.UITests
+namespace SpecsFor.Mvc.Demo.AcceptanceTests
 {
 	public class LoginSpecs
 	{

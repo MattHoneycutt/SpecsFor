@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Web.Mvc;
 using System.Web.Security;
-using SpecsFor.Demo.Web.Models;
+using SpecsFor.Mvc.Demo.Models;
 
-namespace SpecsFor.Demo.Web.Controllers
+namespace SpecsFor.Mvc.Demo.Controllers
 {
 	public class AccountController : Controller
 	{

@@ -8,8 +8,8 @@
     <ProjectGuid>{33E0F03F-B72C-439A-86DE-740839973529}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SpecsFor.Demo.Web.UITests</RootNamespace>
-    <AssemblyName>SpecsFor.Demo.Web.UITests</AssemblyName>
+    <RootNamespace>SpecsFor.Mvc.Demo.AcceptanceTests</RootNamespace>
+    <AssemblyName>SpecsFor.Mvc.Demo.AcceptanceTests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -63,9 +63,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SpecsFor.Demo.Web\SpecsFor.Demo.Web.csproj">
+    <ProjectReference Include="..\SpecsFor.Demo.Web\SpecsFor.Mvc.Demo.csproj">
       <Project>{026E903E-2381-49BE-A252-0AB5955CF7AB}</Project>
-      <Name>SpecsFor.Demo.Web</Name>
+      <Name>SpecsFor.Mvc.Demo</Name>
     </ProjectReference>
     <ProjectReference Include="..\SpecsFor.Mvc\SpecsFor.Mvc.csproj">
       <Project>{0B88D196-CA69-44CC-8F4E-E66FC6874C78}</Project>

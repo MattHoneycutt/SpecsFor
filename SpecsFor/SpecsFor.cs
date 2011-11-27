@@ -14,6 +14,14 @@ namespace SpecsFor
 		protected MoqAutoMocker<T> Mocker;
 		protected List<IContext<T>> Contexts = new List<IContext<T>>();
 
+		private void TryDisposeSUT()
+		{
+			if (SUT != null && SUT is IDisposable)
+			{
+				((IDisposable)SUT).Dispose();
+			}
+		}
+
 		protected TContextType GetContext<TContextType>() where TContextType : IContext<T>
 		{
 			return (TContextType)Contexts.FirstOrDefault(c => c.GetType() == typeof(TContextType));
@@ -55,9 +63,17 @@ namespace SpecsFor
 
 			InitializeClassUnderTest();
 
-			Given();
+			try
+			{
+				Given();
 
-			When();
+				When();
+			}
+			catch (Exception)
+			{
+				TryDisposeSUT();
+				throw;
+			}
 		}
 
 		protected virtual void InitializeClassUnderTest()
@@ -78,10 +94,7 @@ namespace SpecsFor
 			}
 			finally
 			{
-				if (SUT != null && SUT is IDisposable)
-				{
-					((IDisposable)SUT).Dispose();
-				}				
+				TryDisposeSUT();
 			}
 		}
 

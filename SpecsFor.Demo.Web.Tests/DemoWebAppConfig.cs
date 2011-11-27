@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
-using SpecsFor.Mvc;
 
-namespace SpecsFor.Demo.Web.UITests
+namespace SpecsFor.Mvc.Demo.AcceptanceTests
 {
 	[SetUpFixture]
 	public class DemoWebAppConfig : SpecsForMvcConfig
