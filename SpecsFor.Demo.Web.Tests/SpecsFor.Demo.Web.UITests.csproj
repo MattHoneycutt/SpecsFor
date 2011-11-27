@@ -43,12 +43,6 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.mocks">
-      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.mocks.dll</HintPath>
-    </Reference>
-    <Reference Include="pnunit.framework">
-      <HintPath>..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <HintPath>..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
     </Reference>
@@ -57,16 +51,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="WebDriver">
-      <HintPath>..\packages\Selenium.WebDriver.2.11.0\lib\net40\WebDriver.dll</HintPath>
+      <HintPath>..\packages\Selenium.WebDriver.2.13.0\lib\net40\WebDriver.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +66,10 @@
     <ProjectReference Include="..\SpecsFor.Demo.Web\SpecsFor.Demo.Web.csproj">
       <Project>{026E903E-2381-49BE-A252-0AB5955CF7AB}</Project>
       <Name>SpecsFor.Demo.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpecsFor.Mvc\SpecsFor.Mvc.csproj">
+      <Project>{0B88D196-CA69-44CC-8F4E-E66FC6874C78}</Project>
+      <Name>SpecsFor.Mvc</Name>
     </ProjectReference>
     <ProjectReference Include="..\SpecsFor\SpecsFor.csproj">
       <Project>{72F23E90-DA8D-40DE-B04E-112B93613D04}</Project>

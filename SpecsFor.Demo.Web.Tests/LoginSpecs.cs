@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using SpecsFor.Demo.Web.Controllers;
 using SpecsFor.Demo.Web.Models;
-using SpecsFor.Web;
+using SpecsFor.Mvc;
 using Should;
 using MvcContrib.TestHelper;
 

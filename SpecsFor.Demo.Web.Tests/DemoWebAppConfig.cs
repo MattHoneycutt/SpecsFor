@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using SpecsFor.Web;
+using SpecsFor.Mvc;
 
 namespace SpecsFor.Demo.Web.UITests
 {

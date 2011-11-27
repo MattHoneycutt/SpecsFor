@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsFor.Demo.Web", "SpecsF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsFor.Demo.Web.UITests", "SpecsFor.Demo.Web.Tests\SpecsFor.Demo.Web.UITests.csproj", "{33E0F03F-B72C-439A-86DE-740839973529}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsFor.Mvc", "SpecsFor.Mvc\SpecsFor.Mvc.csproj", "{0B88D196-CA69-44CC-8F4E-E66FC6874C78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{33E0F03F-B72C-439A-86DE-740839973529}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33E0F03F-B72C-439A-86DE-740839973529}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33E0F03F-B72C-439A-86DE-740839973529}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B88D196-CA69-44CC-8F4E-E66FC6874C78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B88D196-CA69-44CC-8F4E-E66FC6874C78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B88D196-CA69-44CC-8F4E-E66FC6874C78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B88D196-CA69-44CC-8F4E-E66FC6874C78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
