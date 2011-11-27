@@ -49,8 +49,8 @@ namespace SpecsFor.Demo.Web.UITests
 			protected override void When()
 			{
 				SUT.FindFormFor<LogOnModel>()
-					.SetFieldValue(m => m.UserName, "mhoneycutt")
-					.SetFieldValue(m => m.Password, "Testing")
+					.SetFieldValue(m => m.UserName, "real@user.com")
+					.SetFieldValue(m => m.Password, "RealPassword")
 					.Submit();
 			}
 

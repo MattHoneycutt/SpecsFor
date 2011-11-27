@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 using System.Web.Security;
 using SpecsFor.Demo.Web.Models;
 
@@ -28,7 +24,8 @@ namespace SpecsFor.Demo.Web.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				if (Membership.ValidateUser(model.UserName, model.Password))
+				//This is a demo app, so instead of depending on SQL Server, just use this mess... for now. 
+				if (model.UserName == "real@user.com" && model.Password == "RealPassword")
 				{
 					FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
 					if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
@@ -75,25 +72,26 @@ namespace SpecsFor.Demo.Web.Controllers
 		[HttpPost]
 		public ActionResult Register(RegisterModel model)
 		{
-			if (ModelState.IsValid)
-			{
-				// Attempt to register the user
-				MembershipCreateStatus createStatus;
-				Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
+			throw new NotImplementedException("Not supported in this demo app.");
+			//if (ModelState.IsValid)
+			//{
+			//    // Attempt to register the user
+			//    MembershipCreateStatus createStatus;
+			//    Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
 
-				if (createStatus == MembershipCreateStatus.Success)
-				{
-					FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
-					return RedirectToAction("Index", "Home");
-				}
-				else
-				{
-					ModelState.AddModelError("", ErrorCodeToString(createStatus));
-				}
-			}
+			//    if (createStatus == MembershipCreateStatus.Success)
+			//    {
+			//        FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
+			//        return RedirectToAction("Index", "Home");
+			//    }
+			//    else
+			//    {
+			//        ModelState.AddModelError("", ErrorCodeToString(createStatus));
+			//    }
+			//}
 
-			// If we got this far, something failed, redisplay form
-			return View(model);
+			//// If we got this far, something failed, redisplay form
+			//return View(model);
 		}
 
 		//
