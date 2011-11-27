@@ -63,7 +63,9 @@
     <Compile Include="SpecsFor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="targets\Microsoft.Application.targets" />
   </ItemGroup>
   <ItemGroup />
