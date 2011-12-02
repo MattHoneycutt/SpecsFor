@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using Moq;
 using NUnit.Framework;
 using Should;
+using System.Linq;
+using SpecsFor.Tests.TestObjects;
 
 namespace SpecsFor.Tests
 {
@@ -72,6 +76,76 @@ namespace SpecsFor.Tests
 			{
 				GetMockFor<IDisposable>()
 					.Verify(d => d.Dispose());
+			}
+		}
+
+		public class when_injecting_into_a_service_that_depends_on_IEnumerable : SpecsFor<ConsumeEnumerableService>
+		{
+			private IEnumerable<IWidget> _testWidgets;
+
+			protected override void ConfigureContainer(StructureMap.IContainer container)
+			{
+				base.ConfigureContainer(container);
+
+				container.Inject(typeof (string), "blah");
+
+				var mocks = GetMockForEnumerable<IWidget>(10);
+
+				var widgets = new IWidget[10];
+
+				for (var i = 0; i < mocks.Length; i++)
+				{
+					var widget = mocks[i];
+					widget.Setup(w => w.Name).Returns("Widget " + i);
+
+					widgets[i] = widget.Object;
+				}
+
+				_testWidgets = widgets;
+			}
+
+			[Test]
+			public void then_it_provides_the_enumerable()
+			{
+				SUT.Widgets.Count().ShouldEqual(_testWidgets.Count());
+			}
+
+			[Test]
+			public void then_expectations_set_up_on_the_mocks_are_preserved()
+			{
+				SUT.Widgets.All(w => w.Name.StartsWith("Widget ")).ShouldBeTrue();
+			}
+	
+			[Test]
+			public void then_I_can_retrieve_the_equivalent_mock_enumerable()
+			{
+				var mocks = GetMockForEnumerable<IWidget>(10);
+
+				var injectedNames = SUT.Widgets.Select(w => w.Name);
+				var mockNames = mocks.Select(m => m.Object.Name);
+
+				mockNames.ShouldEqual(injectedNames);
+			}
+		}
+		
+		public class when_requesting_a_mock_IEnumerable_of_a_different_size_than_originally_requested: SpecsFor<ConsumeEnumerableService>
+		{
+			private InvalidOperationException _exception;
+
+			protected override void ConfigureContainer(StructureMap.IContainer container)
+			{
+				GetMockForEnumerable<IWidget>(10);
+			}
+
+			protected override void When()
+			{
+				_exception = Assert.Throws<InvalidOperationException>(() => GetMockForEnumerable<IWidget>(5));
+			}
+
+			[Test]
+			public void then_it_throws_an_exception()
+			{
+				_exception.ShouldNotBeNull();
 			}
 		}
 	}

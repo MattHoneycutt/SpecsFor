@@ -54,6 +54,34 @@ namespace SpecsFor
 			return Mock.Get(Mocker.Get<TMock>());
 		}
 
+		/// <summary>
+		/// Creates an IEnumerable of mock objects of T, and returns the mock objects
+		/// for configuration.  Calling this method twice with the same 'enumerableSize'
+		/// will return the same set of mocks. 
+		/// </summary>
+		/// <typeparam name="TMock"></typeparam>
+		/// <param name="enumerableSize"></param>
+		/// <returns></returns>
+		protected Mock<TMock>[] GetMockForEnumerable<TMock>(int enumerableSize) where TMock : class
+		{
+			var existingMocks = Mocker.Container.Model.InstancesOf<TMock>().ToArray();
+
+			if (existingMocks.Length > 0)
+			{
+				if (existingMocks.Length != enumerableSize)
+				{
+					throw new InvalidOperationException("An IEnumerable for this type of mock has already been created with size " +
+					                                    existingMocks.Length + ".");
+				}
+
+				return Mocker.Container.GetAllInstances<TMock>().Select(i => Mock.Get<TMock>(i)).ToArray();
+			}
+
+			var mocks = Mocker.CreateMockArrayFor<TMock>(enumerableSize);
+
+			return mocks.Select(m => Mock.Get<TMock>(m)).ToArray();
+		}
+
 		[TestFixtureSetUp]
 		public virtual void SetupEachSpec() 
 		{
