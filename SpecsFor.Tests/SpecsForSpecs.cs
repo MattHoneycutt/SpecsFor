@@ -89,7 +89,7 @@ namespace SpecsFor.Tests
 
 				container.Inject(typeof (string), "blah");
 
-				var mocks = GetMockForEnumerable<IWidget>(10);
+				var mocks = GetMockForEnumerableOf<IWidget>(10);
 
 				var widgets = new IWidget[10];
 
@@ -119,7 +119,7 @@ namespace SpecsFor.Tests
 			[Test]
 			public void then_I_can_retrieve_the_equivalent_mock_enumerable()
 			{
-				var mocks = GetMockForEnumerable<IWidget>(10);
+				var mocks = GetMockForEnumerableOf<IWidget>(10);
 
 				var injectedNames = SUT.Widgets.Select(w => w.Name);
 				var mockNames = mocks.Select(m => m.Object.Name);
@@ -134,12 +134,12 @@ namespace SpecsFor.Tests
 
 			protected override void ConfigureContainer(StructureMap.IContainer container)
 			{
-				GetMockForEnumerable<IWidget>(10);
+				GetMockForEnumerableOf<IWidget>(10);
 			}
 
 			protected override void When()
 			{
-				_exception = Assert.Throws<InvalidOperationException>(() => GetMockForEnumerable<IWidget>(5));
+				_exception = Assert.Throws<InvalidOperationException>(() => GetMockForEnumerableOf<IWidget>(5));
 			}
 
 			[Test]

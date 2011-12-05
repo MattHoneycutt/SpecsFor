@@ -62,7 +62,7 @@ namespace SpecsFor
 		/// <typeparam name="TMock"></typeparam>
 		/// <param name="enumerableSize"></param>
 		/// <returns></returns>
-		protected Mock<TMock>[] GetMockForEnumerable<TMock>(int enumerableSize) where TMock : class
+		protected Mock<TMock>[] GetMockForEnumerableOf<TMock>(int enumerableSize) where TMock : class
 		{
 			var existingMocks = Mocker.Container.Model.InstancesOf<TMock>().ToArray();
 
