@@ -38,7 +38,7 @@ task Archive -depends Build {
 
 task Pack -depends Build {
 
-	exec { nuget pack "$ProjectPath" -Version "$Version" }
+	exec { nuget pack "$ProjectPath" }
 }
 
 task Publish -depends Pack {

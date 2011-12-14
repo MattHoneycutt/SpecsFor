@@ -5,9 +5,6 @@ properties {
 	$ProjectPath = "$BaseDir\SpecsFor\SpecsFor.csproj"	
 	$ArchiveDir = "$BaseDir\Deploy\Archive"
 	
-	#TODO: Once NuGet fully supports semantic versioning, this can go away.
-	$Version = Read-Host -Prompt "Please enter the version number"
-	
 	$NuGetPackageName = "SpecsFor"
 
 	$ZipFiles =  @("$SpecsForOutput\Moq.dll",
