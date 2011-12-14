@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="GivenAttributeSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShouldExtensions\ContainsExtensionsSpecs.cs" />
     <Compile Include="ShouldExtensions\LooksSpecs.cs" />
     <Compile Include="SpecsForSpecs.cs" />
     <Compile Include="TestObjects\ConsumeEnumerableService.cs" />
