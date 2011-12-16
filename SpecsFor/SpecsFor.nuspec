@@ -6,12 +6,13 @@
 		<authors>Matt Honeycutt</authors>
 		<owners>Matt Honeycutt</owners>
 		<licenseUrl>http://specsfor.codeplex.com/license</licenseUrl>
-		<projectUrl>http://specsfor.codeplex.com/</projectUrl>
+		<projectUrl>http://specsfor.com/</projectUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>SpecsFor is another Behavior-Driven Development framework that focuses on ease of use for *developers* by minimizing testing friction.</description>
 		<tags>testing tdd bdd specs</tags>
 	</metadata>
 	<files>
 		<file src="Tools\**\*.*" target="tools" />
+		<file src="Templates\**\*.*" exclude="**\.gitignore" target="Templates" />
 	</files>
 </package>

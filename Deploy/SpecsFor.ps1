@@ -20,6 +20,6 @@ properties {
 . .\common.ps1
 
 function OnArchiving {
-	cp "$BaseDir\Templates" "$ArchiveDir" -Recurse
+	cp "$BaseDir\SpecsFor\Templates" "$ArchiveDir" -Recurse
 	Remove-Item -Force "$ArchiveDir\Templates\.gitignore"
 }
