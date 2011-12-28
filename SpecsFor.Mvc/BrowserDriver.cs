@@ -1,6 +1,7 @@
 using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.IE;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Remote;
 
 namespace SpecsFor.Mvc
@@ -10,6 +11,7 @@ namespace SpecsFor.Mvc
 		private readonly Func<IWebDriver> _browserFactory;
 
 		public static readonly BrowserDriver InternetExplorer;
+		public static readonly BrowserDriver Firefox;
 
 		static BrowserDriver()
 		{
@@ -19,6 +21,13 @@ namespace SpecsFor.Mvc
 			                               		capabilities.SetCapability(InternetExplorerDriver.IntroduceInstabilityByIgnoringProtectedModeSettings, true);
 
 			                               		return new InternetExplorerDriver(capabilities);
+			                               	});
+
+			Firefox = new BrowserDriver(() =>
+			                               	{
+			                               		var capabilities = new DesiredCapabilities();
+
+			                               		return new FirefoxDriver(capabilities);
 			                               	});
 		}
 
