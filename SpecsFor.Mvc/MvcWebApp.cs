@@ -70,7 +70,7 @@ namespace SpecsFor.Mvc
 			if (!_hasQuit)
 			{
 				_hasQuit = true;
-				Browser.Quit();
+				Browser.Close();
 			}
 
 			Browser.Dispose();
