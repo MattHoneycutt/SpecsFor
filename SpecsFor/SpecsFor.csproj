@@ -61,6 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShouldExtensions\ContainsExtensions.cs" />
     <Compile Include="ShouldExtensions\Looks.cs" />
+    <Compile Include="ShouldExtensions\StringExtensions.cs" />
     <Compile Include="SpecsFor.cs" />
   </ItemGroup>
   <ItemGroup>

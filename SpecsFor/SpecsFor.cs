@@ -143,7 +143,12 @@ namespace SpecsFor
 
 		protected void Given<TContext>() where TContext : IContext<T>, new()
 		{
-			Contexts.Add(new TContext());
+			Given(new TContext());
+		}
+
+		protected void Given(IContext<T> context)
+		{
+			Contexts.Add(context);
 		}
 
 		protected void Given(Type[] context)

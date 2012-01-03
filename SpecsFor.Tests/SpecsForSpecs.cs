@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Moq;
 using NUnit.Framework;
 using Should;
@@ -146,6 +147,47 @@ namespace SpecsFor.Tests
 			public void then_it_throws_an_exception()
 			{
 				_exception.ShouldNotBeNull();
+			}
+		}
+
+		public class when_using_parameterized_contexts : SpecsFor<object>
+		{
+			public class NestedContext : IContext<object>
+			{
+				private readonly string _name;
+
+				public NestedContext(string name)
+				{
+					_name = name;
+				}
+
+				public void Initialize(ITestState<object> state)
+				{
+					state.GetMockFor<TextWriter>().Object.Write(_name);
+				}
+			}
+
+			protected override void Given()
+			{
+				Given(new NestedContext("Test1"));
+				Given(new NestedContext("Test2"));
+
+				base.Given();
+			}
+
+			protected override void When()
+			{
+				
+			}
+
+			[Test]
+			public void then_it_calls_both_contexts()
+			{
+				GetMockFor<TextWriter>()
+					.Verify(w => w.Write("Test1"));
+	
+				GetMockFor<TextWriter>()
+					.Verify(w => w.Write("Test2"));
 			}
 		}
 	}
