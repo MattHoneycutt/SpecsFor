@@ -41,6 +41,19 @@ namespace SpecsFor.Tests.ShouldExtensions
 		}
 
 		[Test]
+		public void then_partial_matching_with_an_equivalenet_object_works()
+		{
+			Assert.DoesNotThrow(() =>
+								SUT.ShouldLookLikePartial(new { ID = 1, Name = "Test" }));
+		}
+
+		[Test]
+		public void then_partial_matching_with_an_unequivalenet_object_throws_exception()
+		{
+			Assert.Throws<Exception>(() => SUT.ShouldLookLikePartial(new {ID = 5, Name = "blah"}));
+		}
+
+		[Test]
 		public void moq_will_match_on_an_equivalent_object()
 		{
 			var mock = GetMockFor<ITestService>();
@@ -58,6 +71,26 @@ namespace SpecsFor.Tests.ShouldExtensions
 			mock.Object.DoStuff(new TestObject {ID = 3, Name = "Name"});
 
 			Assert.Throws<MockException>(() => mock.Verify(s => s.DoStuff(Looks.Like(new TestObject {ID = 1, Name = "Not Name"}))));
+		}
+
+		[Test]
+		public void moq_will_match_on_a_partial_object()
+		{
+			var mock = GetMockFor<ITestService>();
+
+			mock.Object.DoStuff(new TestObject {ID = 1, Name = "Test"});
+
+			Assert.DoesNotThrow(() => mock.Verify(s => s.DoStuff(Looks.LikePartialOf<TestObject>(new {ID = 1, Name = "Test"}))));
+		}
+
+		[Test]
+		public void moq_will_not_match_on_a_nonequivalent_partial_object()
+		{
+			var mock = GetMockFor<ITestService>();
+
+			mock.Object.DoStuff(new TestObject {ID = 3, Name = "Name"});
+
+			Assert.Throws<MockException>(() => mock.Verify(s => s.DoStuff(Looks.LikePartialOf<TestObject>(new {ID = 1, Name = "Not Name"}))));
 		}
 	}
 }
