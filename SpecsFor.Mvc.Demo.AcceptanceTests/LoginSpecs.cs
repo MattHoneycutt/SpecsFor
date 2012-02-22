@@ -18,10 +18,8 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 			protected override void When()
 			{
 				SUT.FindFormFor<LogOnModel>()
-					//TODO: Eventually expose a fluent API like:
-					//.ForField(m => m.UserName).TypeText("bad@user.com")
-					.SetFieldValue(m => m.UserName, "bad@user.com")
-					.SetFieldValue(m => m.Password, "BadPass")
+					.Field(m => m.UserName).SetValueTo("bad@user.com")
+					.Field(m => m.Password).SetValueTo("BadPass")
 					.Submit();
 			}
 
@@ -48,8 +46,8 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 			protected override void When()
 			{
 				SUT.FindFormFor<LogOnModel>()
-					.SetFieldValue(m => m.UserName, "real@user.com")
-					.SetFieldValue(m => m.Password, "RealPassword")
+					.Field(m => m.UserName).SetValueTo("real@user.com")
+					.Field(m => m.Password).SetValueTo("RealPassword")
 					.Submit();
 			}
 

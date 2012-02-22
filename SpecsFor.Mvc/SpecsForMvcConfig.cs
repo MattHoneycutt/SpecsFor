@@ -1,91 +1,60 @@
 using System;
-using System.Diagnostics;
-using System.IO;
+using System.Collections.Generic;
 using System.Web.Routing;
 
 namespace SpecsFor.Mvc
 {
-	public abstract class SpecsForMvcConfig
+	public class SpecsForMvcConfig
 	{
-		private string _pathForIISExpress;
-		private Process _iisProcess;
+		public List<ITestRunnerAction> TestRunnerActions { get; private set; }
 
-		protected void UseBrowser(BrowserDriver driver)
+		public SpecsForMvcConfig()
 		{
-			MvcWebApp.Driver = driver;
+			TestRunnerActions = new List<ITestRunnerAction>();
 		}
 
-		protected void BuildRoutesUsing(Action<RouteCollection> configAction)
+		private void AddNewAction(Action action)
 		{
-			configAction(RouteTable.Routes);
+			TestRunnerActions.Add(new BasicTestRunnerAction(action, () => { }));
 		}
 
-		protected string Project(string projectName)
+		public void UseBrowser(BrowserDriver driver)
 		{
-			var directory = new DirectoryInfo(Environment.CurrentDirectory);
-
-			while (directory.GetFiles("*.sln").Length == 0)
-			{
-				directory = directory.Parent;
-			}
-
-			return Path.Combine(directory.FullName, projectName);
-		}
-		
-		protected void UseIISExpressWith(string pathForIISExpress)
-		{
-			_pathForIISExpress = pathForIISExpress;
+			AddNewAction(() => { MvcWebApp.Driver = driver; });
 		}
 
-		private void StartIISExpress()
+		public void BuildRoutesUsing(Action<RouteCollection> configAction)
 		{
-			var portNumber = (new Random()).Next(20000, 50000);
-
-			var startInfo = new ProcessStartInfo
-			                	{
-			                		WindowStyle = ProcessWindowStyle.Normal,
-			                		ErrorDialog = false,
-			                		CreateNoWindow = false,
-			                		UseShellExecute = false,
-			                		Arguments = string.Format("/path:\"{0}\" /port:{1}", _pathForIISExpress, portNumber)
-			                	};
-
-			var programfiles = !string.IsNullOrEmpty(startInfo.EnvironmentVariables["programfiles(x86)"])
-			                   	? startInfo.EnvironmentVariables["programfiles(x86)"]
-			                   	: startInfo.EnvironmentVariables["programfiles"];
-
-			var iisExpress = programfiles + "\\IIS Express\\iisexpress.exe";
-
-			if (!File.Exists(iisExpress))
-			{
-				throw new FileNotFoundException(string.Format("Did not find iisexpress.exe at {0}. Ensure that IIS Express is installed to the default location.", iisExpress));
-			}
-
-			startInfo.FileName = iisExpress;
-
-			_iisProcess = new Process { StartInfo = startInfo };
-			_iisProcess.Start();
-
-			MvcWebApp.BaseUrl = "http://localhost:" + portNumber;
+			AddNewAction(() => configAction(RouteTable.Routes));
 		}
 
-		public virtual void SetupTestRun()
+		public void Use<TConfig>() where TConfig : SpecsForMvcConfig, new()
 		{
-			if (!string.IsNullOrEmpty(_pathForIISExpress))
-			{
-				StartIISExpress();
-			}
+			TestRunnerActions.AddRange(new TConfig().TestRunnerActions);
 		}
 
-		public virtual void TearDownTestRun()
+		public void BeforeEachTest(Action action)
 		{
-			if (_iisProcess != null && !_iisProcess.HasExited)
-			{
-				_iisProcess.CloseMainWindow();
-				_iisProcess.Dispose();
-			}
+			AddNewAction(() => MvcWebApp.AddPreTestCallback(action));
+		}
 
-			//TODO: Any other cleanup?
+		public void InterceptEmailMessages()
+		{
+			TestRunnerActions.Add(new Smtp4DevIntercepterAction());
+		}
+
+		public void AuthenticateBeforeEachTestUsing<TAuth>() where TAuth : IHandleAuthentication, new()
+		{
+			MvcWebApp.Authentication = new TAuth();
+		}
+
+		public IISExpressConfigBuilder UseIISExpress()
+		{
+			var builder = new IISExpressConfigBuilder();
+
+			TestRunnerActions.Add(builder.GetAction());
+
+			return builder;
 		}
 	}
 }

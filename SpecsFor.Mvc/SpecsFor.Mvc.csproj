@@ -34,6 +34,8 @@
     <Reference Include="Ionic.Zip">
       <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build" />
+    <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Web.Mvc">
       <HintPath>..\packages\Mvc3Futures.3.0.20105.0\lib\Microsoft.Web.Mvc.dll</HintPath>
     </Reference>
@@ -50,16 +52,32 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.XML" />
     <Reference Include="WebDriver">
       <HintPath>..\packages\Selenium.WebDriver.2.13.0\lib\net40\WebDriver.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssertionException.cs" />
+    <Compile Include="BasicTestRunnerAction.cs" />
     <Compile Include="BrowserDriver.cs" />
+    <Compile Include="ElementNotFoundException.cs" />
     <Compile Include="FakeViewDataContainer.cs" />
-    <Compile Include="FormHelper.cs" />
+    <Compile Include="FluentDisplay.cs" />
+    <Compile Include="FluentField.cs" />
+    <Compile Include="FluentForm.cs" />
+    <Compile Include="IHandleAuthentication.cs" />
+    <Compile Include="IISExpressConfigBuilder.cs" />
+    <Compile Include="IISExpressProcess.cs" />
+    <Compile Include="IISTestRunnerAction.cs" />
+    <Compile Include="ITestRunnerAction.cs" />
+    <Compile Include="MultipleMatchesException.cs" />
     <Compile Include="MvcWebApp.cs" />
+    <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SeleniumExtensions\WebElementExtensions.cs" />
+    <Compile Include="Smtp4DevIntercepterAction.cs" />
+    <Compile Include="SpecsForIntegrationHost.cs" />
     <Compile Include="SpecsForMvcConfig.cs" />
   </ItemGroup>
   <ItemGroup>

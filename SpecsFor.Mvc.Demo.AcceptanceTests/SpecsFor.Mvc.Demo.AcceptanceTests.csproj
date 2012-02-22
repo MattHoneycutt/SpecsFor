@@ -58,7 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DemoWebAppConfig.cs" />
+    <Compile Include="AssemblyStartup.cs" />
     <Compile Include="LoginSpecs.cs" />
     <Compile Include="LoginSpecsWithoutSpecsForMvc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
