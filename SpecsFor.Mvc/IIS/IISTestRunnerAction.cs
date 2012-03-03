@@ -5,7 +5,7 @@ using Microsoft.Build.Evaluation;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Logging;
 
-namespace SpecsFor.Mvc
+namespace SpecsFor.Mvc.IIS
 {
 	public class IISTestRunnerAction : ITestRunnerAction
 	{

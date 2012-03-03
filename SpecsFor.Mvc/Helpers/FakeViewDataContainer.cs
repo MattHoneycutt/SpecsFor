@@ -1,6 +1,6 @@
 using System.Web.Mvc;
 
-namespace SpecsFor.Mvc
+namespace SpecsFor.Mvc.Helpers
 {
 	internal class FakeViewDataContainer : IViewDataContainer
 	{

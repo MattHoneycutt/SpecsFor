@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Mail;
 using System.Web.Mvc;
 using System.Web.Security;
 using SpecsFor.Mvc.Demo.Models;
@@ -72,7 +73,6 @@ namespace SpecsFor.Mvc.Demo.Controllers
 		[HttpPost]
 		public ActionResult Register(RegisterModel model)
 		{
-			throw new NotImplementedException("Not supported in this demo app.");
 			//if (ModelState.IsValid)
 			//{
 			//    // Attempt to register the user
@@ -92,6 +92,11 @@ namespace SpecsFor.Mvc.Demo.Controllers
 
 			//// If we got this far, something failed, redisplay form
 			//return View(model);
+
+			var client = new SmtpClient();
+			client.Send("registration@specsfor.com", model.Email, "Welcome to SpecsFor!", "This is a test");
+
+			return RedirectToAction("Index", "Home");
 		}
 
 		//

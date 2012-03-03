@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Routing;
+using SpecsFor.Mvc.Authentication;
+using SpecsFor.Mvc.IIS;
+using SpecsFor.Mvc.Smtp;
 
 namespace SpecsFor.Mvc
 {
@@ -38,9 +41,9 @@ namespace SpecsFor.Mvc
 			AddNewAction(() => MvcWebApp.AddPreTestCallback(action));
 		}
 
-		public void InterceptEmailMessages()
+		public void InterceptEmailMessagesOnPort(int portNumber)
 		{
-			TestRunnerActions.Add(new Smtp4DevIntercepterAction());
+			TestRunnerActions.Add(new SmtpIntercepterAction(portNumber));
 		}
 
 		public void AuthenticateBeforeEachTestUsing<TAuth>() where TAuth : IHandleAuthentication, new()

@@ -1,7 +1,7 @@
 using System.IO;
 using System.Linq;
 
-namespace SpecsFor.Mvc
+namespace SpecsFor.Mvc.IIS
 {
 	public class IISExpressConfigBuilder
 	{

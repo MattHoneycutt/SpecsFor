@@ -13,10 +13,12 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 			var config = new SpecsForMvcConfig();
 			config.UseIISExpress()
 				.With(Project.Named("SpecsFor.Mvc.Demo"))
-				.ApplyWebConfigTransformForConfig("Debug");
+				.ApplyWebConfigTransformForConfig("Test");
 
 			config.BuildRoutesUsing(r => MvcApplication.RegisterRoutes(r));
 			config.UseBrowser(BrowserDriver.InternetExplorer);
+
+			config.InterceptEmailMessagesOnPort(13565);
 
 			_host = new SpecsForIntegrationHost(config);
 			_host.Start();

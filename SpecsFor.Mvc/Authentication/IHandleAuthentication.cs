@@ -1,4 +1,4 @@
-namespace SpecsFor.Mvc
+namespace SpecsFor.Mvc.Authentication
 {
 	public interface IHandleAuthentication
 	{

@@ -7,6 +7,9 @@ using MvcContrib.TestHelper;
 using MvcContrib.TestHelper.Fakes;
 using OpenQA.Selenium;
 using Microsoft.Web.Mvc;
+using SpecsFor.Mvc.Authentication;
+using SpecsFor.Mvc.Helpers;
+using SpecsFor.Mvc.Smtp.Mime;
 
 namespace SpecsFor.Mvc
 {
@@ -83,6 +86,9 @@ namespace SpecsFor.Mvc
 				return url.Route();
 			}
 		}
+
+		//TODO: Throw an error if the SMTP interceptor isn't register. 
+		public MailMessageEx[] MailMessages { get; set; }
 
 		public void NavigateTo<TController>(Expression<Action<TController>> action) where TController : Controller
 		{
