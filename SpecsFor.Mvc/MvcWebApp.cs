@@ -17,7 +17,7 @@ namespace SpecsFor.Mvc
 	{
 		//TODO: Move to Service Locator class. 
 
-		public static readonly IList<Action> PreTestCallbacks = new List<Action>();
+		public static readonly IList<Action<MvcWebApp>> PreTestCallbacks = new List<Action<MvcWebApp>>();
 		public static string BaseUrl { get; set; }
 		public static BrowserDriver Driver { get; set; }
 		public static IHandleAuthentication Authentication { get; set; }
@@ -40,7 +40,7 @@ namespace SpecsFor.Mvc
 			{
 				foreach (var callback in PreTestCallbacks)
 				{
-					callback();
+					callback(this);
 				}
 
 				if (Authentication != null)
@@ -88,7 +88,7 @@ namespace SpecsFor.Mvc
 		}
 
 		//TODO: Throw an error if the SMTP interceptor isn't register. 
-		public MailMessageEx[] MailMessages { get; set; }
+		public List<MailMessageEx> MailMessages { get; internal set; }
 
 		public void NavigateTo<TController>(Expression<Action<TController>> action) where TController : Controller
 		{
@@ -113,6 +113,11 @@ namespace SpecsFor.Mvc
 		}
 
 		public static void AddPreTestCallback(Action action)
+		{
+			AddPreTestCallback(_ => action());
+		}
+
+		public static void AddPreTestCallback(Action<MvcWebApp> action)
 		{
 			PreTestCallbacks.Add(action);
 		}

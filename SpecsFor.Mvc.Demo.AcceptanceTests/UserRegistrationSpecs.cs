@@ -37,6 +37,18 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 			{
 				SUT.MailMessages.Count().ShouldEqual(1);
 			}
+
+			[Test]
+			public void then_it_sends_to_the_right_address()
+			{
+				SUT.MailMessages[0].To[0].Address.ShouldEqual("test@user.com");
+			}
+
+			[Test]
+			public void then_it_comes_from_the_expected_address()
+			{
+				SUT.MailMessages[0].From.Address.ShouldEqual("registration@specsfor.com");
+			}
 		}
 	}
 }

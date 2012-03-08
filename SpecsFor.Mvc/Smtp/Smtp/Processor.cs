@@ -2,6 +2,8 @@
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
+using SpecsFor.Mvc.Smtp.Mime;
 
 namespace SpecsFor.Mvc.Smtp.Smtp
 {
@@ -198,18 +200,22 @@ namespace SpecsFor.Mvc.Smtp.Smtp
 
 			try
 			{
-				Stream networkStream = new NetworkStream(connection.Client, false);
-				StreamReader reader = new StreamReader(networkStream);
-				StreamWriter writer = new StreamWriter(file);
-				string line;
+				var lines = new StringBuilder();
 
-				connection.Send("354 Start mail input; end with <CRLF>.<CRLF>").AsyncWaitHandle.WaitOne();
+				using (var networkStream = new NetworkStream(connection.Client, false))
+				using (var reader = new StreamReader(networkStream))
+				{
+					connection.Send("354 Start mail input; end with <CRLF>.<CRLF>").AsyncWaitHandle.WaitOne();
+					string line;
 
-				while ((line = reader.ReadLine()) != ".")
-					writer.WriteLine(line);
+					while ((line = reader.ReadLine()) != ".")
+						lines.AppendLine(line);
+				}
 
-				writer.Close();
-				reader.Close();
+				var mimeReader = new MimeReader(lines.ToString().Replace("\r\n", "\n").Split('\n'));
+				var entity = mimeReader.CreateMimeEntity();
+				var message = entity.ToMailMessageEx();
+				OnMessageReceived(connection, message);
 			}
 			catch(IOException e)
 			{
@@ -218,30 +224,27 @@ namespace SpecsFor.Mvc.Smtp.Smtp
 				return;
 			}
 
-			OnMessageReceived(connection, file);
-
 			connection.Send("250 OK");
 		}
 		#endregion
 
 		#endregion
 
-		//internal static event EventHandler<MessageEventArgs> MessageReceived;
-
-		public static void OnMessageReceived(Connection connection, string file)
+		private static void OnMessageReceived(Connection connection, MailMessageEx message)
 		{
-			//if (MessageReceived != null)
-			//    MessageReceived(connection, new MessageEventArgs(new MessageEntry(file)));
+			if (MessageReceived != null)
+				MessageReceived(connection, new MessageEventArgs(message));
 		}
 
+		public static event EventHandler<MessageEventArgs> MessageReceived;
 	}
 
-	//class MessageEventArgs : EventArgs
-	//{
-	//    public MessageEntry Entry;
-	//    public MessageEventArgs(MessageEntry entry)
-	//    {
-	//        Entry = entry;
-	//    }
-	//}
+	public class MessageEventArgs : EventArgs
+	{
+		public MailMessageEx Entry;
+		public MessageEventArgs(MailMessageEx entry)
+		{
+			Entry = entry;
+		}
+	}
 }
