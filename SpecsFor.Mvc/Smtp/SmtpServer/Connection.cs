@@ -1,9 +1,10 @@
-﻿using System;
+﻿// Borrowed from the Papercut project: papercut.codeplex.com.  
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-namespace SpecsFor.Mvc.Smtp.Smtp
+namespace SpecsFor.Mvc.Smtp.SmtpServer
 {
 	public class Connection
 	{

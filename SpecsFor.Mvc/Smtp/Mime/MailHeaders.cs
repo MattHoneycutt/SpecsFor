@@ -1,3 +1,4 @@
+// Borrowed from the Papercut project: papercut.codeplex.com.  
 namespace SpecsFor.Mvc.Smtp.Mime
 {
 	public static class MailHeaders

@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Borrowed from the Papercut project: papercut.codeplex.com.  
+using System.Collections.Generic;
 
-namespace SpecsFor.Mvc.Smtp.Smtp
+namespace SpecsFor.Mvc.Smtp.SmtpServer
 {
 	public class SmtpSession
 	{

@@ -9,13 +9,15 @@ using OpenQA.Selenium;
 using Microsoft.Web.Mvc;
 using SpecsFor.Mvc.Authentication;
 using SpecsFor.Mvc.Helpers;
-using SpecsFor.Mvc.Smtp.Mime;
 
 namespace SpecsFor.Mvc
 {
+	//NOTE: MvcWebApp has definitely picked up too many responsibilites.  It's in need of 
+	//		refactoring.  The project could probably benefit from a simple IoC container 
+	//		or service locator for handling some of these things. 
 	public class MvcWebApp : IDisposable
 	{
-		//TODO: Move to Service Locator class. 
+		//TODO: Move to Service Locator class?  
 
 		public static readonly IList<Action<MvcWebApp>> PreTestCallbacks = new List<Action<MvcWebApp>>();
 		public static string BaseUrl { get; set; }

@@ -85,13 +85,13 @@
     <Compile Include="Smtp\Mime\MimeReader.cs" />
     <Compile Include="Smtp\Mime\QuotedPrintableEncoding.cs" />
     <Compile Include="Smtp\SmtpIntercepterAction.cs" />
-    <Compile Include="Smtp\Smtp\Connection.cs" />
-    <Compile Include="Smtp\Smtp\Logger.cs" />
-    <Compile Include="Smtp\Smtp\Processor.cs" />
-    <Compile Include="Smtp\Smtp\Server.cs" />
-    <Compile Include="Smtp\Smtp\SmtpClient.cs" />
-    <Compile Include="Smtp\Smtp\SmtpSession.cs" />
-    <Compile Include="Smtp\Smtp\Util.cs" />
+    <Compile Include="Smtp\SmtpServer\Connection.cs" />
+    <Compile Include="Smtp\SmtpServer\Logger.cs" />
+    <Compile Include="Smtp\SmtpServer\Processor.cs" />
+    <Compile Include="Smtp\SmtpServer\Server.cs" />
+    <Compile Include="Smtp\SmtpServer\SmtpClient.cs" />
+    <Compile Include="Smtp\SmtpServer\SmtpSession.cs" />
+    <Compile Include="Smtp\SmtpServer\Util.cs" />
     <Compile Include="SpecsForIntegrationHost.cs" />
     <Compile Include="SpecsForMvcConfig.cs" />
   </ItemGroup>

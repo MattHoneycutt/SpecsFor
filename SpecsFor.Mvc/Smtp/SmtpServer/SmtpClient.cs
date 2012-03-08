@@ -1,7 +1,8 @@
-﻿using System.Net.Mail;
+﻿// Borrowed from the Papercut project: papercut.codeplex.com.  
+using System.Net.Mail;
 using System.Net.Sockets;
 
-namespace SpecsFor.Mvc.Smtp.Smtp
+namespace SpecsFor.Mvc.Smtp.SmtpServer
 {
 	public class SmtpClient : TcpClient
 	{

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using System.Reflection;
+﻿// Borrowed from the Papercut project: papercut.codeplex.com.  
+using System;
 
-namespace SpecsFor.Mvc.Smtp.Smtp
+namespace SpecsFor.Mvc.Smtp.SmtpServer
 {
 	/// <summary>
 	/// Summary description for Logger.

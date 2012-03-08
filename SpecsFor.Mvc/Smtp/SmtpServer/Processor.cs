@@ -1,15 +1,15 @@
-﻿using System;
+﻿// Borrowed from the Papercut project: papercut.codeplex.com.  
+using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using SpecsFor.Mvc.Smtp.Mime;
 
-namespace SpecsFor.Mvc.Smtp.Smtp
+namespace SpecsFor.Mvc.Smtp.SmtpServer
 {
 	public class Processor
 	{
-
 		#region Command Parser
 
 		public static void ProcessCommand(Connection connection, object data)

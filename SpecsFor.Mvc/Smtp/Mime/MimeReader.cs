@@ -1,3 +1,4 @@
+// Borrowed from the Papercut project: papercut.codeplex.com.  
 using System;
 using System.Collections.Generic;
 using System.IO;

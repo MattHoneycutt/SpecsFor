@@ -1,4 +1,5 @@
 using SpecsFor.Mvc.Smtp.Smtp;
+using SpecsFor.Mvc.Smtp.SmtpServer;
 
 namespace SpecsFor.Mvc.Smtp
 {

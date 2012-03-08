@@ -1,3 +1,4 @@
+// Borrowed from the Papercut project: papercut.codeplex.com.  
 using System.Net.Mime;
 
 namespace SpecsFor.Mvc.Smtp.Mime

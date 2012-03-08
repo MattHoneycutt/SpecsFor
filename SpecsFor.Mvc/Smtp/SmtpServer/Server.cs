@@ -1,11 +1,12 @@
-﻿using System;
+﻿// Borrowed from the Papercut project: papercut.codeplex.com.  
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
-namespace SpecsFor.Mvc.Smtp.Smtp
+namespace SpecsFor.Mvc.Smtp.SmtpServer
 {
 	public class Server
 	{
