@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using SpecsFor.Mvc.Smtp.Mime;
 using SpecsFor.Mvc.Smtp.Smtp;
 
 namespace SpecsFor.Mvc.Smtp
@@ -9,7 +6,6 @@ namespace SpecsFor.Mvc.Smtp
 	{
 		private readonly int _portNumber;
 		private Server _server;
-		private MvcWebApp _sut;
 
 		public SmtpIntercepterAction(int portNumber)
 		{
@@ -28,13 +24,12 @@ namespace SpecsFor.Mvc.Smtp
 
 		private void ProcessorOnMessageReceived(object sender, MessageEventArgs e)
 		{
-			_sut.MailMessages.Add(e.Entry);
+			Mailbox.Current.MailMessages.Add(e.Entry);
 		}
 
-		private void PrepareForTest(MvcWebApp sut)
+		private void PrepareForTest()
 		{
-			sut.MailMessages = new List<MailMessageEx>();
-			_sut = sut;
+			Mailbox.Current = new Mailbox();
 		}
 
 		private void StopSmtp4Dev()

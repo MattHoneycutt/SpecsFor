@@ -76,6 +76,7 @@
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeleniumExtensions\WebElementExtensions.cs" />
+    <Compile Include="Smtp\Mailbox.cs" />
     <Compile Include="Smtp\Mime\MailHeaders.cs" />
     <Compile Include="Smtp\Mime\MailMessageEx.cs" />
     <Compile Include="Smtp\Mime\MediaTypes.cs" />

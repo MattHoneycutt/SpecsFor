@@ -4,6 +4,7 @@ using SpecsFor.Mvc.Demo.Controllers;
 using SpecsFor.Mvc.Demo.Models;
 using System.Linq;
 using MvcContrib.TestHelper;
+using SpecsFor.Mvc.Smtp;
 
 namespace SpecsFor.Mvc.Demo.AcceptanceTests
 {
@@ -35,19 +36,19 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 			[Test]
 			public void then_it_sends_the_user_an_email()
 			{
-				SUT.MailMessages.Count().ShouldEqual(1);
+				SUT.Mailbox().MailMessages.Count().ShouldEqual(1);
 			}
 
 			[Test]
 			public void then_it_sends_to_the_right_address()
 			{
-				SUT.MailMessages[0].To[0].Address.ShouldEqual("test@user.com");
+				SUT.Mailbox().MailMessages[0].To[0].Address.ShouldEqual("test@user.com");
 			}
 
 			[Test]
 			public void then_it_comes_from_the_expected_address()
 			{
-				SUT.MailMessages[0].From.Address.ShouldEqual("registration@specsfor.com");
+				SUT.Mailbox().MailMessages[0].From.Address.ShouldEqual("registration@specsfor.com");
 			}
 		}
 	}

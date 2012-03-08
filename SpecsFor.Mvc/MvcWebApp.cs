@@ -87,9 +87,6 @@ namespace SpecsFor.Mvc
 			}
 		}
 
-		//TODO: Throw an error if the SMTP interceptor isn't register. 
-		public List<MailMessageEx> MailMessages { get; internal set; }
-
 		public void NavigateTo<TController>(Expression<Action<TController>> action) where TController : Controller
 		{
 			var helper = new HtmlHelper(new ViewContext { HttpContext = FakeHttpContext.Root() }, new FakeViewDataContainer());
