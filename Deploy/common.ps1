@@ -14,8 +14,8 @@ task Clean -depends Init {
 		ri $ArchiveDir -Recurse
 	}
 	
-	ri SpecsFor.*.nupkg
-	ri specsfor*.zip -ea SilentlyContinue
+	#ri SpecsFor.*.nupkg
+	#ri specsfor*.zip -ea SilentlyContinue
 }
 
 task Build -depends Init,Clean {
@@ -36,13 +36,13 @@ task Archive -depends Build {
 	Write-Zip -Path "$ArchiveDir\*" -OutputPath $ZipName
 }
 
-task Pack -depends Build {
+task Package -depends Build {
 
 	exec { nuget pack "$ProjectPath" }
 }
 
-task Publish -depends Pack {
-	$PackageName = gci *.nupkg
+task Publish -depends Package {
+	$PackageName = gci "$NuGetPackageName.*.nupkg"
 	#We don't care if deleting fails..
 	nuget delete $NuGetPackageName $Version -NoPrompt
 	exec { nuget push $PackageName }
