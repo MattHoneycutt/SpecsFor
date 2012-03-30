@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SpecsFor.Mvc.Demo.Areas.Tasks;
 
 namespace SpecsFor.Mvc.Demo.AcceptanceTests
 {
@@ -16,6 +17,8 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 				.ApplyWebConfigTransformForConfig("Test");
 
 			config.BuildRoutesUsing(r => MvcApplication.RegisterRoutes(r));
+			config.RegisterArea<TasksAreaRegistration>();
+
 			config.UseBrowser(BrowserDriver.InternetExplorer);
 
 			config.InterceptEmailMessagesOnPort(13565);

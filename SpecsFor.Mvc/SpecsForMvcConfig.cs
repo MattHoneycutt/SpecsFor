@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Web.Mvc;
 using System.Web.Routing;
 using SpecsFor.Mvc.Authentication;
 using SpecsFor.Mvc.IIS;
@@ -29,6 +30,15 @@ namespace SpecsFor.Mvc
 		public void BuildRoutesUsing(Action<RouteCollection> configAction)
 		{
 			AddNewAction(() => configAction(RouteTable.Routes));
+		}
+
+		public void RegisterArea<T>() where T : AreaRegistration, new()
+		{
+			AddNewAction(() =>
+			             	{
+								var reg = new T();
+								reg.RegisterArea(new AreaRegistrationContext(reg.AreaName, RouteTable.Routes));
+			             	});
 		}
 
 		public void Use<TConfig>() where TConfig : SpecsForMvcConfig, new()
