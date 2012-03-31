@@ -7,35 +7,35 @@ namespace SpecsFor.Mvc
 {
 	public class FluentField<T,TProp>
 	{
-		private readonly FluentForm<T> _fluentForm;
-		private readonly MvcWebApp _webApp;
-		private readonly IWebElement _field;
+		public FluentForm<T> FluentForm { get; private set; }
+		public MvcWebApp WebApp { get; private set; }
+		public IWebElement Field { get; private set; }
 
 		public FluentField(FluentForm<T> fluentForm, MvcWebApp webApp, Expression<Func<T, TProp>> property)
 		{
-			_fluentForm = fluentForm;
-			_webApp = webApp;
-			_field = webApp.FindElementByExpression(property);
+			FluentForm = fluentForm;
+			WebApp = webApp;
+			Field = webApp.FindElementByExpression(property);
 		}
 
 		public FluentForm<T> ShouldBeInvalid()
 		{
-			var validation = _webApp.Browser.FindElements(By.CssSelector("span.field-validation-error span[htmlfor=\"" + _field.GetAttribute("Name") + "\"]")).SingleOrDefault();
+			var validation = WebApp.Browser.FindElements(By.CssSelector("span.field-validation-error span[htmlfor=\"" + Field.GetAttribute("Name") + "\"]")).SingleOrDefault();
 
 			if (validation == null)
 			{
 				throw new AssertionException("No validation message found.");
 			}
 
-			return _fluentForm;
+			return FluentForm;
 		}
 
 		public FluentForm<T> SetValueTo(string value)
 		{
-			_field.Clear();
-			_field.SendKeys(value);
+			Field.Clear();
+			Field.SendKeys(value);
 
-			return _fluentForm;
+			return FluentForm;
 		}
 	}
 }
