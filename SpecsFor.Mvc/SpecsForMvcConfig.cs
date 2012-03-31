@@ -69,5 +69,10 @@ namespace SpecsFor.Mvc
 
 			return builder;
 		}
+
+		public void UseApplicationAtUrl(string baseUrl)
+		{
+			AddNewAction(() => MvcWebApp.BaseUrl = baseUrl.TrimEnd('/'));
+		}
 	}
 }

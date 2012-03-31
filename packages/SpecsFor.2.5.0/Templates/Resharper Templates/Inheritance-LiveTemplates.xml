@@ -1,0 +1,23 @@
+<TemplatesExport family="Live Templates">
+  <Template uid="c5a9be1b-a5f1-4b8c-8b9b-5b52040de7ce" shortcut="then" description="Creates a spec within a spec fixture. " text="[NUnit.Framework.Test]&#xD;&#xA;public void then_$it_should$()&#xD;&#xA;{&#xD;&#xA;	$END$&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
+    <Context>
+      <CSharpContext context="TypeMember" minimumLanguageVersion="2.0" />
+    </Context>
+    <Categories />
+    <Variables>
+      <Variable name="it_should" expression="" initialRange="0" />
+    </Variables>
+    <CustomProperties />
+  </Template>
+  <Template uid="0c5a2e8f-a73a-4d95-bdcc-3fd55073204a" shortcut="when" description="Creates a spec class (test fixture) within a spec file. " text="public class when_$SPEC$ : given.$the_default_state$&#xD;&#xA;{&#xD;&#xA;	protected override void When()&#xD;&#xA;	{&#xD;&#xA;		$END$&#xD;&#xA;	}&#xD;&#xA;}" reformat="False" shortenQualifiedReferences="True">
+    <Context>
+      <CSharpContext context="TypeMember" minimumLanguageVersion="2.0" />
+    </Context>
+    <Categories />
+    <Variables>
+      <Variable name="SPEC" expression="" initialRange="0" />
+      <Variable name="the_default_state" expression="" initialRange="0" />
+    </Variables>
+    <CustomProperties />
+  </Template>
+</TemplatesExport>

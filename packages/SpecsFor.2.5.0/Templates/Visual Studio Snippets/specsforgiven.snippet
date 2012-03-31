@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>SpecsFor Given</Title>
+      <Shortcut>given</Shortcut>
+      <Description>Generates a SpecsFor given class </Description>
+      <Author>bradygaster</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>given</ID>
+          <ToolTip>Defines the condition under which this Spec is assumed to run</ToolTip>
+          <Default>the_car_is_stopped</Default>
+        </Literal>
+        <Literal>
+          <ID>SUT</ID>
+          <ToolTip>The system under test</ToolTip>
+          <Default>Car</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp">
+        <![CDATA[public class $given$ : IContext<$SUT$>
+{
+	public void Initialize(ITestState<$SUT$> state)
+	{
+		$end$// TODO: add initialization logic to set up the context
+	}
+}]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{995CD0A1-83EB-4C62-9865-A99B346D1EB1}</ProjectGuid>
+    <ProjectGuid>{06F84306-ECBA-4C3C-8676-C54AFCB57A3B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SpecsFor.Demo</RootNamespace>
-    <AssemblyName>SpecsFor.Demo</AssemblyName>
+    <RootNamespace>SpecsFor.Mvc.Specs</RootNamespace>
+    <AssemblyName>SpecsFor.Mvc.Specs</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,13 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ExpectedObjects, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ExpectedObjects">
       <HintPath>..\packages\ExpectedObjects.1.0.0.2\lib\ExpectedObjects.dll</HintPath>
     </Reference>
-    <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+    <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+    <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="nunit.mocks">
@@ -46,45 +46,34 @@
     <Reference Include="pnunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Should, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Should">
       <HintPath>..\packages\Should.1.1.12.0\lib\Should.dll</HintPath>
     </Reference>
-    <Reference Include="SpecsFor, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="SpecsFor">
       <HintPath>..\packages\SpecsFor.2.5.0\lib\net40\SpecsFor.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap, Version=2.6.3.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+    <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap.AutoMocking, Version=2.6.3.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+    <Reference Include="StructureMap.AutoMocking">
       <HintPath>..\packages\structuremap.automocking.2.6.3\lib\StructureMap.AutoMocking.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BDD.Inheritance\OrderProcessorSpecs.cs" />
-    <Compile Include="BDD.Composition\ValidatingOrderProcessorSpecs.cs" />
-    <Compile Include="BDD.Attributes\ValidatingOrderProcessorSpecs.cs" />
-    <Compile Include="Domain\IInventory.cs" />
-    <Compile Include="Domain\Invoice.cs" />
-    <Compile Include="Domain\InvoiceProcessor.cs" />
-    <Compile Include="Domain\InvoiceSubmissionResult.cs" />
-    <Compile Include="Domain\InvoiceSubmittedEvent.cs" />
-    <Compile Include="Domain\IPublisher.cs" />
-    <Compile Include="Domain\IValidator.cs" />
-    <Compile Include="Domain\OrderProcessor.cs" />
-    <Compile Include="Domain\OrderResult.cs" />
-    <Compile Include="Domain\OrderSubmitted.cs" />
-    <Compile Include="Domain\ValidatingOrderProcessor.cs" />
-    <Compile Include="OldSchoolTests\OrderProcessorSpecs.cs" />
-    <Compile Include="Domain\Order.cs" />
-    <Compile Include="PlainBDD\OrderProcessorSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Domain\Car.cs" />
-    <Compile Include="ShouldExtensions\InvoiceProcessorSpecs.cs" />
+    <Compile Include="SpecsForMvcConfigSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SpecsFor.Mvc\SpecsFor.Mvc.csproj">
+      <Project>{0B88D196-CA69-44CC-8F4E-E66FC6874C78}</Project>
+      <Name>SpecsFor.Mvc</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

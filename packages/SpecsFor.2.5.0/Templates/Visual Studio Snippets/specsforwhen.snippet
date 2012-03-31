@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>SpecsFor When</Title>
+			<Shortcut>when</Shortcut>
+			<Description>Generates a SpecsFor when class</Description>
+			<Author>bradygaster</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>given</ID>
+					<ToolTip>Defines the condition under which this Spec is assumed to run</ToolTip>
+					<Default>the_car_is_stopped</Default>
+				</Literal>
+        <Literal>
+          <ID>SUT</ID>
+          <ToolTip>The system under test</ToolTip>
+          <Default>Car</Default>
+        </Literal>
+        <Literal>
+          <ID>expectedResult</ID>
+          <ToolTip>The expected outcome given the condition</ToolTip>
+          <Default>the_engine_can_be_started</Default>
+        </Literal>
+			</Declarations>
+			<Code Language="csharp">
+        <![CDATA[[TestFixture]
+public class when_$given$ : SpecsFor<$SUT$>
+{
+	protected override void When()
+	{
+		// TODO: perform logic using the system under test (SUT) property
+	}
+
+	[Test]
+	public void then_$expectedResult$()
+	{
+		//TODO: write test to make sure everything is as it should be $end$
+	}
+}]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
