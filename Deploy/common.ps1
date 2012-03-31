@@ -14,8 +14,8 @@ task Clean -depends Init {
 		ri $ArchiveDir -Recurse
 	}
 	
-	ri SpecsFor.*.nupkg
-	#ri specsfor*.zip -ea SilentlyContinue
+	ri SpecsFor*.nupkg
+	ri specsfor*.zip -ea SilentlyContinue
 }
 
 task Build -depends Init,Clean {
@@ -36,12 +36,12 @@ task Archive -depends Build {
 	Write-Zip -Path "$ArchiveDir\*" -OutputPath $ZipName
 }
 
-task Package -depends Build {
+task Pack -depends Build {
 
 	exec { nuget pack "$ProjectPath" }
 }
 
-task Publish -depends Package {
+task Publish -depends Pack {
 	$PackageName = gci "$NuGetPackageName.*.nupkg"
 	exec { nuget push $PackageName }
 }

@@ -1,3 +1,7 @@
+param(
+	$PackageName
+)
+
 $loadedPsake = $false;
 if ((Get-Module psake) -eq $null) {
 	import-module .\extensions\psake.psm1
@@ -10,8 +14,7 @@ if ((Get-Module pscx) -eq $null) {
 	$loadedPscx = $true;
 }
 
-invoke-psake SpecsFor.ps1 -taskList Publish,Archive
-invoke-psake SpecsFor.Mvc.ps1 -taskList Publish,Archive
+invoke-psake "$($PackageName).ps1" -taskList Publish,Archive
 
 if ($loadedPscx) { 
 	remove-module pscx
