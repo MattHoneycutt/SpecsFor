@@ -69,7 +69,7 @@ namespace SpecsFor.Demo.BDD.Inheritance
 
 		public class given
 		{
-			public class the_item_is_available : SpecsFor<OrderProcessor>
+			public abstract class the_item_is_available : SpecsFor<OrderProcessor>
 			{
 				protected override void Given()
 				{
