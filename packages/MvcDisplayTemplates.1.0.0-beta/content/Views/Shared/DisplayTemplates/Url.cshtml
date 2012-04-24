@@ -1,0 +1,5 @@
+﻿@model dynamic
+@{
+	Layout = "~/Views/Shared/DisplayTemplates/_Layout.cshtml";	   	
+}
+<a href="@Html.AttributeEncode(Html.ViewContext.ViewData.Model)">@Html.ViewContext.ViewData.TemplateInfo.FormattedModelValue</a>

@@ -1,0 +1,5 @@
+﻿@model string
+@{
+	Layout = "~/Views/Shared/DisplayTemplates/_Layout.cshtml";	   	
+}
+<a href="mailto:@Html.AttributeEncode(Html.ViewContext.ViewData.Model)">@Html.ViewContext.ViewData.TemplateInfo.FormattedModelValue</a>

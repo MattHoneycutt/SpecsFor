@@ -1,0 +1,9 @@
+﻿@using System.Globalization
+@model dynamic
+@{
+	if (Html.ViewContext.ViewData.TemplateInfo.FormattedModelValue == Html.ViewContext.ViewData.ModelMetadata.Model)
+	{
+		Html.ViewContext.ViewData.TemplateInfo.FormattedModelValue = String.Format(CultureInfo.CurrentCulture, "{0:0.00}", Html.ViewContext.ViewData.ModelMetadata.Model);
+	}	
+}
+@Html.Partial("DisplayTemplates/String")

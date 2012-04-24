@@ -1,0 +1,22 @@
+﻿@using System.Globalization
+@model bool
+@{
+	Layout = "~/Views/Shared/DisplayTemplates/_Layout.cshtml";
+
+	bool? value = null;
+	if (Html.ViewContext.ViewData.Model != null)
+	{
+		value = Convert.ToBoolean(Html.ViewContext.ViewData.Model, CultureInfo.InvariantCulture);
+	} 
+}
+@(Html.ViewContext.ViewData.ModelMetadata.IsNullableValueType ? BooleanTemplateDropDownList(value) : BooleanTemplateCheckbox(value ?? false))
+@helper BooleanTemplateDropDownList(bool? value) {
+	<select class="tri-state list-box" disabled="disabled">
+		<option @(value == null ? "selected=\"selected\"" : string.Empty) value="">Not Set</option>
+		<option @(value == false ? "selected=\"selected\"" : string.Empty) value="false">False</option>
+		<option @(value == true ? "selected=\"selected\"" : string.Empty) value="true">True</option>
+	</select>
+}
+@helper BooleanTemplateCheckbox(bool? value) {
+	<input @(value == true ? "checked=\"checked\"" : string.Empty) class="check-box" disabled="disabled" type="checkbox" />
+}

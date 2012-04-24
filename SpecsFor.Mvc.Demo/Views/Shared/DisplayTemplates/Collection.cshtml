@@ -1,0 +1,17 @@
+﻿@model System.Collections.IEnumerable
+@{
+	var index = 0;
+	var prefix = Html.ViewContext.ViewData.TemplateInfo.HtmlFieldPrefix;
+}
+@try
+{
+	foreach (var item in Model)
+	{
+		Html.ViewContext.ViewData.TemplateInfo.HtmlFieldPrefix = prefix + "_" + index++ + "_";
+		@Html.DisplayFor(m => item, null, "")
+	}
+}
+finally
+{
+	Html.ViewContext.ViewData.TemplateInfo.HtmlFieldPrefix = prefix;
+}

@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
-<package >
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <metadata>
-    <id>$id$</id>
-    <version>$version$</version>
-    <title>$title$</title>
+    <id>SpecsFor.Mvc</id>
+    <version>1.2.0</version>
+    <title>SpecsFor.Mvc</title>
 	<authors>Matt Honeycutt</authors>
 	<owners>Matt Honeycutt</owners>
 	<licenseUrl>http://specsfor.codeplex.com/license</licenseUrl>
-	<projectUrl>http://specsfor.codeplex.com/</projectUrl>
+	<projectUrl>http://specsfor.com/</projectUrl>
 	<requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>SpecsFor.Mvc is a stand-alone acceptance testing framework for ASP.NET MVC.  It enables you to write strongly-typed, refactor friendly integration tests using the browser and testing framework of your choice.</description>
 	<tags>testing tdd bdd specs acceptance-tests ui-testing</tags>

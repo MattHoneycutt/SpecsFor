@@ -124,6 +124,7 @@ namespace SpecsFor.Mvc
 		public IWebElement FindElementByExpression<T, TProp>(Expression<Func<T, TProp>> property)
 		{
 			var name = ExpressionHelper.GetExpressionText(property);
+			name = TagBuilder.CreateSanitizedId(name);
 
 			var field = Browser.FindElement(By.Id(name));
 			return field;

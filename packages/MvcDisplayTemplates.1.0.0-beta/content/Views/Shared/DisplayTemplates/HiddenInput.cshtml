@@ -1,0 +1,7 @@
+﻿@model dynamic
+@{
+	Layout = "~/Views/Shared/DisplayTemplates/_Layout.cshtml";	   	
+}
+@if(!Html.ViewContext.ViewData.ModelMetadata.HideSurroundingHtml) { 
+	<text>@ViewData.TemplateInfo.FormattedModelValue</text>
+}

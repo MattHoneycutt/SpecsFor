@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
+using SpecsFor.Mvc.Demo.Models;
 
 namespace SpecsFor.Mvc.Demo.Controllers
 {
@@ -13,7 +15,15 @@ namespace SpecsFor.Mvc.Demo.Controllers
 
 		public ActionResult About()
 		{
-			return View();
+			return View(new AboutViewModel
+			            	{
+			            		DayOfWeek = DateTime.Today.DayOfWeek.ToString(),
+								User = new UserViewModel
+								       	{
+								       		UserName = string.IsNullOrEmpty(HttpContext.User.Identity.Name) ? "Anonymous" : HttpContext.User.Identity.Name
+								       	},
+								BusinessDays = new[] { "Monday", "Wednesday", "Friday", "Saturday"}
+			            	});
 		}
 	}
 }
