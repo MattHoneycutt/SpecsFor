@@ -23,6 +23,8 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 
 			config.InterceptEmailMessagesOnPort(13565);
 
+			config.AuthenticateBeforeEachTestUsing<StandardAuthenticator>();
+
 			_host = new SpecsForIntegrationHost(config);
 			_host.Start();
 		}

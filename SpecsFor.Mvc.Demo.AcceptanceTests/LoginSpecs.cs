@@ -12,6 +12,9 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 		{
 			protected override void Given()
 			{
+				//Make sure we're already logged out
+				SUT.NavigateTo<AccountController>(c => c.LogOff());
+
 				SUT.NavigateTo<AccountController>(c => c.LogOn());
 			}
 

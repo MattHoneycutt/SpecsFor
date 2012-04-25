@@ -64,6 +64,7 @@
     <Compile Include="LoginSpecs.cs" />
     <Compile Include="LoginSpecsWithoutSpecsForMvc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StandardAuthenticator.cs" />
     <Compile Include="TaskAreaSpecs.cs" />
     <Compile Include="UserRegistrationSpecs.cs" />
   </ItemGroup>
