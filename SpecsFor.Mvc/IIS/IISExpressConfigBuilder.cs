@@ -19,8 +19,16 @@ namespace SpecsFor.Mvc.IIS
 
 		public IISExpressConfigBuilder With(string pathToProject)
 		{
-			var projectFile = new DirectoryInfo(pathToProject).EnumerateFiles("*.csproj").Single().FullName;
-			_action.ProjectPath = projectFile;
+			var projectDirectory = new DirectoryInfo(pathToProject);
+			var projectFile = projectDirectory.EnumerateFiles("*.csproj").SingleOrDefault() ??
+			                  projectDirectory.EnumerateFiles("*.vbproj").SingleOrDefault();
+
+			if (projectFile == null)
+			{
+				throw new FileNotFoundException("No C# or VB.NET projects were found in " + projectDirectory.FullName);
+			}
+
+			_action.ProjectPath = projectFile.FullName;
 			return this;
 		}
 

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <metadata>
-    <id>SpecsFor.Mvc</id>
-    <version>1.2.0</version>
-    <title>SpecsFor.Mvc</title>
+	<id>$id$</id>
+	<version>$version$</version>
+	<title>$title$</title>
 	<authors>Matt Honeycutt</authors>
 	<owners>Matt Honeycutt</owners>
 	<licenseUrl>http://specsfor.codeplex.com/license</licenseUrl>
