@@ -32,6 +32,12 @@ namespace SpecsFor.Mvc.IIS
 			return this;
 		}
 
+		public IISExpressConfigBuilder Platform(string platform)
+		{
+			_action.Platform = platform;
+			return this;
+		}
+
 		public IISExpressConfigBuilder ApplyWebConfigTransformForConfig(string configuration)
 		{
 			_action.Configuration = configuration;

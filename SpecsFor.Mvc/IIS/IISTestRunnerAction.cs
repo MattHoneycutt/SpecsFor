@@ -16,6 +16,8 @@ namespace SpecsFor.Mvc.IIS
 
 		public string Configuration { get; set; }
 
+		public string Platform { get; set; }
+
 		private void StartIISExpress()
 		{
 			_iisExpressProcess = new IISExpressProcess(_publishDir);
@@ -52,7 +54,6 @@ namespace SpecsFor.Mvc.IIS
 					File.Delete(logFile);
 				}
 			}
-
 		}
 
 		public void Startup()
@@ -66,7 +67,10 @@ namespace SpecsFor.Mvc.IIS
 									{"DeployOnBuild", "true"},
 									{"DeployTarget", "Package"},
 									{"_PackageTempDir", _publishDir},
-									{"AutoParameterizationWebConfigConnectionStrings", "false"}
+									{"AutoParameterizationWebConfigConnectionStrings", "false"},
+									{"Platform", Platform ?? "AnyCPU" },
+									//Needed for Post-Build events that reference the SolutionDir macro/property.  
+									{"SolutionDir", Directory.GetParent(Path.GetDirectoryName(ProjectPath)).FullName + @"\"}
 			                 	};
 
 			if (!string.IsNullOrEmpty(Configuration))
