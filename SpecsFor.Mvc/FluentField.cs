@@ -20,7 +20,7 @@ namespace SpecsFor.Mvc
 
 		public FluentForm<T> ShouldBeInvalid()
 		{
-			var validation = WebApp.Browser.FindElements(By.CssSelector("span.field-validation-error span[htmlfor=\"" + Field.GetAttribute("Name") + "\"]")).SingleOrDefault();
+			var validation = WebApp.Browser.FindElements(By.CssSelector("span.field-validation-error[data-valmsg-for=\"" + Field.GetAttribute("Name") + "\"]")).SingleOrDefault();
 
 			if (validation == null)
 			{
