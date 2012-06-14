@@ -13,6 +13,7 @@ namespace SpecsFor.Mvc.Demo.Controllers
 			return View();
 		}
 
+		[Authorize]
 		public ActionResult About()
 		{
 			return View(new AboutViewModel
