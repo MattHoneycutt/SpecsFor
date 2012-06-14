@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -26,6 +27,7 @@ namespace SpecsFor.Mvc
 		public static string BaseUrl { get; set; }
 		public static BrowserDriver Driver { get; set; }
 		public static IHandleAuthentication Authentication { get; set; }
+		public static TimeSpan Delay { get; set; }
 
 		private bool _hasQuit;
 
@@ -117,6 +119,19 @@ namespace SpecsFor.Mvc
 			var url = helper.BuildUrlFromExpression(action);
 
 			Browser.Navigate().GoToUrl(BaseUrl + url);
+		}
+		
+		internal void Pause()
+		{
+			//Not all of the web drivers have implemented IDisposable correctly.  Some will dispose
+			//but won't actually exit.  This wrapper fixes that inconsistent behavior. 
+			if (!_hasQuit)
+				if (Delay != default(TimeSpan))
+				{
+					_hasQuit = true;
+					Browser.Close();
+					Thread.Sleep(Delay);
+				}
 		}
 
 		public void Dispose()

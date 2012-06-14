@@ -74,5 +74,10 @@ namespace SpecsFor.Mvc
 		{
 			AddNewAction(() => MvcWebApp.BaseUrl = baseUrl.TrimEnd('/'));
 		}
+
+		public void PostOperationDelay(TimeSpan delay)
+		{
+			AddNewAction(() => MvcWebApp.Delay = delay);
+		}
 	}
 }

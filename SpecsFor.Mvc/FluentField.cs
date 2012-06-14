@@ -35,6 +35,8 @@ namespace SpecsFor.Mvc
 			Field.Clear();
 			Field.SendKeys(value);
 
+			WebApp.Pause();
+
 			return FluentForm;
 		}
 	}

@@ -36,6 +36,8 @@ namespace SpecsFor.Mvc
 			{				
 				forms.Single().Submit();
 			}
+
+			_webApp.Pause();
 		}
 	}
 }
