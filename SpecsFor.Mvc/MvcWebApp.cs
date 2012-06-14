@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq.Expressions;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using MvcContrib.TestHelper;
@@ -9,6 +11,7 @@ using OpenQA.Selenium;
 using Microsoft.Web.Mvc;
 using SpecsFor.Mvc.Authentication;
 using SpecsFor.Mvc.Helpers;
+using System.Linq;
 
 namespace SpecsFor.Mvc
 {
@@ -85,7 +88,25 @@ namespace SpecsFor.Mvc
 				//expect the URL to look like "~/virtual/path"
 				var url = Browser.Url.Replace(BaseUrl, "~");
 
-				return url.Route();
+				var queryStringParams = new NameValueCollection();
+
+				//Parse out the query string params. 
+				if (url.Contains("?"))
+				{
+					var parts = url.Split('?');
+					url = parts[0];
+
+					foreach (var pair in parts[1].Split('&')
+						.Select(v => v.Split('='))
+						.Select(a => new KeyValuePair<string, string>(a[0], a[1])))
+					{
+						queryStringParams.Add(pair.Key, pair.Value);
+					}
+				}
+				
+				var context = new FakeHttpContext(url, null, null, queryStringParams, null, null);
+
+				return RouteTable.Routes.GetRouteData(context);
 			}
 		}
 
