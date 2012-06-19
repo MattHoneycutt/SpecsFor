@@ -1,3 +1,10 @@
 ﻿@using Microsoft.Web.Mvc
 @model dynamic
+@if (HttpContext.Current.IsDebuggingEnabled)
+{ // wrap elements with an id for SpecsFor.MVC testing
 <span id="@Html.IdForModel()">@RenderBody()</span>
+}
+else
+{
+@RenderBody()
+}
