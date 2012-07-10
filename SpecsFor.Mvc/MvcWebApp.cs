@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq.Expressions;
 using System.Threading;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using MvcContrib.TestHelper;
 using MvcContrib.TestHelper.Fakes;
 using OpenQA.Selenium;
 using Microsoft.Web.Mvc;
@@ -120,18 +118,26 @@ namespace SpecsFor.Mvc
 
 			Browser.Navigate().GoToUrl(BaseUrl + url);
 		}
-		
+
+		public IWebElement FindLinkTo<TController>(Expression<Action<TController>> action) where TController : Controller
+		{
+			var helper = new HtmlHelper(new ViewContext { HttpContext = FakeHttpContext.Root() }, new FakeViewDataContainer());
+
+			var url = helper.BuildUrlFromExpression(action);
+
+			var element = Browser.FindElement(By.CssSelector("a[href='" + url + "']"));
+
+			return element;
+		}
+
 		internal void Pause()
 		{
-			//Not all of the web drivers have implemented IDisposable correctly.  Some will dispose
-			//but won't actually exit.  This wrapper fixes that inconsistent behavior. 
-			if (!_hasQuit)
-				if (Delay != default(TimeSpan))
-				{
-					_hasQuit = true;
-					Browser.Close();
-					Thread.Sleep(Delay);
-				}
+			if (Delay != default(TimeSpan))
+			{
+				_hasQuit = true;
+				Browser.Close();
+				Thread.Sleep(Delay);
+			}
 		}
 
 		public void Dispose()
