@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Moq;
 using NUnit.Framework;
+using SpecsFor.Configuration;
 using StructureMap;
 using StructureMap.AutoMocking;
 
@@ -22,6 +23,7 @@ namespace SpecsFor
 			}
 		}
 
+		//TODO: Obsolete this as well.
 		protected TContextType GetContext<TContextType>() where TContextType : IContext<T>
 		{
 			return (TContextType)Contexts.FirstOrDefault(c => c.GetType() == typeof(TContextType));
@@ -37,6 +39,7 @@ namespace SpecsFor
 			
 		}
 
+		//And make this obsolete.
 		protected SpecsFor(Type[] contexts)
 		{
 			Given(contexts);
@@ -93,7 +96,10 @@ namespace SpecsFor
 
 			try
 			{
+				//TODO: Do the standard Given stuff (such as applying Given<T> context) outside of the base Given.
 				Given();
+
+				SpecsForBehaviors.ApplyBehaviorsFor(this);
 
 				When();
 			}
@@ -136,6 +142,7 @@ namespace SpecsFor
 
 		}
 
+		//TODO: Obsolete this and add a replacement. 
 		protected virtual void AfterEachSpec()
 		{
 			
