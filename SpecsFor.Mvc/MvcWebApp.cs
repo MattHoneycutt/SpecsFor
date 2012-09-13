@@ -148,6 +148,7 @@ namespace SpecsFor.Mvc
 			{
 				_hasQuit = true;
 				Browser.Close();
+				Browser.Quit();
 			}
 
 			Browser.Dispose();

@@ -13,10 +13,8 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 		[Test]
 		public void when_logging_in_with_an_invalid_username_and_password()
 		{
-			var capabilities = new DesiredCapabilities();
-			capabilities.SetCapability(InternetExplorerDriver.IntroduceInstabilityByIgnoringProtectedModeSettings, true);
-
-			var driver = new InternetExplorerDriver(capabilities);
+			var options = new InternetExplorerOptions {IntroduceInstabilityByIgnoringProtectedModeSettings = true};
+			var driver = new InternetExplorerDriver(options);
 
 			try
 			{
@@ -40,10 +38,8 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 		[Test]
 		public void when_logging_in_with_a_valid_username_and_password()
 		{
-			var capabilities = new DesiredCapabilities();
-			capabilities.SetCapability(InternetExplorerDriver.IntroduceInstabilityByIgnoringProtectedModeSettings, true);
-
-			var driver = new InternetExplorerDriver(capabilities);
+			var options = new InternetExplorerOptions { IntroduceInstabilityByIgnoringProtectedModeSettings = true };
+			var driver = new InternetExplorerDriver(options);
 
 			try
 			{
