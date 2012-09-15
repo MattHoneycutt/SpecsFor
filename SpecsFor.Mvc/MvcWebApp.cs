@@ -17,7 +17,7 @@ namespace SpecsFor.Mvc
 	//NOTE: MvcWebApp has definitely picked up too many responsibilites.  It's in need of 
 	//		refactoring.  The project could probably benefit from a simple IoC container 
 	//		or service locator for handling some of these things. 
-	public class MvcWebApp : IDisposable
+	public class MvcWebApp
 	{
 		//TODO: Move to Service Locator class?  
 
@@ -39,7 +39,7 @@ namespace SpecsFor.Mvc
 
 		public MvcWebApp()
 		{
-			Browser = Driver.CreateDriver();
+			Browser = Driver.GetDriver();
 
 			try
 			{
@@ -138,20 +138,6 @@ namespace SpecsFor.Mvc
 				Browser.Close();
 				Thread.Sleep(Delay);
 			}
-		}
-
-		public void Dispose()
-		{
-			//Not all of the web drivers have implemented IDisposable correctly.  Some will dispose
-			//but won't actually exit.  This wrapper fixes that inconsistent behavior. 
-			if (!_hasQuit)
-			{
-				_hasQuit = true;
-				Browser.Close();
-				Browser.Quit();
-			}
-
-			Browser.Dispose();
 		}
 
 		public static void AddPreTestCallback(Action action)

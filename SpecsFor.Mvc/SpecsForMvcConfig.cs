@@ -24,7 +24,7 @@ namespace SpecsFor.Mvc
 
 		public void UseBrowser(BrowserDriver driver)
 		{
-			AddNewAction(() => { MvcWebApp.Driver = driver; });
+			TestRunnerActions.Add(new BrowserDriverAction(driver));
 		}
 
 		public void BuildRoutesUsing(Action<RouteCollection> configAction)
@@ -78,6 +78,26 @@ namespace SpecsFor.Mvc
 		public void PostOperationDelay(TimeSpan delay)
 		{
 			AddNewAction(() => MvcWebApp.Delay = delay);
+		}
+	}
+
+	public class BrowserDriverAction : ITestRunnerAction
+	{
+		private readonly BrowserDriver _driver;
+
+		public BrowserDriverAction(BrowserDriver driver)
+		{
+			_driver = driver;
+		}
+
+		public void Startup()
+		{
+			MvcWebApp.Driver = _driver;
+		}
+
+		public void Shutdown()
+		{
+			_driver.Shutdown();
 		}
 	}
 }

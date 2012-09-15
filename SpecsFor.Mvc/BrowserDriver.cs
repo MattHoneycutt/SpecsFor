@@ -7,6 +7,7 @@ using OpenQA.Selenium.Remote;
 
 namespace SpecsFor.Mvc
 {
+	//TODO: Split this so that the implementation and DSL aren't sharing classes. 
 	public class BrowserDriver
 	{
 		private readonly Func<IWebDriver> _browserFactory;
@@ -14,12 +15,13 @@ namespace SpecsFor.Mvc
 		public static readonly BrowserDriver InternetExplorer;
 		public static readonly BrowserDriver Firefox;
 		public static readonly BrowserDriver Chrome;
+		private IWebDriver _driver;
 
 		static BrowserDriver()
 		{
 			InternetExplorer = new BrowserDriver(() =>
 				{
-					var options = new InternetExplorerOptions {IntroduceInstabilityByIgnoringProtectedModeSettings = true};
+					var options = new InternetExplorerOptions { IntroduceInstabilityByIgnoringProtectedModeSettings = true };
 
 					return new InternetExplorerDriver(options);
 				});
@@ -42,9 +44,14 @@ namespace SpecsFor.Mvc
 			_browserFactory = browserFactory;
 		}
 
-		public IWebDriver CreateDriver()
+		public IWebDriver GetDriver()
 		{
-			return _browserFactory();
+			return _driver ?? (_driver = _browserFactory());
+		}
+
+		public void Shutdown()
+		{
+			_driver.Quit();
 		}
 	}
 }

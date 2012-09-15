@@ -19,7 +19,12 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 			config.BuildRoutesUsing(r => MvcApplication.RegisterRoutes(r));
 			config.RegisterArea<TasksAreaRegistration>();
 
+			//NOTE: You can use whatever browser you want.  For build servers, you can check an environment
+			//		variable to determine which browser to use, enabling you to re-run the same suite of
+			//		tests once for each browser. 
 			config.UseBrowser(BrowserDriver.InternetExplorer);
+			//config.UseBrowser(BrowserDriver.Chrome);
+			//config.UseBrowser(BrowserDriver.Firefox);
 
 			config.InterceptEmailMessagesOnPort(13565);
 
