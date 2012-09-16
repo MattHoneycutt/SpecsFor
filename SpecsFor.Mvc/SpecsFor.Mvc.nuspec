@@ -12,4 +12,8 @@
     <description>SpecsFor.Mvc is a stand-alone acceptance testing framework for ASP.NET MVC.  It enables you to write strongly-typed, refactor friendly integration tests using the browser and testing framework of your choice.</description>
 	<tags>testing tdd bdd specs acceptance-tests ui-testing</tags>
   </metadata>
+	<files>
+		<file src="Tools\**\*.*" target="tools" />
+		<file src="..\WebDrivers\**\*.*" target="tools" />
+	</files>
 </package>

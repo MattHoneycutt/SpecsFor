@@ -27,8 +27,6 @@ namespace SpecsFor.Mvc
 		public static IHandleAuthentication Authentication { get; set; }
 		public static TimeSpan Delay { get; set; }
 
-		private bool _hasQuit;
-
 		public IWebDriver Browser { get; private set; }
 
 		static MvcWebApp()
@@ -134,8 +132,6 @@ namespace SpecsFor.Mvc
 		{
 			if (Delay != default(TimeSpan))
 			{
-				_hasQuit = true;
-				Browser.Close();
 				Thread.Sleep(Delay);
 			}
 		}
