@@ -16,8 +16,9 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 				.With(Project.Named("SpecsFor.Mvc.Demo"))
 				.ApplyWebConfigTransformForConfig("Test");
 
-			config.BuildRoutesUsing(r => MvcApplication.RegisterRoutes(r));
+			//TODO: The order of registration matters right now, but it shouldn't. 
 			config.RegisterArea<TasksAreaRegistration>();
+			config.BuildRoutesUsing(r => MvcApplication.RegisterRoutes(r));
 
 			//NOTE: You can use whatever browser you want.  For build servers, you can check an environment
 			//		variable to determine which browser to use, enabling you to re-run the same suite of

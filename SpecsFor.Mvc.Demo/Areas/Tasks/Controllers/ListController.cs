@@ -10,5 +10,10 @@ namespace SpecsFor.Mvc.Demo.Areas.Tasks.Controllers
         {
             return View();
         }
+
+		public ActionResult Create(int newID, string name)
+		{
+			return null;
+		}
     }
 }

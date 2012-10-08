@@ -86,7 +86,7 @@ namespace SpecsFor.Mvc
 				//expect the URL to look like "~/virtual/path"
 				var url = Browser.Url.Replace(BaseUrl, "~");
 
-				var queryStringParams = new NameValueCollection();
+				var queryStringParams = new Dictionary<string, string>();
 
 				//Parse out the query string params. 
 				if (url.Contains("?"))
@@ -94,17 +94,23 @@ namespace SpecsFor.Mvc
 					var parts = url.Split('?');
 					url = parts[0];
 
-					foreach (var pair in parts[1].Split('&')
+					queryStringParams = parts[1].Split('&')
 						.Select(v => v.Split('='))
-						.Select(a => new KeyValuePair<string, string>(a[0], a[1])))
-					{
-						queryStringParams.Add(pair.Key, pair.Value);
-					}
+						.ToDictionary(a => a[0], a => a[1]);
 				}
 				
-				var context = new FakeHttpContext(url, null, null, queryStringParams, null, null);
+				var context = new FakeHttpContext(url, null, null, null, null, null);
 
-				return RouteTable.Routes.GetRouteData(context);
+				var routeData = RouteTable.Routes.GetRouteData(context);
+
+				//Add in query string params.  This will allow the ShouldMapTo extension method to work 
+				//with query string parameters.
+				foreach (var kvp in queryStringParams.Where(kvp => !routeData.Values.ContainsKey(kvp.Key)))
+				{
+					routeData.Values.Add(kvp.Key, kvp.Value);
+				}
+
+				return routeData;
 			}
 		}
 
@@ -154,5 +160,11 @@ namespace SpecsFor.Mvc
 			var field = Browser.FindElement(By.Id(name));
 			return field;
 		}
+
+		public string AllText()
+		{
+			return Browser.FindElement(By.TagName("body")).Text;
+		}
+
 	}
 }
