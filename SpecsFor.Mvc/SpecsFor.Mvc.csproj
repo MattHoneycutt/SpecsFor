@@ -66,6 +66,8 @@
     <Compile Include="BasicTestRunnerAction.cs" />
     <Compile Include="BrowserDriver.cs" />
     <Compile Include="ElementNotFoundException.cs" />
+    <Compile Include="Helpers\FakeHttpContext.cs" />
+    <Compile Include="Helpers\FakeHttpRequest.cs" />
     <Compile Include="Helpers\FakeViewDataContainer.cs" />
     <Compile Include="FluentDisplay.cs" />
     <Compile Include="FluentField.cs" />

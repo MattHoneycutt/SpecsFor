@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Web.Mvc;
 using System.Web.Routing;
-using MvcContrib.TestHelper.Fakes;
 using OpenQA.Selenium;
 using Microsoft.Web.Mvc;
 using SpecsFor.Mvc.Authentication;
@@ -100,6 +98,7 @@ namespace SpecsFor.Mvc
 				}
 				
 				var context = new FakeHttpContext(url, null, null, null, null, null);
+				context.SetRequest(new FakeHttpRequest(url, new Uri(Browser.Url), null));
 
 				var routeData = RouteTable.Routes.GetRouteData(context);
 
@@ -165,6 +164,5 @@ namespace SpecsFor.Mvc
 		{
 			return Browser.FindElement(By.TagName("body")).Text;
 		}
-
 	}
 }
