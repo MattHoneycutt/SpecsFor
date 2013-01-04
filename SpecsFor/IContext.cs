@@ -2,6 +2,6 @@
 {
 	public interface IContext<T>
 	{
-		void Initialize(ITestState<T> state);
+		void Initialize(ISpecs<T> state);
 	}
 }

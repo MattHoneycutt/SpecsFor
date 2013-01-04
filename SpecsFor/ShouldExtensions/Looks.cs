@@ -6,17 +6,6 @@ namespace SpecsFor.ShouldExtensions
 {
 	public static class Looks
 	{
-		//TODO: Move to their own class in SpecsFor v3.
-		public static void ShouldLookLike<T>(this T actual, T expected)
-		{
-			expected.ToExpectedObject().ShouldEqual(actual);
-		}
-
-		public static void ShouldLookLikePartial<T>(this T actual, object expected)
-		{
-			expected.ToExpectedObject().ShouldMatch(actual);
-		}
-
 		public static T Like<T>(T obj)
 		{
 			var expected = obj.ToExpectedObject();

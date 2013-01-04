@@ -53,10 +53,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComposingContext\CompositionalContextSpecs.cs" />
-    <Compile Include="ComposingContext\SpecsForConfig.cs" />
-    <Compile Include="GivenAttributeSpecs.cs" />
+    <Compile Include="ComposingContext\ComposingContextConfig.cs" />
+    <Compile Include="ComposingContext\StackingContext\StackingContextConfig.cs" />
+    <Compile Include="ComposingContext\StackingContext\StackingContextSpecs.cs" />
+    <Compile Include="ComposingContext\TestDomain\DoNotProvideMagic.cs" />
+    <Compile Include="ComposingContext\TestDomain\ILikeMagic.cs" />
+    <Compile Include="ComposingContext\TestDomain\MyTestLogger.cs" />
+    <Compile Include="ComposingContext\TestDomain\ProvideMagicByConcreteType.cs" />
+    <Compile Include="ComposingContext\TestDomain\ProvideMagicByInterface.cs" />
+    <Compile Include="ComposingContext\TestDomain\ProvideMagicByTypeName.cs" />
+    <Compile Include="ComposingContext\TestDomain\ProvideMagicForEveryone.cs" />
+    <Compile Include="ComposingContext\TestDomain\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShouldExtensions\ContainsExtensionsSpecs.cs" />
+    <Compile Include="ShouldExtensions\ExpectedObjectExtensionsSpecs.cs" />
     <Compile Include="ShouldExtensions\LooksSpecs.cs" />
     <Compile Include="ShouldExtensions\StringExtensionsSpecs.cs" />
     <Compile Include="SpecsForSpecs.cs" />

@@ -3,49 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using Moq;
 using NUnit.Framework;
-using SpecsFor.Configuration;
+using SpecsFor.Configuration.Model;
 using StructureMap;
 using StructureMap.AutoMocking;
 
 namespace SpecsFor
 {
+	//TODO: This type is getting fairly complex.  What about splitting the 
+	//		mocking helper methods either into extension methods, a partial
+	//		class, or pulling those up into a base class that SpecsFor<T>
+	//		derives from?
+
 	[TestFixture]
-	public abstract class SpecsFor<T> : ITestState<T> where T: class
+	public abstract class SpecsFor<T> : ISpecs<T> where T: class
 	{
 		protected MoqAutoMocker<T> Mocker;
 		protected List<IContext<T>> Contexts = new List<IContext<T>>();
 
+		public T SUT { get; set; }
+
 		private void TryDisposeSUT()
 		{
-			if (SUT != null && SUT is IDisposable)
+			var sut = SUT as IDisposable;
+			if (sut != null)
 			{
-				((IDisposable)SUT).Dispose();
+				sut.Dispose();
 			}
 		}
-
-		//TODO: Obsolete this as well.
-		protected TContextType GetContext<TContextType>() where TContextType : IContext<T>
-		{
-			return (TContextType)Contexts.FirstOrDefault(c => c.GetType() == typeof(TContextType));
-		}
-
-		protected TContextType GetContext<TContextType>(Func<IEnumerable<TContextType>, TContextType> search) where TContextType : IContext<T>
-		{
-			return search((IEnumerable<TContextType>)Contexts.Where(c => c.GetType() == typeof(TContextType)));
-		}
-
-		protected SpecsFor()
-		{
-			
-		}
-
-		//And make this obsolete.
-		protected SpecsFor(Type[] contexts)
-		{
-			Given(contexts);
-		}
-
-		public T SUT { get; set; }
 
 		/// <summary>
 		/// Gets the mock for the specified type from the underlying container. 
@@ -65,7 +49,7 @@ namespace SpecsFor
 		/// <typeparam name="TMock"></typeparam>
 		/// <param name="enumerableSize"></param>
 		/// <returns></returns>
-		protected Mock<TMock>[] GetMockForEnumerableOf<TMock>(int enumerableSize) where TMock : class
+		public Mock<TMock>[] GetMockForEnumerableOf<TMock>(int enumerableSize) where TMock : class
 		{
 			var existingMocks = Mocker.Container.Model.InstancesOf<TMock>().ToArray();
 
@@ -77,12 +61,22 @@ namespace SpecsFor
 					                                    existingMocks.Length + ".");
 				}
 
-				return Mocker.Container.GetAllInstances<TMock>().Select(i => Mock.Get<TMock>(i)).ToArray();
+				return Mocker.Container.GetAllInstances<TMock>().Select(Mock.Get).ToArray();
 			}
 
 			var mocks = Mocker.CreateMockArrayFor<TMock>(enumerableSize);
 
-			return mocks.Select(m => Mock.Get<TMock>(m)).ToArray();
+			return mocks.Select(Mock.Get).ToArray();
+		}
+
+		protected void Given<TContext>() where TContext : IContext<T>, new()
+		{
+			Given(new TContext());
+		}
+
+		protected void Given(IContext<T> context)
+		{
+			context.Initialize(this);
 		}
 
 		[TestFixtureSetUp]
@@ -96,10 +90,9 @@ namespace SpecsFor
 
 			try
 			{
-				//TODO: Do the standard Given stuff (such as applying Given<T> context) outside of the base Given.
 				Given();
 
-				SpecsForBehaviors.ApplyBehaviorsFor(this);
+				BehaviorStack.Current.ApplyGivenTo(this);
 
 				When();
 			}
@@ -110,12 +103,25 @@ namespace SpecsFor
 			}
 		}
 
+		protected virtual void ConfigureContainer(IContainer container)
+		{
+		}
+
 		protected virtual void InitializeClassUnderTest()
 		{
 			SUT = Mocker.ClassUnderTest;
 		}
 
-		protected virtual void ConfigureContainer(IContainer container)
+		protected virtual void Given()
+		{
+		}
+
+		protected virtual void When()
+		{
+		}
+
+		[TearDown]
+		protected virtual void AfterEachTest()
 		{
 		}
 
@@ -124,7 +130,9 @@ namespace SpecsFor
 		{
 			try
 			{
-				AfterEachSpec();
+				AfterSpec();
+
+				BehaviorStack.Current.ApplyAfterSpecTo(this);
 			}
 			finally
 			{
@@ -132,39 +140,8 @@ namespace SpecsFor
 			}
 		}
 
-		protected virtual void Given()
+		protected virtual void AfterSpec()
 		{
-			Contexts.ForEach(c => c.Initialize(this));
-		}
-
-		protected virtual void When()
-		{
-
-		}
-
-		//TODO: Obsolete this and add a replacement. 
-		protected virtual void AfterEachSpec()
-		{
-			
-		}
-
-		protected void Given<TContext>() where TContext : IContext<T>, new()
-		{
-			Given(new TContext());
-		}
-
-		protected void Given(IContext<T> context)
-		{
-			Contexts.Add(context);
-		}
-
-		protected void Given(Type[] context)
-		{
-			var contexts = (from c in context
-			                select Activator.CreateInstance(c))
-							.Cast<IContext<T>>();
-
-			Contexts.AddRange(contexts);
 		}
 	}
 }

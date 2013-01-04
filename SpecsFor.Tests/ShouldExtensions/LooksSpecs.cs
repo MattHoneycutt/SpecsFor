@@ -28,32 +28,6 @@ namespace SpecsFor.Tests.ShouldExtensions
 		}
 
 		[Test]
-		public void two_equivalent_objects_look_identical()
-		{
-			Assert.DoesNotThrow(() =>
-			                    SUT.ShouldLookLike(new TestObject {ID = 1, Name = "Test"}));
-		}
-
-		[Test]
-		public void two_different_objects_do_not_look_the_same()
-		{
-			Assert.Throws<Exception>(() => SUT.ShouldLookLike(new TestObject()));
-		}
-
-		[Test]
-		public void then_partial_matching_with_an_equivalenet_object_works()
-		{
-			Assert.DoesNotThrow(() =>
-								SUT.ShouldLookLikePartial(new { ID = 1, Name = "Test" }));
-		}
-
-		[Test]
-		public void then_partial_matching_with_an_unequivalenet_object_throws_exception()
-		{
-			Assert.Throws<Exception>(() => SUT.ShouldLookLikePartial(new {ID = 5, Name = "blah"}));
-		}
-
-		[Test]
 		public void moq_will_match_on_an_equivalent_object()
 		{
 			var mock = GetMockFor<ITestService>();

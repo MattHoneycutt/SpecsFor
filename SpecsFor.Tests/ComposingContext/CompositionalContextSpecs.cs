@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
 using Should;
+using SpecsFor.Tests.ComposingContext.TestDomain;
 
 namespace SpecsFor.Tests.ComposingContext
 {
@@ -47,10 +48,17 @@ namespace SpecsFor.Tests.ComposingContext
 				CalledByDuringGiven.ShouldContain(typeof(ProvideMagicForEveryone).Name);
 			}
 
-			//TODO: Make sure it can be called in other stages as well.
+			public override void TearDown()
+			{
+				base.TearDown();
+
+				//At this point, all the AfterSpec contexts should be applied.
+				CalledByAfterTest.ShouldContain(typeof(ProvideMagicByInterface).Name);
+				CalledByAfterTest.ShouldContain(typeof(ProvideMagicByConcreteType).Name);
+				CalledByAfterTest.ShouldContain(typeof(ProvideMagicByTypeName).Name);
+				CalledByAfterTest.ShouldContain(typeof(ProvideMagicForEveryone).Name);
+				CalledByAfterTest.ShouldNotContain(typeof(DoNotProvideMagic).Name);
+			}
 		}
-
-		//TODO: Error-handling tests
 	}
-
 }

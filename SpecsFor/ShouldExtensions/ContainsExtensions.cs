@@ -15,5 +15,13 @@ namespace SpecsFor.ShouldExtensions
 				Assert.Fail("Expected list containing item matching {0}, but item was not found.", filter);
 			}
 		}
+
+		public static void ShouldNotContain<T>(this IEnumerable<T> list, Expression<Func<T, bool>> filter)
+		{
+			if (list.Any(filter.Compile()))
+			{
+				Assert.Fail("Expected list not containing item matching {0}, but found a matching item.", filter);
+			}
+		}
 	}
 }

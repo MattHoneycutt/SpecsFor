@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Moq;
 using NUnit.Framework;
 using Should;
 using System.Linq;
@@ -161,7 +160,7 @@ namespace SpecsFor.Tests
 					_name = name;
 				}
 
-				public void Initialize(ITestState<object> state)
+				public void Initialize(ISpecs<object> state)
 				{
 					state.GetMockFor<TextWriter>().Object.Write(_name);
 				}
@@ -171,13 +170,6 @@ namespace SpecsFor.Tests
 			{
 				Given(new NestedContext("Test1"));
 				Given(new NestedContext("Test2"));
-
-				base.Given();
-			}
-
-			protected override void When()
-			{
-				
 			}
 
 			[Test]

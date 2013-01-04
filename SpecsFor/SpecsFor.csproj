@@ -56,13 +56,17 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\Behavior.cs" />
+    <Compile Include="Configuration\ISpecsForConfigurationExpression.cs" />
+    <Compile Include="Configuration\Model\BehaviorStack.cs" />
+    <Compile Include="Configuration\Model\ConditionalBehaviorAdapter.cs" />
     <Compile Include="Configuration\SpecsForConfiguration.cs" />
-    <Compile Include="GivenAttribute.cs" />
+    <Compile Include="Configuration\SpecsForConfigurationExpression.cs" />
     <Compile Include="IContext.cs" />
-    <Compile Include="InvalidContextException.cs" />
-    <Compile Include="ITestState.cs" />
+    <Compile Include="ISpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShouldExtensions\ContainsExtensions.cs" />
+    <Compile Include="ShouldExtensions\ExpectedObjectExtensions.cs" />
     <Compile Include="ShouldExtensions\Looks.cs" />
     <Compile Include="ShouldExtensions\StringExtensions.cs" />
     <Compile Include="SpecsFor.cs" />
@@ -76,6 +80,7 @@
   <ItemGroup>
     <Content Include="Readme.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project=".\targets\Microsoft.Application.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

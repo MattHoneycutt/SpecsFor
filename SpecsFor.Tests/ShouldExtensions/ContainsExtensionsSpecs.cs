@@ -6,47 +6,35 @@ using Should;
 
 namespace SpecsFor.Tests.ShouldExtensions
 {
-	public class ContainsExtensionsSpecs
+	public class ContainsExtensionsSpecs : SpecsFor<IEnumerable<string>>
 	{
-		public class when_checking_for_an_object_that_exists : given.an_enumerable_of_items
+		protected override void InitializeClassUnderTest()
 		{
-			protected override void When()
-			{
-				Assert.DoesNotThrow(() => SUT.ShouldContain(s => s.EndsWith("2")));
-			}
-
-			[Test]
-			public void then_it_does_not_throw_an_exception()
-			{
-				//Nothing to check.
-			}
+			SUT = new[] { "Test 1", "Test 2", "Test 3" };
 		}
 
-		public class when_checking_for_an_object_that_does_not_exist : given.an_enumerable_of_items
+		[Test]
+		public void ShouldContains_does_not_throw_if_list_contains_matching_item()
 		{
-			private AssertionException _exception;
-
-			protected override void When()
-			{
-				_exception = Assert.Throws<AssertionException>(() => SUT.ShouldContain(s => s.EndsWith("98")));
-			}
-
-			[Test]
-			public void then_it_throws_an_exception()
-			{
-				_exception.ShouldNotBeNull();
-			}
+			Assert.DoesNotThrow(() => SUT.ShouldContain(s => s.EndsWith("2")));
 		}
 
-		public static class given
+		[Test]
+		public void ShouldNotContains_throws_if_list_contains_matching_item()
 		{
-			public abstract class an_enumerable_of_items : SpecsFor<IEnumerable<string>>
-			{
-				protected override void InitializeClassUnderTest()
-				{
-					SUT = new[] {"Test 1", "Test 2", "Test 3"};
-				}
-			}
+			Assert.Throws<AssertionException>(() => SUT.ShouldNotContain(s => s.EndsWith("2")));
+		}
+
+		[Test]
+		public void ShouldContains_throws_if_list_does_not_contain_matching_item()
+		{
+			Assert.Throws<AssertionException>(() => SUT.ShouldContain(s => s.EndsWith("98")));
+		}
+
+		[Test]
+		public void ShouldNotContains_does_not_throw_if_list_does_not_contain_matching_item()
+		{
+			Assert.DoesNotThrow(() => SUT.ShouldNotContain(s => s.EndsWith("98")));
 		}
 	}
 }
