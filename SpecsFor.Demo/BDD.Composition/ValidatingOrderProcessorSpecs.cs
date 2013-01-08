@@ -85,7 +85,7 @@ namespace SpecsFor.Demo.BDD.Composition
 
 		public class the_item_is_available : IContext<ValidatingOrderProcessor>
 		{
-			public void Initialize(ITestState<ValidatingOrderProcessor> state)
+			public void Initialize(ISpecs<ValidatingOrderProcessor> state)
 			{
 				state.GetMockFor<IInventory>()
 					.Setup(i => i.IsQuantityAvailable("TestPart", 10))
@@ -96,7 +96,7 @@ namespace SpecsFor.Demo.BDD.Composition
 
 		public class the_item_is_valid : IContext<ValidatingOrderProcessor>
 		{
-			public void Initialize(ITestState<ValidatingOrderProcessor> state)
+			public void Initialize(ISpecs<ValidatingOrderProcessor> state)
 			{
 				state.GetMockFor<IValidator<Order>>()
 					.Setup(v => v.Validate(It.IsAny<Order>()))
@@ -106,7 +106,7 @@ namespace SpecsFor.Demo.BDD.Composition
 
 		public class the_item_is_not_valid : IContext<ValidatingOrderProcessor>
 		{
-			public void Initialize(ITestState<ValidatingOrderProcessor> state)
+			public void Initialize(ISpecs<ValidatingOrderProcessor> state)
 			{
 				state.GetMockFor<IValidator<Order>>()
 					.Setup(v => v.Validate(It.IsAny<Order>()))
