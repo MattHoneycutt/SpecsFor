@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
 using SpecsFor.ShouldExtensions;
-using Assert = Should.Core.Assertions.Assert;
-using Should;
 
 namespace SpecsFor.Tests.ShouldExtensions
 {

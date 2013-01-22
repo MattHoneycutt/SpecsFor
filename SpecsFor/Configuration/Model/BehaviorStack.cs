@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SpecsFor.Configuration.Model
 {
-	internal class BehaviorStack
+	internal class BehaviorStack : IBehaviorStack
 	{
 		[ThreadStatic]
 		private static BehaviorStack _current;
@@ -43,9 +43,15 @@ namespace SpecsFor.Configuration.Model
 			_current._stack.Pop();
 		}
 
-		public void ApplyGivenTo(object specs)
+		private IEnumerable<IConditionalBehavior> FindBehaviorsFor(object specs)
 		{
 			var behaviors = _stack.Reverse().SelectMany(c => c.GetBehaviorsFor(specs.GetType()));
+			return behaviors;
+		}
+
+		public void ApplyGivenTo(object specs)
+		{
+			var behaviors = FindBehaviorsFor(specs);
 
 			foreach (var behavior in behaviors)
 			{
@@ -55,12 +61,37 @@ namespace SpecsFor.Configuration.Model
 
 		public void ApplyAfterSpecTo(object specs)
 		{
-			var behaviors = _stack.Reverse().SelectMany(c => c.GetBehaviorsFor(specs.GetType()));
+			var behaviors = FindBehaviorsFor(specs);
 
 			foreach (var behavior in behaviors)
 			{
 				behavior.ApplyAfterSpecTo(specs);
 			}
+		}
+
+		public void ApplySpecInitTo(object specs)
+		{
+			var behaviors = FindBehaviorsFor(specs);
+
+			foreach (var behavior in behaviors)
+			{
+				behavior.ApplySpecInitTo(specs);
+			}
+		}
+
+		public void ApplyAfterClassUnderTestInitializedTo(object specs)
+		{
+			var behaviors = FindBehaviorsFor(specs);
+
+			foreach (var behavior in behaviors)
+			{
+				behavior.ApplyAfterClassUnderTestInitializedTo(specs);
+			}
+		}
+
+		public Func<object> GetInitializationMethodFor(object specs)
+		{
+			return _stack.Reverse().Select(c => c.GetInitializationMethodFor(specs.GetType())).FirstOrDefault(i => i != null);
 		}
 	}
 }

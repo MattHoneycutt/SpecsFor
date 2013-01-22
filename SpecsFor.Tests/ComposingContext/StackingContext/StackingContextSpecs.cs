@@ -12,9 +12,13 @@ namespace SpecsFor.Tests.ComposingContext.StackingContext
 		{
 			public List<string> CalledByDuringGiven { get; set; }
 			public List<string> CalledByAfterTest { get; set; }
+			public List<string> CalledByApplyAfterClassUnderTestInitialized { get; set; }
+			public List<string> CalledBySpecInit { get; set; }
 
 			public when_running_tests_decorated_with_a_behavior()
 			{
+				CalledBySpecInit = new List<string>();
+				CalledByApplyAfterClassUnderTestInitialized = new List<string>();
 				CalledByDuringGiven = new List<string>();
 				CalledByAfterTest = new List<string>();
 			}

@@ -1,34 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
 using SpecsFor.Configuration.Model;
+using SpecsFor.Validation;
 using StructureMap;
 using StructureMap.AutoMocking;
 
 namespace SpecsFor
 {
-	//TODO: This type is getting fairly complex.  What about splitting the 
-	//		mocking helper methods either into extension methods, a partial
-	//		class, or pulling those up into a base class that SpecsFor<T>
-	//		derives from?
-
 	[TestFixture]
-	public abstract class SpecsFor<T> : ISpecs<T> where T: class
+	public abstract class SpecsFor<T> : ISpecs<T> where T : class
 	{
-		protected MoqAutoMocker<T> Mocker;
-		protected List<IContext<T>> Contexts = new List<IContext<T>>();
+		private readonly SpecsForEngine<T> _engine;
 
-		public T SUT { get; set; }
+		public T SUT { get { return _engine.SUT; } set { _engine.SUT = value; } }
 
-		private void TryDisposeSUT()
+		protected SpecsFor()
 		{
-			var sut = SUT as IDisposable;
-			if (sut != null)
-			{
-				sut.Dispose();
-			}
+			_engine = new SpecsForEngine<T>(this, BehaviorStack.Current, new NUnitSpecValidator());
+		}
+
+		[TestFixtureSetUp]
+		public virtual void SetupEachSpec()
+		{
+			_engine.Init();
+
+			_engine.Given();
+
+			_engine.When();
 		}
 
 		/// <summary>
@@ -38,7 +36,7 @@ namespace SpecsFor
 		/// <returns></returns>
 		public Mock<TMock> GetMockFor<TMock>() where TMock : class
 		{
-			return Mock.Get(Mocker.Get<TMock>());
+			return _engine.Mocker.GetMockFor<T, TMock>();
 		}
 
 		/// <summary>
@@ -51,56 +49,22 @@ namespace SpecsFor
 		/// <returns></returns>
 		public Mock<TMock>[] GetMockForEnumerableOf<TMock>(int enumerableSize) where TMock : class
 		{
-			var existingMocks = Mocker.Container.Model.InstancesOf<TMock>().ToArray();
-
-			if (existingMocks.Length > 0)
-			{
-				if (existingMocks.Length != enumerableSize)
-				{
-					throw new InvalidOperationException("An IEnumerable for this type of mock has already been created with size " +
-					                                    existingMocks.Length + ".");
-				}
-
-				return Mocker.Container.GetAllInstances<TMock>().Select(Mock.Get).ToArray();
-			}
-
-			var mocks = Mocker.CreateMockArrayFor<TMock>(enumerableSize);
-
-			return mocks.Select(Mock.Get).ToArray();
+			return _engine.Mocker.GetMockForEnumerableOf<T, TMock>(enumerableSize);	
 		}
+
+		public MoqAutoMocker<T> Mocker
+		{
+			get { return _engine.Mocker;}
+		} 
 
 		protected void Given<TContext>() where TContext : IContext<T>, new()
 		{
-			Given(new TContext());
+			_engine.ApplyContext(new TContext());
 		}
 
 		protected void Given(IContext<T> context)
 		{
-			context.Initialize(this);
-		}
-
-		[TestFixtureSetUp]
-		public virtual void SetupEachSpec() 
-		{
-			Mocker = new MoqAutoMocker<T>();
-
-			ConfigureContainer(Mocker.Container);
-
-			InitializeClassUnderTest();
-
-			try
-			{
-				Given();
-
-				BehaviorStack.Current.ApplyGivenTo(this);
-
-				When();
-			}
-			catch (Exception)
-			{
-				TryDisposeSUT();
-				throw;
-			}
+			_engine.ApplyContext(context);
 		}
 
 		protected virtual void ConfigureContainer(IContainer container)
@@ -109,7 +73,7 @@ namespace SpecsFor
 
 		protected virtual void InitializeClassUnderTest()
 		{
-			SUT = Mocker.ClassUnderTest;
+			_engine.InitializeClassUnderTest();
 		}
 
 		protected virtual void Given()
@@ -128,20 +92,40 @@ namespace SpecsFor
 		[TestFixtureTearDown]
 		public virtual void TearDown()
 		{
-			try
-			{
-				AfterSpec();
-
-				BehaviorStack.Current.ApplyAfterSpecTo(this);
-			}
-			finally
-			{
-				TryDisposeSUT();
-			}
+			_engine.TearDown();
 		}
 
 		protected virtual void AfterSpec()
 		{
 		}
+
+		#region ISpecs implementation
+
+		void ISpecs.Given()
+		{
+			Given();
+		}
+
+		void ISpecs.When()
+		{
+			When();
+		}
+
+		void ISpecs.ConfigureContainer(IContainer container)
+		{
+			ConfigureContainer(container);
+		}
+
+		void ISpecs.InitializeClassUnderTest()
+		{
+			InitializeClassUnderTest();
+		}
+
+		void ISpecs.AfterSpec()
+		{
+			AfterSpec();
+		}
+
+		#endregion
 	}
 }

@@ -7,17 +7,24 @@ namespace SpecsFor.Tests.ComposingContext
 {
 	public class CompositionalContextSpecs
 	{
-		public class when_running_tests_decorated_with_a_behavior : SpecsFor<Widget>, ILikeMagic
+		public abstract class given_the_default_state : SpecsFor<Widget>, ILikeMagic
 		{
+			public List<string> CalledBySpecInit { get; set; }
+			public List<string> CalledByApplyAfterClassUnderTestInitialized { get; set; }
 			public List<string> CalledByDuringGiven { get; set; }
 			public List<string> CalledByAfterTest { get; set; }
 
-			public when_running_tests_decorated_with_a_behavior()
+			protected given_the_default_state()
 			{
+				CalledBySpecInit = new List<string>();
+				CalledByApplyAfterClassUnderTestInitialized = new List<string>();
 				CalledByDuringGiven = new List<string>();
 				CalledByAfterTest = new List<string>();
 			}
+		}
 
+		public class when_running_tests_decorated_with_a_behavior : given_the_default_state
+		{
 			[Test]
 			public void then_handlers_for_the_interface_are_called()
 			{
@@ -46,6 +53,18 @@ namespace SpecsFor.Tests.ComposingContext
 			public void then_handlers_for_all_types_are_called()
 			{
 				CalledByDuringGiven.ShouldContain(typeof(ProvideMagicForEveryone).Name);
+			}
+
+			[Test]
+			public void then_it_invokes_the_handlers_during_the_init_phase()
+			{
+				CalledBySpecInit.ShouldContain(typeof(ProvideMagicForEveryone).Name);
+			}
+
+			[Test]
+			public void then_it_invokes_the_class_initialized_phase()
+			{
+				CalledBySpecInit.ShouldContain(typeof(ProvideMagicForEveryone).Name);
 			}
 
 			public override void TearDown()

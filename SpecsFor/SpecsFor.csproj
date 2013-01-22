@@ -56,20 +56,31 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoMockerExtensions.cs" />
     <Compile Include="Configuration\Behavior.cs" />
+    <Compile Include="Configuration\ConditionalInitializer.cs" />
     <Compile Include="Configuration\ISpecsForConfigurationExpression.cs" />
     <Compile Include="Configuration\Model\BehaviorStack.cs" />
-    <Compile Include="Configuration\Model\ConditionalBehaviorAdapter.cs" />
+    <Compile Include="Configuration\Model\ConditionalBehavior.cs" />
+    <Compile Include="Configuration\Model\IBehaviorStack.cs" />
+    <Compile Include="Configuration\Model\IConditionalBehavior.cs" />
     <Compile Include="Configuration\SpecsForConfiguration.cs" />
     <Compile Include="Configuration\SpecsForConfigurationExpression.cs" />
+    <Compile Include="GivenSpecificationException.cs" />
     <Compile Include="IContext.cs" />
     <Compile Include="ISpecs.cs" />
+    <Compile Include="Validation\NUnitSpecValidator.cs" />
+    <Compile Include="Validation\ISpecValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShouldExtensions\ContainsExtensions.cs" />
     <Compile Include="ShouldExtensions\ExpectedObjectExtensions.cs" />
     <Compile Include="ShouldExtensions\Looks.cs" />
     <Compile Include="ShouldExtensions\StringExtensions.cs" />
+    <Compile Include="SpecificationException.cs" />
+    <Compile Include="SpecInitException.cs" />
     <Compile Include="SpecsFor.cs" />
+    <Compile Include="SpecsForEngine.cs" />
+    <Compile Include="WhenSpecificationException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -78,7 +89,7 @@
     <None Include="targets\Microsoft.Application.targets" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Readme.txt" />
+    <None Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

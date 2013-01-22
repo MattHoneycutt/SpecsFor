@@ -13,5 +13,15 @@ namespace SpecsFor.Tests.ComposingContext.TestDomain
 		{
 			((ILikeMagic)instance).CalledByAfterTest.Add(GetType().Name);
 		}
+
+		public override void ClassUnderTestInitialized(ISpecs instance)
+		{
+			((ILikeMagic)instance).CalledByApplyAfterClassUnderTestInitialized.Add(GetType().Name);
+		}
+
+		public override void SpecInit(ISpecs instance)
+		{
+			((ILikeMagic)instance).CalledBySpecInit.Add(GetType().Name);
+		}
 	}
 }

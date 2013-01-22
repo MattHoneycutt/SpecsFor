@@ -15,9 +15,6 @@ namespace SpecsFor.Tests.ComposingContext
 			WhenTesting(t => t.Name.Contains("junk that does not exist")).EnrichWith<DoNotProvideMagic>();
 			WhenTestingAnything().EnrichWith<ProvideMagicForEveryone>();
 			WhenTestingAnything().EnrichWith<MyTestLogger>();
-			//May or may not need this? This could be a way to say "for any class that is a spec for T," regardless
-			//of the actual spec class's type.  This would allow it to match even custom SpecsFor types. 
-			//cfg.ForSpecsOn<IRequireContext>().EnrichWith<SomethingElse>();
 		}
 	}
 }

@@ -8,9 +8,8 @@ namespace SpecsFor.Configuration
 {
 	public abstract class SpecsForConfiguration
 	{
-		private readonly List<ConditionalBehaviorAdapter> _behaviors = new List<ConditionalBehaviorAdapter>();
-
-		//TODO: Need some way to identify when derived classes are not decorated with the SetupFixture attribute.
+		private readonly List<IConditionalBehavior> _behaviors = new List<IConditionalBehavior>();
+		private readonly List<ConditionalInitializer> _initializers = new List<ConditionalInitializer>();
 
 		[SetUp]
 		public void ApplyConfiguration()
@@ -43,14 +42,30 @@ namespace SpecsFor.Configuration
 			where TBehavior : Behavior<TSpec>, new()
 			where TSpec : class
 		{
-			var behavior = new TBehavior();
-
-			_behaviors.Add(new ConditionalBehaviorAdapter(predicate, o => behavior.Given(((TSpec)o)), o => behavior.AfterSpec((TSpec)o)));
+			_behaviors.Add(new ConditionalBehavior<TSpec>(predicate, new TBehavior()));
 		}
 
-		internal IEnumerable<ConditionalBehaviorAdapter> GetBehaviorsFor(Type targetType)
+		internal IEnumerable<IConditionalBehavior> GetBehaviorsFor(Type targetType)
 		{
 			return _behaviors.Where(behavior => behavior.CanBeAppliedTo(targetType));
+		}
+
+		public Func<object> GetInitializationMethodFor(Type targetType)
+		{
+			var adapter = _initializers.FirstOrDefault(i => i.CanCreate(targetType));
+
+			return adapter != null ? adapter.Initializer() : null;
+		}
+
+		internal void AddInitializer(Func<Type, bool> predicate, Func<object> initializer)
+		{
+			var adapter = new ConditionalInitializer
+				(
+				predicate,
+				initializer
+				);
+
+			_initializers.Add(adapter);
 		}
 	}
 }

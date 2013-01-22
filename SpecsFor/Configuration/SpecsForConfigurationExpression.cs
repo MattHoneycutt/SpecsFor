@@ -17,5 +17,11 @@ namespace SpecsFor.Configuration
 		{
 			_config.AddBehavior<TSpec, TEnricher>(_predicate);
 		}
+
+		//TODO: Need some tests.
+		public void CreateClassUnderTestUsing(Func<object> initializer)
+		{
+			_config.AddInitializer(_predicate, initializer);
+		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using Moq;
+using StructureMap;
 
 namespace SpecsFor
 {
@@ -15,6 +16,17 @@ namespace SpecsFor
 		/// <param name="enumerableSize"></param>
 		/// <returns></returns>
 		Mock<TMock>[] GetMockForEnumerableOf<TMock>(int enumerableSize) where TMock : class;
+
+
+		void ConfigureContainer(IContainer container);
+
+		void InitializeClassUnderTest();
+
+		void Given();
+
+		void When();
+
+		void AfterSpec();
 	}
 
 	public interface ISpecs<T> : ISpecs
