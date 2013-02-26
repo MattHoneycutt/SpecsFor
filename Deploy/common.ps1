@@ -2,7 +2,7 @@
 
 $framework = '4.0'
 
-task default -depends Pack,Archive
+task default -depends Pack
 
 task Init {
 	cls
@@ -24,16 +24,6 @@ task Build -depends Init,Clean {
 
 #This function can be overriden to add additional logic to the archive process.
 function OnArchiving {
-}
-
-task Archive -depends Build {
-	mkdir $ArchiveDir
-		
-	$ZipFiles | %{cp $_ "$ArchiveDir" }
-	
-	OnArchiving
-	
-	Write-Zip -Path "$ArchiveDir\*" -OutputPath $ZipName
 }
 
 task Pack -depends Build {
