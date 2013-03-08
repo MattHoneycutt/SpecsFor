@@ -69,6 +69,7 @@
     <Compile Include="GivenSpecificationException.cs" />
     <Compile Include="IContext.cs" />
     <Compile Include="ISpecs.cs" />
+    <Compile Include="MoqExtensions.cs" />
     <Compile Include="Validation\NUnitSpecValidator.cs" />
     <Compile Include="Validation\ISpecValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
