@@ -39,5 +39,19 @@ namespace SpecsFor.Mvc
 
 			return FluentForm;
 		}
+
+		public FluentForm<T> Click()
+		{
+			Field.Click();
+
+			return FluentForm;
+		} 
+
+		public FluentForm<T> InteractWithField(Action<IWebElement> callback)
+		{
+			callback(Field);
+
+			return FluentForm;
+		}
 	}
 }

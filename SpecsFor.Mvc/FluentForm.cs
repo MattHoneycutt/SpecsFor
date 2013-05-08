@@ -7,17 +7,18 @@ namespace SpecsFor.Mvc
 {
 	public class FluentForm<T>
 	{
-		private readonly MvcWebApp _webApp;
 		private IWebElement _lastField;
+
+		public MvcWebApp WebApp { get; private set; }
 
 		public FluentForm(MvcWebApp webApp)
 		{
-			_webApp = webApp;
+			WebApp = webApp;
 		}
 
 		public FluentField<T,TProp> Field<TProp>(Expression<Func<T, TProp>> property)
 		{
-			var field = new FluentField<T, TProp>(this, _webApp, property);
+			var field = new FluentField<T, TProp>(this, WebApp, property);
 			
 			//Store the last field that is accessed.  This is used to submit the form.
 			_lastField = field.Field;
@@ -31,12 +32,12 @@ namespace SpecsFor.Mvc
 
 			submitElement.Submit();
 
-			_webApp.Pause();
+			WebApp.Pause();
 		}
 
 		private IWebElement FindSingleForm()
 		{
-			var forms = _webApp.Browser.FindElements(By.TagName("form"));
+			var forms = WebApp.Browser.FindElements(By.TagName("form"));
 
 			if (!forms.Any())
 			{
