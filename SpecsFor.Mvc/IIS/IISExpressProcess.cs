@@ -22,9 +22,8 @@ namespace SpecsFor.Mvc.IIS
 
 			var startInfo = new ProcessStartInfo
 			                	{
-			                		WindowStyle = ProcessWindowStyle.Normal,
 			                		ErrorDialog = false,
-			                		CreateNoWindow = false,
+			                		CreateNoWindow = true,
 			                		UseShellExecute = false,
 			                		Arguments = string.Format("/path:\"{0}\" /port:{1}", _pathToSite, PortNumber)
 			                	};
@@ -51,6 +50,7 @@ namespace SpecsFor.Mvc.IIS
 			if (_iisProcess != null && !_iisProcess.HasExited)
 			{
 				_iisProcess.CloseMainWindow();
+				_iisProcess.Kill();
 				_iisProcess.Dispose();
 				_iisProcess = null;
 			}

@@ -51,7 +51,10 @@ namespace SpecsFor.Mvc
 
 		public void Shutdown()
 		{
-			_driver.Quit();
+			if (_driver != null)
+			{
+				_driver.Quit();
+			}
 		}
 	}
 }

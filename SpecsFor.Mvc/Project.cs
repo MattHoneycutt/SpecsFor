@@ -7,11 +7,21 @@ namespace SpecsFor.Mvc
 	{
 		public static string Named(string projectName)
 		{
+			Console.WriteLine("Beginning search for project '{0}' in directory '{1}'...", projectName, Environment.CurrentDirectory);
+
 			var directory = new DirectoryInfo(Environment.CurrentDirectory);
 
 			while (directory.GetFiles("*.sln").Length == 0)
 			{
+				if (directory.Parent == null)
+				{
+					var errorMessage = string.Format("Unable to find solution file, traversed up to '{0}'.  Your test runner may be using shadow-copy to create a clone of your working directory.  The Project.Named method does not currently support this behavior.  You must manually specify the path to the project to be tested instead.", directory.FullName);
+
+					throw new InvalidOperationException(errorMessage);
+				}
+
 				directory = directory.Parent;
+
 			}
 
 			return Path.Combine(directory.FullName, projectName);

@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using Microsoft.Build.Evaluation;
-using Microsoft.Build.Framework;
-using Microsoft.Build.Logging;
+using System.Linq;
 
 namespace SpecsFor.Mvc.IIS
 {
@@ -28,31 +27,38 @@ namespace SpecsFor.Mvc.IIS
 
 		private void PublishSite(Dictionary<string, string> properties)
 		{
-			var logFile = Path.GetTempFileName();
+			var arguments = "/p:" + string.Join(";", properties.Select(kvp => kvp.Key + "=" + kvp.Value)) + " \"" + ProjectPath + "\"";
 
-			try
+			var msBuildProc = new Process();
+			msBuildProc.StartInfo = new ProcessStartInfo
+				{
+					FileName = Path.Combine(System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory(), "msbuild.exe"),
+					Arguments = arguments,
+					RedirectStandardError = true,
+					RedirectStandardOutput = true,
+					UseShellExecute = false,
+					CreateNoWindow = true,
+				};
+			msBuildProc.Start();
+	
+			var stdout = msBuildProc.StandardOutput.ReadToEnd();
+			var stderr = msBuildProc.StandardError.ReadToEnd();
+			msBuildProc.WaitForExit();
+			
+			var success = msBuildProc.ExitCode == 0;
+
+			if (!success)
 			{
-				bool success;
-				using (var projects = new ProjectCollection(properties))
-				{
-					projects.RegisterLogger(new FileLogger { Parameters = @"logfile=" + logFile, Verbosity = LoggerVerbosity.Quiet });
-					projects.OnlyLogCriticalEvents = true;
-					var project = projects.LoadProject(ProjectPath);
-					success = project.Build();
-				}
-
-				if (!success)
-				{
-					Console.WriteLine(File.ReadAllText(logFile));
-					throw new ApplicationException("Build failed.");
-				}
+				Console.WriteLine("The publish failed.");
+				Console.WriteLine(stdout);
+				Console.WriteLine(stderr);
+				throw new ApplicationException("Build failed.");
 			}
-			finally
+			else
 			{
-				if (File.Exists(logFile))
-				{
-					File.Delete(logFile);
-				}
+				Console.WriteLine("The publish succeeded.");
+				Console.WriteLine(stdout);
+				Console.WriteLine(stderr);
 			}
 		}
 
@@ -66,11 +72,11 @@ namespace SpecsFor.Mvc.IIS
 			                 	{
 									{"DeployOnBuild", "true"},
 									{"DeployTarget", "Package"},
-									{"_PackageTempDir", _publishDir},
+									{"_PackageTempDir", "\"" + _publishDir + "\""},
 									{"AutoParameterizationWebConfigConnectionStrings", "false"},
 									{"Platform", Platform ?? "AnyCPU" },
 									//Needed for Post-Build events that reference the SolutionDir macro/property.  
-									{"SolutionDir", Directory.GetParent(Path.GetDirectoryName(ProjectPath)).FullName + @"\"}
+									{"SolutionDir", "\"" + Directory.GetParent(Path.GetDirectoryName(ProjectPath)).FullName + "\\\\\""}
 			                 	};
 
 			if (!string.IsNullOrEmpty(Configuration))
