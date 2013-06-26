@@ -57,8 +57,6 @@ namespace SpecsFor.Mvc.IIS
 			else
 			{
 				Console.WriteLine("The publish succeeded.");
-				Console.WriteLine(stdout);
-				Console.WriteLine(stderr);
 			}
 		}
 
