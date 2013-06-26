@@ -32,12 +32,12 @@ namespace SpecsFor.Mvc
 			AddNewAction(() => configAction(RouteTable.Routes));
 		}
 
-		public void RegisterArea<T>() where T : AreaRegistration, new()
+		public void RegisterArea<T>(object state = null) where T : AreaRegistration, new()
 		{
 			AddNewAction(() =>
 			             	{
 								var reg = new T();
-								reg.RegisterArea(new AreaRegistrationContext(reg.AreaName, RouteTable.Routes));
+								reg.RegisterArea(new AreaRegistrationContext(reg.AreaName, RouteTable.Routes, state));
 			             	});
 		}
 
