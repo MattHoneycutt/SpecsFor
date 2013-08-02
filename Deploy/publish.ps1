@@ -9,6 +9,7 @@ if ((Get-Module psake) -eq $null) {
 }
 
 invoke-psake "$($PackageName).ps1" -taskList Publish
+#invoke-psake "$($PackageName).ps1" -taskList Pack
 
 if ($loadedPsake) {
 	remove-module psake
