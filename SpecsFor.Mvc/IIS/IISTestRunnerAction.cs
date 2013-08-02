@@ -10,6 +10,7 @@ namespace SpecsFor.Mvc.IIS
 	{
 		private IISExpressProcess _iisExpressProcess;
 		private string _publishDir;
+		private string _intermediateDir;
 
 		public string ProjectPath { get; set; }
 
@@ -61,12 +62,18 @@ namespace SpecsFor.Mvc.IIS
 			//TODO: Make sure the config is valid!
 
 			_publishDir = Path.Combine(Directory.GetCurrentDirectory(), "SpecsForMvc.TestSite");
+			_intermediateDir = Path.Combine(Directory.GetCurrentDirectory(), "SpecsForMvc.TempIntermediateDir");
 
 			var properties = new Dictionary<string, string>
 			                 	{
 									{"DeployOnBuild", "true"},
 									{"DeployTarget", "Package"},
 									{"_PackageTempDir", "\"" + _publishDir + "\""},
+									//If you think this looks bad, that's because it does.  What this
+									//actually outputs looks like: "path\to\whatever\\"
+									//The backslash on the end has to be esaped, otherwise msbuild.exe
+									//will interpet it as escaping the final quote, which is incorrect.
+									{"BaseIntermediateOutputPath", "\"" + _intermediateDir + "\\\\\""},
 									{"AutoParameterizationWebConfigConnectionStrings", "false"},
 									{"Platform", Platform ?? "AnyCPU" },
 									//Needed for Post-Build events that reference the SolutionDir macro/property.  
