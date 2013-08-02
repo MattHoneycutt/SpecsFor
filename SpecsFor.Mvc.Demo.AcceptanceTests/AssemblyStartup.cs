@@ -14,6 +14,7 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 			var config = new SpecsForMvcConfig();
 			config.UseIISExpress()
 				.With(Project.Named("SpecsFor.Mvc.Demo"))
+				.CleanupPublishedFiles()
 				.ApplyWebConfigTransformForConfig("Test");
 
 			//TODO: The order of registration matters right now, but it shouldn't. 

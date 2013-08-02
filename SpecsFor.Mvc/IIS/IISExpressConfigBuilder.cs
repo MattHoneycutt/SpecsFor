@@ -43,5 +43,11 @@ namespace SpecsFor.Mvc.IIS
 			_action.Configuration = configuration;
 			return this;
 		}
+
+		public IISExpressConfigBuilder CleanupPublishedFiles()
+		{
+			_action.CleanupPublishedFiles = true;
+			return this;
+		}
 	}
 }

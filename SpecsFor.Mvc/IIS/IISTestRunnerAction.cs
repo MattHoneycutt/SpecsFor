@@ -18,6 +18,8 @@ namespace SpecsFor.Mvc.IIS
 
 		public string Platform { get; set; }
 
+		public bool CleanupPublishedFiles { get; set; }
+
 		private void StartIISExpress()
 		{
 			_iisExpressProcess = new IISExpressProcess(_publishDir);
@@ -54,6 +56,18 @@ namespace SpecsFor.Mvc.IIS
 				Console.WriteLine(stdout);
 				Console.WriteLine(stderr);
 				throw new ApplicationException("Build failed.");
+			}
+		}
+		
+		private void SafelyRemoveDirectory(string targetDirectory)
+		{
+			try
+			{
+				Directory.Delete(targetDirectory, true);
+			}
+			catch (Exception)
+			{
+				Console.WriteLine("There was a problem deleting {0}.", targetDirectory);
 			}
 		}
 
@@ -97,12 +111,17 @@ namespace SpecsFor.Mvc.IIS
 				_iisExpressProcess.Stop();
 
 				//To make the publish faster, the published app isn't deleted.  This reduces
-				//the amount of work MSBuild needs to do each time it's invoked.  This
-				//might need to be a configurable option in some scenarios though.
-				//if (Directory.Exists(_publishDir))
-				//{
-				//    Directory.Delete(_publishDir, true);
-				//}
+				//the amount of work MSBuild needs to do each time it's invoked.  It
+				//can be overriden though.
+				if (CleanupPublishedFiles && Directory.Exists(_publishDir))
+				{
+					SafelyRemoveDirectory(_publishDir);
+				}
+
+				if (CleanupPublishedFiles && Directory.Exists(_intermediateDir))
+				{
+					SafelyRemoveDirectory(_intermediateDir);
+				}
 			}
 		}
 	}
