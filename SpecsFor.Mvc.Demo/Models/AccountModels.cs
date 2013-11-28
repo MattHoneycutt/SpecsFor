@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-using Microsoft.Web.Mvc;
 
 namespace SpecsFor.Mvc.Demo.Models
 {
