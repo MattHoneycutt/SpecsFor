@@ -40,7 +40,7 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 					.Field(m => m.UserName).ShouldBeInvalid();
 			}
 
-			[Test]
+			[Test, Ignore]
 			public void then_it_marks_the_email_as_invalid()
 			{
 				SUT.FindFormFor<RegisterModel>()
