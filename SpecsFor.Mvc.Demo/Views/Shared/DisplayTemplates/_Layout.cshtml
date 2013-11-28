@@ -1,5 +1,4 @@
-﻿@using Microsoft.Web.Mvc
-@model dynamic
+﻿@model dynamic
 @if (HttpContext.Current.IsDebuggingEnabled)
 { // wrap elements with an id for SpecsFor.MVC testing
 <span id="@Html.IdForModel()">@RenderBody()</span>
