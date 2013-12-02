@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace SpecsFor.Mvc
 {
@@ -30,15 +31,40 @@ namespace SpecsFor.Mvc
 			return FluentForm;
 		}
 
-		public FluentForm<T> SetValueTo(string value)
-		{
-			Field.Clear();
-			Field.SendKeys(value);
+        public FluentForm<T> SetValueTo(string value)
+        {
+            Field.Clear();
+            Field.SendKeys(value);
 
-			WebApp.Pause();
+            WebApp.Pause();
 
-			return FluentForm;
-		}
+            return FluentForm;
+        }
+        public FluentForm<T> SelectByValue(string value)
+        {
+            //create select element object 
+            var selectElement = new SelectElement(Field);
+                                
+            //select by value
+            selectElement.SelectByValue(value);
+
+            WebApp.Pause();
+
+            return FluentForm;
+        }
+
+        public FluentForm<T> SelecyByText(string text)
+        {
+            //create select element object 
+            var selectElement = new SelectElement(Field);
+
+            // select by text
+            selectElement.SelectByText(text);
+
+            WebApp.Pause();
+
+            return FluentForm;
+        }
 
 		public FluentForm<T> Click()
 		{
