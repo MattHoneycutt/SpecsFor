@@ -75,9 +75,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="WebDriver, Version=2.37.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="WebDriver, Version=2.39.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Selenium.WebDriver.2.37.0\lib\net40\WebDriver.dll</HintPath>
+      <HintPath>..\packages\Selenium.WebDriver.2.39.0\lib\net40\WebDriver.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
