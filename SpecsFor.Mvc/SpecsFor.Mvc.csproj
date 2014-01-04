@@ -45,14 +45,6 @@
     <Reference Include="Microsoft.Web.Mvc">
       <HintPath>..\packages\Mvc4Futures.4.0.20710.0\lib\net40\Microsoft.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="MvcContrib.TestHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MvcContrib.Mvc3.TestHelper-ci.3.0.100.0\lib\MvcContrib.TestHelper.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -97,11 +89,15 @@
     <Compile Include="ElementNotFoundException.cs" />
     <Compile Include="Helpers\FakeHttpContext.cs" />
     <Compile Include="Helpers\FakeHttpRequest.cs" />
+    <Compile Include="Helpers\FakeHttpResponse.cs" />
+    <Compile Include="Helpers\FakeHttpSessionState.cs" />
     <Compile Include="Helpers\FakeViewDataContainer.cs" />
     <Compile Include="FluentDisplay.cs" />
     <Compile Include="FluentField.cs" />
     <Compile Include="FluentForm.cs" />
     <Compile Include="Authentication\IHandleAuthentication.cs" />
+    <Compile Include="Helpers\RouteAssertionException.cs" />
+    <Compile Include="Helpers\RouteTestingExtensions.cs" />
     <Compile Include="IIS\IISExpressConfigBuilder.cs" />
     <Compile Include="IIS\IISExpressProcess.cs" />
     <Compile Include="IIS\IISTestRunnerAction.cs" />

@@ -3,7 +3,7 @@ using NUnit.Framework;
 using SpecsFor.Mvc.Demo.Controllers;
 using Should;
 using SpecsFor.Mvc.Demo.Models;
-using MvcContrib.TestHelper;
+using SpecsFor.Mvc.Helpers;
 
 namespace SpecsFor.Mvc.Demo.AcceptanceTests
 {

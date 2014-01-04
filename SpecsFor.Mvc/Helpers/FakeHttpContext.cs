@@ -5,7 +5,6 @@ using System.Collections.Specialized;
 using System.Security.Principal;
 using System.Web;
 using System.Web.SessionState;
-using MvcContrib.TestHelper.Fakes;
 
 namespace SpecsFor.Mvc.Helpers
 {
@@ -26,7 +25,7 @@ namespace SpecsFor.Mvc.Helpers
 		{
 			get
 			{
-				return this._request ?? (HttpRequestBase)new MvcContrib.TestHelper.Fakes.FakeHttpRequest(this._relativeUrl, this._method, this._formParams, this._queryStringParams, this._cookies);
+				return this._request ?? (HttpRequestBase)new FakeHttpRequest(this._relativeUrl, this._method, this._formParams, this._queryStringParams, this._cookies);
 			}
 		}
 
@@ -95,9 +94,9 @@ namespace SpecsFor.Mvc.Helpers
 			this._items = new Dictionary<object, object>();
 		}
 
-		public static MvcContrib.TestHelper.Fakes.FakeHttpContext Root()
+		public static FakeHttpContext Root()
 		{
-			return new MvcContrib.TestHelper.Fakes.FakeHttpContext("~/");
+			return new FakeHttpContext("~/");
 		}
 
 		public void SetRequest(HttpRequestBase request)

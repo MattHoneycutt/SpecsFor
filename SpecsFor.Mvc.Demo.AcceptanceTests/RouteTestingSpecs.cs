@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using SpecsFor.Mvc.Demo.Areas.Tasks.Controllers;
-using MvcContrib.TestHelper;
+using SpecsFor.Mvc.Helpers;
 
 namespace SpecsFor.Mvc.Demo.AcceptanceTests
 {
@@ -22,7 +22,7 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 			[Test]
 			public void then_it_throws_an_exception_on_a_different_route()
 			{
-				Assert.Throws<MvcContrib.TestHelper.AssertionException>(() => SUT.Route.ShouldMapTo<ListController>(c => c.Create(4, "other")));
+				Assert.Throws<RouteAssertionException>(() => SUT.Route.ShouldMapTo<ListController>(c => c.Create(4, "other")));
 			}
 		}
 	}

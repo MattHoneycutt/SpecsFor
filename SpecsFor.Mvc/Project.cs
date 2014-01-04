@@ -7,8 +7,6 @@ namespace SpecsFor.Mvc
 	{
 		public static string Named(string projectName)
 		{
-			Console.WriteLine("Beginning search for project '{0}' in directory '{1}'...", projectName, Environment.CurrentDirectory);
-
 			var directory = new DirectoryInfo(Environment.CurrentDirectory);
 
 			while (directory.GetFiles("*.sln").Length == 0)

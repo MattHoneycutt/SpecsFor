@@ -3,7 +3,7 @@ using Should;
 using SpecsFor.Mvc.Demo.Controllers;
 using SpecsFor.Mvc.Demo.Models;
 using System.Linq;
-using MvcContrib.TestHelper;
+using SpecsFor.Mvc.Helpers;
 using SpecsFor.Mvc.Smtp;
 
 namespace SpecsFor.Mvc.Demo.AcceptanceTests

@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
 using Should;
-using MvcContrib.TestHelper;
 using SpecsFor.Mvc.Demo.Controllers;
 using SpecsFor.Mvc.Demo.Models;
+using SpecsFor.Mvc.Helpers;
 
 namespace SpecsFor.Mvc.Demo.AcceptanceTests
 {

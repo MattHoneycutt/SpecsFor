@@ -49,14 +49,10 @@ namespace SpecsFor.Mvc.IIS
 
 			if (!success)
 			{
-				Console.WriteLine("The publish failed.");
+				Console.WriteLine("The publish failed.  Dumping MSBuild output:");
 				Console.WriteLine(stdout);
 				Console.WriteLine(stderr);
 				throw new ApplicationException("Build failed.");
-			}
-			else
-			{
-				Console.WriteLine("The publish succeeded.");
 			}
 		}
 
