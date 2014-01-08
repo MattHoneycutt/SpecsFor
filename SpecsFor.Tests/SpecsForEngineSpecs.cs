@@ -47,7 +47,7 @@ namespace SpecsFor.Tests
 			public void then_it_applies_spec_init_behaviors()
 			{
 				GetMockFor<IBehaviorStack>()
-					.Verify(s => s.ApplySpecInitTo(It.IsAny<object>()));
+					.Verify(s => s.ApplySpecInitTo(It.IsAny<ISpecs>()));
 			}
 
 			[Test]
@@ -68,7 +68,7 @@ namespace SpecsFor.Tests
 			public void then_it_applies_after_class_under_test_initialized_behaviors()
 			{
 				GetMockFor<IBehaviorStack>()
-					.Verify(s => s.ApplyAfterClassUnderTestInitializedTo(It.IsAny<object>()));
+					.Verify(s => s.ApplyAfterClassUnderTestInitializedTo(It.IsAny<ISpecs>()));
 			}
 		}
 

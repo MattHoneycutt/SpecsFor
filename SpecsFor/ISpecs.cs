@@ -17,6 +17,7 @@ namespace SpecsFor
 		/// <returns></returns>
 		Mock<TMock>[] GetMockForEnumerableOf<TMock>(int enumerableSize) where TMock : class;
 
+		IContainer MockContainer { get; }
 
 		void ConfigureContainer(IContainer container);
 

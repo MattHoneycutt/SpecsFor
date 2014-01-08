@@ -12,6 +12,11 @@ namespace SpecsFor
 	{
 		private readonly SpecsForEngine<T> _engine;
 
+		public IContainer MockContainer
+		{
+			get { return _engine.Mocker.Container; }
+		}
+
 		public T SUT { get { return _engine.SUT; } set { _engine.SUT = value; } }
 
 		protected SpecsFor()

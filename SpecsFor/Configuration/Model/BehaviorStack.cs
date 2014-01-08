@@ -49,7 +49,7 @@ namespace SpecsFor.Configuration.Model
 			return behaviors;
 		}
 
-		public void ApplyGivenTo(object specs)
+		public void ApplyGivenTo(ISpecs specs)
 		{
 			var behaviors = FindBehaviorsFor(specs);
 
@@ -59,7 +59,7 @@ namespace SpecsFor.Configuration.Model
 			}
 		}
 
-		public void ApplyAfterSpecTo(object specs)
+		public void ApplyAfterSpecTo(ISpecs specs)
 		{
 			var behaviors = FindBehaviorsFor(specs);
 
@@ -69,7 +69,7 @@ namespace SpecsFor.Configuration.Model
 			}
 		}
 
-		public void ApplySpecInitTo(object specs)
+		public void ApplySpecInitTo(ISpecs specs)
 		{
 			var behaviors = FindBehaviorsFor(specs);
 
@@ -79,7 +79,7 @@ namespace SpecsFor.Configuration.Model
 			}
 		}
 
-		public void ApplyAfterClassUnderTestInitializedTo(object specs)
+		public void ApplyAfterClassUnderTestInitializedTo(ISpecs specs)
 		{
 			var behaviors = FindBehaviorsFor(specs);
 
@@ -89,7 +89,7 @@ namespace SpecsFor.Configuration.Model
 			}
 		}
 
-		public Func<object> GetInitializationMethodFor(object specs)
+		public Func<object> GetInitializationMethodFor(ISpecs specs)
 		{
 			return _stack.Reverse().Select(c => c.GetInitializationMethodFor(specs.GetType())).FirstOrDefault(i => i != null);
 		}
