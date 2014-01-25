@@ -10,11 +10,11 @@ namespace SpecsFor.Mvc.Helpers
 	/// </summary>
 	public static class RouteTestingExtensions
 	{
-		public static void AssertSameStringAs(this string left, string right)
+		public static void AssertSameStringAs(this string expected, string actual)
 		{
-			if (!string.Equals(left, right, StringComparison.InvariantCultureIgnoreCase))
+			if (!string.Equals(expected, actual, StringComparison.InvariantCultureIgnoreCase))
 			{
-				var message = string.Format("Expected {0} but was {1}", right, left);
+				var message = string.Format("Expected {0} but was {1}", expected, actual);
 				throw new AssertionException(message);
 			}
 		}
@@ -39,9 +39,9 @@ namespace SpecsFor.Mvc.Helpers
 
 			//check action
 			var methodCall = (MethodCallExpression)action.Body;
-			string actualAction = routeData.Values.GetValue("action").ToString();
 			string expectedAction = methodCall.Method.Name;
-			actualAction.AssertSameStringAs(expectedAction);
+			string actualAction = routeData.Values.GetValue("action").ToString();
+			expectedAction.AssertSameStringAs(actualAction);
 
 			//check parameters
 			for (int i = 0; i < methodCall.Arguments.Count; i++)
