@@ -49,5 +49,28 @@ namespace SpecsFor.Mvc.IIS
 			_action.CleanupPublishedFiles = true;
 			return this;
 		}
+
+        /// <summary>
+        /// Sets the path to an IIS application host configuration file.
+        /// </summary>
+        /// <param name="applicationHostConfigurationFile">The full path to the application host configuration file.</param>
+        /// <returns></returns>
+        /// <remarks>If a full path is not given it is assumed that the configuration file is part of the test project
+        /// and will be found in the test assembly's output folder.</remarks>
+        public IISExpressConfigBuilder ApplicationHostConfigurationFile(string applicationHostConfigurationFile)
+        {
+            var hostConfigPath = Path.GetFullPath(applicationHostConfigurationFile);
+
+            if (File.Exists(hostConfigPath))
+            {
+                _action.ApplicationHostConfigurationFile = applicationHostConfigurationFile;
+            }
+            else
+            {
+                throw new FileNotFoundException("No application host configuration files were found in " + hostConfigPath);
+            }
+
+            return this;
+        }
 	}
 }
