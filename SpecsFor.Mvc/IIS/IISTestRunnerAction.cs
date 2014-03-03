@@ -20,9 +20,17 @@ namespace SpecsFor.Mvc.IIS
 
 		public bool CleanupPublishedFiles { get; set; }
 
+        public string ApplicationHostConfigurationFile { get; set; }
+
+        /// <summary>
+        /// Gets the name of the web application project.
+        /// </summary>
+        /// <remarks>This is used to tie back to the site name to configure when an application configuration file is used.</remarks>
+        public string ProjectName { get; private set; }
+
 		private void StartIISExpress()
 		{
-			_iisExpressProcess = new IISExpressProcess(_publishDir);
+            _iisExpressProcess = new IISExpressProcess(_publishDir, ApplicationHostConfigurationFile, ProjectName);
 			_iisExpressProcess.Start();
 
 			MvcWebApp.BaseUrl = "http://localhost:" + _iisExpressProcess.PortNumber;
@@ -74,6 +82,17 @@ namespace SpecsFor.Mvc.IIS
 		public void Startup()
 		{
 			//TODO: Make sure the config is valid!
+
+            if (ProjectPath.Contains("\\"))
+            {
+                ProjectName = ProjectPath.Substring(ProjectPath.LastIndexOf("\\") + 1);
+            }
+            else
+            {
+                ProjectName = ProjectPath;
+            }
+
+            ProjectName = ProjectName.Replace(".csproj", string.Empty).Replace(".vbproj", string.Empty);
 
 			_publishDir = Path.Combine(Directory.GetCurrentDirectory(), "SpecsForMvc.TestSite");
 			_intermediateDir = Path.Combine(Directory.GetCurrentDirectory(), "SpecsForMvc.TempIntermediateDir");
