@@ -4,6 +4,7 @@ using SpecsFor.Configuration.Model;
 using SpecsFor.Validation;
 using StructureMap;
 using StructureMap.AutoMocking;
+using StructureMap.AutoMocking.Moq;
 
 namespace SpecsFor
 {

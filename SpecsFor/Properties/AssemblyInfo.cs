@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("SpecsFor")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("http://trycatchfail.com")]
+[assembly: AssemblyCompany("http://heroicapplications.com")]
 [assembly: AssemblyProduct("SpecsFor")]
 [assembly: AssemblyCopyright("Copyright - Matt Honeycutt")]
 [assembly: AssemblyTrademark("")]
@@ -32,8 +32,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.1.1")]
-[assembly: AssemblyFileVersion("3.1.1")]
-[assembly: AssemblyInformationalVersion("3.1.1-test2")]
+[assembly: AssemblyVersion("4.0.0")]
+[assembly: AssemblyFileVersion("4.0.0")]
+[assembly: AssemblyInformationalVersion("4.0.0-rc1")]
 [assembly: InternalsVisibleTo("SpecsFor.Tests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
