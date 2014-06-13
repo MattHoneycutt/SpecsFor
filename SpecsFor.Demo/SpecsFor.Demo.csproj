@@ -48,24 +48,20 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Rhino.Mocks">
-      <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
-    </Reference>
     <Reference Include="Should, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Should.1.1.20\lib\Should.dll</HintPath>
     </Reference>
-    <Reference Include="SpecsFor, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SpecsFor, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SpecsFor.3.0.0\lib\net40\SpecsFor.dll</HintPath>
+      <HintPath>..\packages\SpecsFor.4.0.0-rc1\lib\net40\SpecsFor.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\structuremap.3.0.3.116\lib\net40\StructureMap.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap.AutoMocking, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\structuremap.automocking.3.0.0.108\lib\net40\StructureMap.AutoMocking.dll</HintPath>
+    <Reference Include="StructureMap.AutoMocking.Moq">
+      <HintPath>..\packages\structuremap.automocking.moq.3.0.2.115\lib\net40\StructureMap.AutoMocking.Moq.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap.Net4, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
