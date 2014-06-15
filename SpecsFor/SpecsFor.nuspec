@@ -10,6 +10,13 @@
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>SpecsFor is another Behavior-Driven Development framework that focuses on ease of use for *developers* by minimizing testing friction.</description>
 		<tags>testing tdd bdd specs</tags>
+		<dependencies>
+			<dependency id="ExpectedObjects" version="1.1.1" />
+			<dependency id="NUnit" version="2.6.3" />
+			<dependency id="Should" version="1.1.20" />
+			<dependency id="structuremap.automocking.moq" version="3.0.2.115" />
+			<dependency id="Moq" version="4.2.1402.2112" />
+		</dependencies>
 	</metadata>
 	<files>
 		<file src="Readme.txt" target="Readme.txt" />
