@@ -34,3 +34,4 @@ _ReSharper*/
 *.zip
 *.ncrunchproject
 packages/
+ResharperTemplates/*.nupkg

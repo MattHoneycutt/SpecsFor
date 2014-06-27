@@ -1,0 +1,36 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BBEA9C5F1A58C4B8B9B5B52040DE7CE/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BBEA9C5F1A58C4B8B9B5B52040DE7CE/Shortcut/@EntryValue">then</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BBEA9C5F1A58C4B8B9B5B52040DE7CE/Description/@EntryValue">Creates a spec within a spec fixture. </s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BBEA9C5F1A58C4B8B9B5B52040DE7CE/Text/@EntryValue">[NUnit.Framework.Test]&#xD;
+public void then_$it_should$()&#xD;
+{&#xD;
+	$END$&#xD;
+}</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BBEA9C5F1A58C4B8B9B5B52040DE7CE/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BBEA9C5F1A58C4B8B9B5B52040DE7CE/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BBEA9C5F1A58C4B8B9B5B52040DE7CE/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BBEA9C5F1A58C4B8B9B5B52040DE7CE/Scope/=B68999B9D6B43E47A02B22C12A54C3CC/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BBEA9C5F1A58C4B8B9B5B52040DE7CE/Scope/=B68999B9D6B43E47A02B22C12A54C3CC/Type/@EntryValue">InCSharpTypeMember</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BBEA9C5F1A58C4B8B9B5B52040DE7CE/Scope/=B68999B9D6B43E47A02B22C12A54C3CC/CustomProperties/=minimumLanguageVersion/@EntryIndexedValue">2.0</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BBEA9C5F1A58C4B8B9B5B52040DE7CE/Field/=it_005Fshould/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=1BBEA9C5F1A58C4B8B9B5B52040DE7CE/Field/=it_005Fshould/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=8F2E5A0C3AA7954DBDCC3FD55073204A/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=8F2E5A0C3AA7954DBDCC3FD55073204A/Shortcut/@EntryValue">when</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=8F2E5A0C3AA7954DBDCC3FD55073204A/Description/@EntryValue">Creates a spec class (test fixture) within a spec file. </s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=8F2E5A0C3AA7954DBDCC3FD55073204A/Text/@EntryValue">public class when_$SPEC$ : SpecsFor.SpecsFor&lt;$SUT$&gt;&#xD;
+{&#xD;
+	protected override void When()&#xD;
+	{&#xD;
+		$END$&#xD;
+	}&#xD;
+}</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=8F2E5A0C3AA7954DBDCC3FD55073204A/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=8F2E5A0C3AA7954DBDCC3FD55073204A/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=8F2E5A0C3AA7954DBDCC3FD55073204A/Scope/=B68999B9D6B43E47A02B22C12A54C3CC/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=8F2E5A0C3AA7954DBDCC3FD55073204A/Scope/=B68999B9D6B43E47A02B22C12A54C3CC/Type/@EntryValue">InCSharpTypeMember</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=8F2E5A0C3AA7954DBDCC3FD55073204A/Scope/=B68999B9D6B43E47A02B22C12A54C3CC/CustomProperties/=minimumLanguageVersion/@EntryIndexedValue">2.0</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=8F2E5A0C3AA7954DBDCC3FD55073204A/Field/=SPEC/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=8F2E5A0C3AA7954DBDCC3FD55073204A/Field/=SPEC/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=8F2E5A0C3AA7954DBDCC3FD55073204A/Field/=SUT/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=8F2E5A0C3AA7954DBDCC3FD55073204A/Field/=SUT/Order/@EntryValue">1</s:Int64></wpf:ResourceDictionary>

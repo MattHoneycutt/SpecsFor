@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>SpecsFor.Templates</id>
+				<title>SpecsFor File &amp; Live Templates</title>
+        <version>1.0.0</version>
+				<authors>Matt Honeycutt</authors>
+				<owners>Matt Honeycutt</owners>
+				<licenseUrl>https://github.com/MattHoneycutt/SpecsFor/blob/master/LICENSE.md</licenseUrl>
+				<projectUrl>http://specsfor.com/</projectUrl>
+				<requireLicenseAcceptance>false</requireLicenseAcceptance>
+				<description>File and live templates for use with the SpecsFor testing framework.</description>
+				<releaseNotes>• Initial release!</releaseNotes>
+        <tags>resharper specsfor testing</tags>
+				<dependencies>
+					<dependency id="ReSharper" version="8.0" />
+				</dependencies>
+		</metadata>
+		<files>
+			<file src="fileTemplates.dotSettings" target="ReSharper/vAny/settings/fileTemplates.dotSettings" />
+			<file src="liveTemplates.dotSettings" target="ReSharper/vAny/settings/liveTemplates.dotSettings" />
+		</files>
+</package>
