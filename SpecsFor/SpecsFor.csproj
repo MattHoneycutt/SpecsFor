@@ -97,10 +97,9 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="SpecsFor.nuspec" />
     <None Include="targets\Microsoft.Application.targets" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Readme.txt" />
+    <None Include="tools\Install.ps1" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

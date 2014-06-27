@@ -52,9 +52,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Should.1.1.20\lib\Should.dll</HintPath>
     </Reference>
-    <Reference Include="SpecsFor, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SpecsFor, Version=4.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SpecsFor.4.0.0-rc1\lib\net40\SpecsFor.dll</HintPath>
+      <HintPath>..\packages\SpecsFor.4.0.2\lib\net40\SpecsFor.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

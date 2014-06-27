@@ -5,7 +5,7 @@
 		<version>$version$</version>
 		<authors>Matt Honeycutt</authors>
 		<owners>Matt Honeycutt</owners>
-		<licenseUrl>http://specsfor.codeplex.com/license</licenseUrl>
+		<licenseUrl>https://github.com/MattHoneycutt/SpecsFor/blob/master/LICENSE.md</licenseUrl>
 		<projectUrl>http://specsfor.com/</projectUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>SpecsFor is another Behavior-Driven Development framework that focuses on ease of use for *developers* by minimizing testing friction.</description>
@@ -19,7 +19,6 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Readme.txt" target="Readme.txt" />
 		<file src="Tools\**\*.*" target="tools" />
 		<file src="Templates\**\*.*" exclude="**\.gitignore" target="Templates" />
 	</files>
