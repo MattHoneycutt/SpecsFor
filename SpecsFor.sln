@@ -34,6 +34,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ResharperTemplates", "Resha
 		ResharperTemplates\SpecsFor.Templates.nuspec = ResharperTemplates\SpecsFor.Templates.nuspec
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SpecsFor-Helpers", "SpecsFor-Helpers", "{AD5D8C39-5748-4DA9-A92A-3F31CD1F2CB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsFor.Helpers.Web", "SpecsFor.Helpers.Web\SpecsFor.Helpers.Web.csproj", "{3ACAEC93-008F-48DA-A0A7-16D28F2B266E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsFor.Helpers.Web.Specs", "SpecsFor.Helpers.Web.Specs\SpecsFor.Helpers.Web.Specs.csproj", "{2EC7FA53-2377-4B47-B833-CDDA24AF24A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +74,14 @@ Global
 		{06F84306-ECBA-4C3C-8676-C54AFCB57A3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06F84306-ECBA-4C3C-8676-C54AFCB57A3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06F84306-ECBA-4C3C-8676-C54AFCB57A3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ACAEC93-008F-48DA-A0A7-16D28F2B266E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ACAEC93-008F-48DA-A0A7-16D28F2B266E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ACAEC93-008F-48DA-A0A7-16D28F2B266E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ACAEC93-008F-48DA-A0A7-16D28F2B266E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EC7FA53-2377-4B47-B833-CDDA24AF24A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EC7FA53-2377-4B47-B833-CDDA24AF24A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EC7FA53-2377-4B47-B833-CDDA24AF24A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EC7FA53-2377-4B47-B833-CDDA24AF24A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,5 +94,7 @@ Global
 		{72F23E90-DA8D-40DE-B04E-112B93613D04} = {1DCC0825-52F0-4D1A-BDA5-6E756E3E6D09}
 		{D123B65A-4C1C-49A5-AF9D-380AAAF7F006} = {1DCC0825-52F0-4D1A-BDA5-6E756E3E6D09}
 		{995CD0A1-83EB-4C62-9865-A99B346D1EB1} = {1DCC0825-52F0-4D1A-BDA5-6E756E3E6D09}
+		{3ACAEC93-008F-48DA-A0A7-16D28F2B266E} = {AD5D8C39-5748-4DA9-A92A-3F31CD1F2CB1}
+		{2EC7FA53-2377-4B47-B833-CDDA24AF24A5} = {AD5D8C39-5748-4DA9-A92A-3F31CD1F2CB1}
 	EndGlobalSection
 EndGlobal
