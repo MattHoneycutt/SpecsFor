@@ -80,6 +80,36 @@ namespace SpecsFor.Tests.ShouldExtensions
 		}
 
 		[Test]
+		public void then_it_should_fail_with_incorrectly_nested_objects()
+		{
+			SUT.Nested = new TestObject
+			{
+				Name = "nested 1 test",
+				Awesomeness = -10, //not going to specify in assertion
+				Nested = new TestObject
+				{
+					Name = "ULTRA NEST COMBO KILL",
+					Awesomeness = 69 //thanks, Bill & Ted, real mature.
+				}
+			};
+
+			Assert.Throws<EqualException>(() => SUT.ShouldLookLike(() => new TestObject
+			{
+				Name = "Test",
+				Awesomeness = 11,
+				Nested = new TestObject
+				{
+					Name = "nested 1 test",
+					Nested = new TestObject
+					{
+						Name = "ULTRA NEST COMBO KILL",
+						Awesomeness = 70
+					}
+				}
+			}));
+		}
+
+		[Test]
 		public void then_it_should_work_with_ienumerables()
 		{
 			Assert.Inconclusive("write this code");
