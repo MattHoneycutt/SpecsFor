@@ -17,14 +17,30 @@ namespace SpecsFor.ShouldExtensions
 				Assert.Fail("The matching expression can only be a new object declaration.");
 			}
 
-			var expected = matchFunc.Compile()();
+			ShouldMatch(actual, memberInitExpression);
+		}
 
-			foreach (var memberBinding in memberInitExpression.Bindings)
+		private static void ShouldMatch(object actual, MemberInitExpression expression)
+		{
+			var expected = Expression.Lambda<Func<object>>(expression).Compile()();
+			var type = actual.GetType();
+
+			foreach (var memberBinding in expression.Bindings)
 			{
-				var actualValue = typeof(T).GetProperty(memberBinding.Member.Name).GetValue(actual, null);
-				var expectedValue = typeof(T).GetProperty(memberBinding.Member.Name).GetValue(expected, null);
+				var actualValue = type.GetProperty(memberBinding.Member.Name).GetValue(actual, null);
+				var expectedValue = type.GetProperty(memberBinding.Member.Name).GetValue(expected, null);
 
-				actualValue.ShouldEqual(expectedValue);
+				var bindingAsAnotherExpression = memberBinding as MemberAssignment;
+
+				if (bindingAsAnotherExpression != null &&
+					bindingAsAnotherExpression.Expression.NodeType == ExpressionType.MemberInit)
+				{
+					ShouldMatch(actualValue, bindingAsAnotherExpression.Expression as MemberInitExpression);
+				}
+				else
+				{
+					actualValue.ShouldEqual(expectedValue);
+				}
 			}
 		}
 	}

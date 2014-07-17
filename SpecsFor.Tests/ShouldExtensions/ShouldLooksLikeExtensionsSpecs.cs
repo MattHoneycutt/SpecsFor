@@ -12,6 +12,8 @@ namespace SpecsFor.Tests.ShouldExtensions
 			public Guid TestObjectId { get; set; }
 			public int Awesomeness { get; set; }
 			public string Name { get; set; }
+			public TestObject Nested { get; set; }
+			public TestObject[] NestedArray { get; set; }
 		}
 
 		protected override void InitializeClassUnderTest()
@@ -20,7 +22,7 @@ namespace SpecsFor.Tests.ShouldExtensions
 		}
 
 		[Test]
-		public void then_it_should_only_check_specified_properties_good()
+		public void then_it_should_only_check_specified_properties()
 		{
 			Assert.DoesNotThrow(() => SUT.ShouldLookLike(() => new TestObject
 			{
@@ -39,14 +41,48 @@ namespace SpecsFor.Tests.ShouldExtensions
 		}
 
 		[Test]
-		public void then_it_should_only_check_specified_properties_bad()
+		public void then_it_should_fail_if_specified_properties_dont_match()
 		{
 			Assert.Throws<EqualException>(() => SUT.ShouldLookLike(() => new TestObject
 			{
 				Name = "Tests"
 			}));
 		}
-		
-		//TODO: Handle nested properties, arrays, etc
+
+		[Test]
+		public void then_it_should_work_with_nested_objects()
+		{
+			SUT.Nested = new TestObject
+			{
+				Name = "nested 1 test",
+				Awesomeness = -10, //not going to specify in assertion
+				Nested = new TestObject
+				{
+					Name = "ULTRA NEST COMBO KILL",
+					Awesomeness = 69 //thanks, Bill & Ted, real mature.
+				}
+			};
+
+			Assert.DoesNotThrow(() => SUT.ShouldLookLike(() => new TestObject
+			{
+				Name = "Test",
+				Awesomeness = 11,
+				Nested = new TestObject
+				{
+					Name = "nested 1 test",
+					Nested = new TestObject
+					{
+						Name = "ULTRA NEST COMBO KILL",
+						Awesomeness = 69
+					}
+				}
+			}));
+		}
+
+		[Test]
+		public void then_it_should_work_with_ienumerables()
+		{
+			Assert.Inconclusive("write this code");
+		}
 	}
 }
