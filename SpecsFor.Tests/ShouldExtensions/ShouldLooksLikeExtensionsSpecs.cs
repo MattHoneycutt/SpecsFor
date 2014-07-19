@@ -112,7 +112,249 @@ namespace SpecsFor.Tests.ShouldExtensions
 		[Test]
 		public void then_it_should_work_with_ienumerables()
 		{
-			Assert.Inconclusive("write this code");
+			var list = new[]
+				{
+					new TestObject
+						{
+							Name = "one",
+							Awesomeness = 1
+						},
+					new TestObject
+						{
+							Name = "two",
+							Awesomeness = 2
+						}
+				};
+
+			Assert.DoesNotThrow(() => list.ShouldLookLike(() => new[]
+				{
+					new TestObject
+						{
+							Name = "one",
+							Awesomeness = 1
+						},
+					new TestObject
+						{
+							Name = "two",
+							Awesomeness = 2
+						}
+				}));
+		}
+
+		[Test]
+		public void then_it_should_fail_when_ienumerables_dont_match()
+		{
+			var list = new[]
+				{
+					new TestObject
+						{
+							Name = "one",
+							Awesomeness = 1
+						},
+					new TestObject
+						{
+							Name = "two",
+							Awesomeness = 2
+						}
+				};
+
+			Assert.Throws<EqualException>(() => list.ShouldLookLike(() => new[]
+				{
+					new TestObject
+						{
+							Name = "one",
+							Awesomeness = 1
+						},
+					new TestObject
+						{
+							Name = "two",
+							Awesomeness = 3
+						}
+				}));
+		}
+
+		[Test]
+		public void then_it_should_work_with_nested_ienumerables()
+		{
+			SUT.Nested = new TestObject
+			{
+				Name = "nested 1 test",
+				Awesomeness = -10, //not going to specify in assertion
+				NestedArray = new []
+					{
+						new TestObject
+							{
+								Name = "level 1 nested 1",
+								Awesomeness = 11
+							},
+						new TestObject
+							{
+								Name = "level 1 nested 2",
+								Awesomeness = -4, //not specified in assertion
+								NestedArray = new []
+									{
+										new TestObject
+											{
+												Name = "lets get nested son"
+											}
+									}
+							}
+					},
+				Nested = new TestObject
+				{
+					Name = "ULTRA NEST COMBO KILL",
+					Awesomeness = 69, //thanks, Bill & Ted, real mature.
+					NestedArray = new []
+						{
+							new TestObject
+								{
+									Name = "nested array 1",
+									Awesomeness = -12 //not specified in assertion
+								},
+							new TestObject
+								{
+									Name = "nested array 2"
+								}
+						}
+				}
+			};
+
+			Assert.DoesNotThrow(() => SUT.ShouldLookLike(() => new TestObject
+			{
+				Name = "Test",
+				Awesomeness = 11,
+				Nested = new TestObject
+				{
+					Name = "nested 1 test",
+					NestedArray = new []
+						{
+							new TestObject
+								{
+									Name = "level 1 nested 1",
+									Awesomeness = 11
+								},
+							new TestObject
+								{
+									Name = "level 1 nested 2",
+									NestedArray = new []
+										{
+											new TestObject
+												{
+													Name = "lets get nested son"
+												}
+										}
+								}
+						},
+					Nested = new TestObject
+					{
+						Name = "ULTRA NEST COMBO KILL",
+						Awesomeness = 69, //thanks, Bill & Ted, real mature.
+						NestedArray = new []
+							{
+								new TestObject
+									{
+										Name = "nested array 1",
+									},
+								new TestObject
+									{
+										Name = "nested array 2"
+									}
+							}
+					}
+				}
+			}));
+		}
+
+		[Test]
+		public void then_it_should_fail_with_bad_nested_ienumerables()
+		{
+			SUT.Nested = new TestObject
+			{
+				Name = "nested 1 test",
+				Awesomeness = -10, //not going to specify in assertion
+				NestedArray = new[]
+					{
+						new TestObject
+							{
+								Name = "level 1 nested 1",
+								Awesomeness = 11
+							},
+						new TestObject
+							{
+								Name = "level 1 nested 2",
+								Awesomeness = -4, //not specified in assertion
+								NestedArray = new []
+									{
+										new TestObject
+											{
+												Name = "lets get nested son"
+											}
+									}
+							}
+					},
+				Nested = new TestObject
+				{
+					Name = "ULTRA NEST COMBO KILL",
+					Awesomeness = 69, //thanks, Bill & Ted, real mature.
+					NestedArray = new[]
+						{
+							new TestObject
+								{
+									Name = "nested array 1",
+									Awesomeness = -12 //not specified in assertion
+								},
+							new TestObject
+								{
+									Name = "nested array 2"
+								}
+						}
+				}
+			};
+
+			Assert.Throws<EqualException>(() => SUT.ShouldLookLike(() => new TestObject
+			{
+				Name = "Test",
+				Awesomeness = 11,
+				Nested = new TestObject
+				{
+					Name = "nested 1 test",
+					NestedArray = new[]
+						{
+							new TestObject
+								{
+									Name = "level 1 nested 1",
+									Awesomeness = 11
+								},
+							new TestObject
+								{
+									Name = "level 1 nested 2",
+									NestedArray = new []
+										{
+											new TestObject
+												{
+													Name = "lets get nested son OH NO THIS IS WRONG"
+												}
+										}
+								}
+						},
+					Nested = new TestObject
+					{
+						Name = "ULTRA NEST COMBO KILL",
+						Awesomeness = 69, //thanks, Bill & Ted, real mature.
+						NestedArray = new[]
+							{
+								new TestObject
+									{
+										Name = "nested array 1",
+									},
+								new TestObject
+									{
+										Name = "nested array 2"
+									}
+							}
+					}
+				}
+			}));
 		}
 	}
 }

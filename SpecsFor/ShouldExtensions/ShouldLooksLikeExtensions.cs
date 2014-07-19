@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using Moq;
 using NUnit.Framework;
@@ -10,14 +13,36 @@ namespace SpecsFor.ShouldExtensions
 	{
 		public static void ShouldLookLike<T>(this T actual, Expression<Func<T>> matchFunc) where T : class
 		{
-			var memberInitExpression = (matchFunc.Body as MemberInitExpression);
+			var memberInitExpression = matchFunc.Body as MemberInitExpression;
 
-			if (matchFunc.Body.NodeType != ExpressionType.MemberInit || memberInitExpression == null)
+			if (matchFunc.Body.NodeType == ExpressionType.MemberInit || memberInitExpression != null)
 			{
-				Assert.Fail("The matching expression can only be a new object declaration.");
+				ShouldMatch(actual, memberInitExpression);
 			}
 
-			ShouldMatch(actual, memberInitExpression);
+			var newArrayExpression = matchFunc.Body as NewArrayExpression;
+
+			if (matchFunc.Body.NodeType == ExpressionType.NewArrayInit || newArrayExpression != null)
+			{
+				var actualAsIEnumerable = actual as IEnumerable<object>;
+
+				if (actualAsIEnumerable == null)
+				{
+					throw new InvalidOperationException("Actual value isn't IEnumerable, yet expression is.");
+				}
+
+				ShouldMatchIEnumerable(actualAsIEnumerable, newArrayExpression);
+			}
+
+		}
+
+		private static void ShouldMatchIEnumerable(IEnumerable<object> actual, NewArrayExpression arrayExpression)
+		{
+			var array = actual.ToArray();
+			for (int i = 0; i < arrayExpression.Expressions.Count; i++)
+			{
+				ShouldMatch(array[i], arrayExpression.Expressions[i] as MemberInitExpression);
+			}
 		}
 
 		private static void ShouldMatch(object actual, MemberInitExpression expression)
@@ -37,7 +62,12 @@ namespace SpecsFor.ShouldExtensions
 				{
 					ShouldMatch(actualValue, bindingAsAnotherExpression.Expression as MemberInitExpression);
 				}
-				else
+				else if (bindingAsAnotherExpression != null &&
+						bindingAsAnotherExpression.Expression.NodeType == ExpressionType.NewArrayInit)
+				{
+					ShouldMatchIEnumerable(actualValue as IEnumerable<object>, bindingAsAnotherExpression.Expression as NewArrayExpression);
+				}
+				else 
 				{
 					actualValue.ShouldEqual(expectedValue);
 				}
