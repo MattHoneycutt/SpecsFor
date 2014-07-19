@@ -80,6 +80,7 @@
     <Compile Include="IContext.cs" />
     <Compile Include="ISpecs.cs" />
     <Compile Include="MoqExtensions.cs" />
+    <Compile Include="ShouldExtensions\ShouldLooksLikeExtensions.cs" />
     <Compile Include="Validation\NUnitSpecValidator.cs" />
     <Compile Include="Validation\ISpecValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
