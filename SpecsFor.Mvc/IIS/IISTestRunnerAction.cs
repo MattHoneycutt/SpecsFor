@@ -29,6 +29,7 @@ namespace SpecsFor.Mvc.IIS
 		public string ProjectName { get; private set; }
 
 		public string MSBuildOverride { get; set; }
+		public string SolutionPath { get; set; }
 
 		private void StartIISExpress()
 		{
@@ -41,6 +42,8 @@ namespace SpecsFor.Mvc.IIS
 		private void PublishSite(Dictionary<string, string> properties)
 		{
 			var arguments = "/p:" + string.Join(";", properties.Select(kvp => kvp.Key + "=" + kvp.Value)) + " \"" + ProjectPath + "\"";
+
+			Console.WriteLine(arguments);
 
 			var msBuildPath = MSBuildOverride ?? Path.Combine(System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory(), "msbuild.exe");
 
@@ -114,7 +117,7 @@ namespace SpecsFor.Mvc.IIS
 									{"AutoParameterizationWebConfigConnectionStrings", "false"},
 									{"Platform", Platform ?? "AnyCPU" },
 									//Needed for Post-Build events that reference the SolutionDir macro/property.  
-									{"SolutionDir", "\"" + Directory.GetParent(Path.GetDirectoryName(ProjectPath)).FullName + "\\\\\""}
+									{"SolutionDir", @"""" + Path.GetDirectoryName(SolutionPath) + "\\\\\""}
 								};
 
 			if (!string.IsNullOrEmpty(Configuration))

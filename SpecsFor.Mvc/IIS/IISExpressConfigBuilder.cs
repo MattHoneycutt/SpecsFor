@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 
@@ -17,7 +18,7 @@ namespace SpecsFor.Mvc.IIS
 			return _action;
 		}
 
-		public IISExpressConfigBuilder With(string pathToProject)
+		public IISExpressConfigBuilder With(string pathToProject, string pathToSolution = null)
 		{
 			var projectDirectory = new DirectoryInfo(pathToProject);
 			var projectFile = projectDirectory.EnumerateFiles("*.csproj").SingleOrDefault() ??
@@ -29,6 +30,11 @@ namespace SpecsFor.Mvc.IIS
 			}
 
 			_action.ProjectPath = projectFile.FullName;
+
+			if (pathToSolution == null && (projectDirectory.Parent == null || projectDirectory.Parent.EnumerateFiles("*.sln").SingleOrDefault() == null))
+				throw new InvalidOperationException("Unable to find the project's solution file!  Call 'With()' and specify the path to the solution directly");
+
+			_action.SolutionPath = pathToSolution ?? projectDirectory.Parent.EnumerateFiles("*.sln").SingleOrDefault().FullName;
 			return this;
 		}
 
