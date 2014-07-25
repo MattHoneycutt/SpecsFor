@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Moq;
-using NUnit.Framework;
 using Should;
 
 namespace SpecsFor.ShouldExtensions
@@ -14,15 +11,13 @@ namespace SpecsFor.ShouldExtensions
 		public static void ShouldLookLike<T>(this T actual, Expression<Func<T>> matchFunc) where T : class
 		{
 			var memberInitExpression = matchFunc.Body as MemberInitExpression;
+			var newArrayExpression = matchFunc.Body as NewArrayExpression;
 
-			if (matchFunc.Body.NodeType == ExpressionType.MemberInit || memberInitExpression != null)
+			if (memberInitExpression != null)
 			{
 				ShouldMatch(actual, memberInitExpression);
 			}
-
-			var newArrayExpression = matchFunc.Body as NewArrayExpression;
-
-			if (matchFunc.Body.NodeType == ExpressionType.NewArrayInit || newArrayExpression != null)
+			else if (newArrayExpression != null)
 			{
 				var actualAsIEnumerable = actual as IEnumerable<object>;
 
@@ -33,7 +28,11 @@ namespace SpecsFor.ShouldExtensions
 
 				ShouldMatchIEnumerable(actualAsIEnumerable, newArrayExpression);
 			}
-
+			else
+			{
+				throw new InvalidOperationException(
+					"You must pass in an initialization expression, such as 'new SomeObject{..}' or 'new[] { new SomeObject{...}, new SomeObject{...}'");
+			}
 		}
 
 		private static void ShouldMatchIEnumerable(IEnumerable<object> actual, NewArrayExpression arrayExpression)

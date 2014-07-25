@@ -356,5 +356,16 @@ namespace SpecsFor.Tests.ShouldExtensions
 				}
 			}));
 		}
+
+		[Test]
+		public void then_it_throws_a_good_error_if_you_pass_in_anything_but_a_member_init_expression()
+		{
+			var testObject = new TestObject {};
+
+			Assert.Throws<InvalidOperationException>(() =>
+			{
+				SUT.ShouldLookLike(() => testObject);
+			});
+		}
 	}
 }
