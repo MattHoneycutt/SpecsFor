@@ -21,7 +21,7 @@ namespace SpecsFor.Mvc.IIS
 		{
 			var projectDirectory = new DirectoryInfo(pathToProject);
 			var projectFile = projectDirectory.EnumerateFiles("*.csproj").SingleOrDefault() ??
-			                  projectDirectory.EnumerateFiles("*.vbproj").SingleOrDefault();
+							  projectDirectory.EnumerateFiles("*.vbproj").SingleOrDefault();
 
 			if (projectFile == null)
 			{
@@ -50,27 +50,36 @@ namespace SpecsFor.Mvc.IIS
 			return this;
 		}
 
-        /// <summary>
-        /// Sets the path to an IIS application host configuration file.
-        /// </summary>
-        /// <param name="applicationHostConfigurationFile">The full path to the application host configuration file.</param>
-        /// <returns></returns>
-        /// <remarks>If a full path is not given it is assumed that the configuration file is part of the test project
-        /// and will be found in the test assembly's output folder.</remarks>
-        public IISExpressConfigBuilder ApplicationHostConfigurationFile(string applicationHostConfigurationFile)
-        {
-            var hostConfigPath = Path.GetFullPath(applicationHostConfigurationFile);
+		/// <summary>
+		/// Sets the path to an IIS application host configuration file.
+		/// </summary>
+		/// <param name="applicationHostConfigurationFile">The full path to the application host configuration file.</param>
+		/// <returns></returns>
+		/// <remarks>If a full path is not given it is assumed that the configuration file is part of the test project
+		/// and will be found in the test assembly's output folder.</remarks>
+		public IISExpressConfigBuilder ApplicationHostConfigurationFile(string applicationHostConfigurationFile)
+		{
+			var hostConfigPath = Path.GetFullPath(applicationHostConfigurationFile);
 
-            if (File.Exists(hostConfigPath))
-            {
-                _action.ApplicationHostConfigurationFile = applicationHostConfigurationFile;
-            }
-            else
-            {
-                throw new FileNotFoundException("No application host configuration files were found in " + hostConfigPath);
-            }
+			if (File.Exists(hostConfigPath))
+			{
+				_action.ApplicationHostConfigurationFile = applicationHostConfigurationFile;
+			}
+			else
+			{
+				throw new FileNotFoundException("No application host configuration files were found in " + hostConfigPath);
+			}
 
-            return this;
-        }
+			return this;
+		}
+
+		public IISExpressConfigBuilder UseMSBuildExecutableAt(string pathToExecutable)
+		{
+			if (!File.Exists(pathToExecutable)) throw new FileNotFoundException(@"MSBuild.exe was not found!  Specify the full path, including \msbuild.exe!");
+
+			_action.MSBuildOverride = pathToExecutable;
+
+			return this;
+		}
 	}
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <metadata>
+	<metadata>
 	<id>$id$</id>
 	<version>$version$</version>
 	<title>$title$</title>
@@ -9,9 +9,9 @@
 	<licenseUrl>http://specsfor.codeplex.com/license</licenseUrl>
 	<projectUrl>http://specsfor.com/</projectUrl>
 	<requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>SpecsFor.Mvc is a stand-alone acceptance testing framework for ASP.NET MVC.  It enables you to write strongly-typed, refactor friendly integration tests using the browser and testing framework of your choice.</description>
+		<description>SpecsFor.Mvc is a stand-alone acceptance testing framework for ASP.NET MVC.  It enables you to write strongly-typed, refactor friendly integration tests using the browser and testing framework of your choice.</description>
 	<tags>testing tdd bdd specs acceptance-tests ui-testing</tags>
-  </metadata>
+	</metadata>
 	<files>
 		<file src="Tools\**\*.*" target="tools" />
 		<file src="..\WebDrivers\**\*.*" target="tools" />

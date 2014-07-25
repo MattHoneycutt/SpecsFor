@@ -20,17 +20,19 @@ namespace SpecsFor.Mvc.IIS
 
 		public bool CleanupPublishedFiles { get; set; }
 
-        public string ApplicationHostConfigurationFile { get; set; }
+		public string ApplicationHostConfigurationFile { get; set; }
 
-        /// <summary>
-        /// Gets the name of the web application project.
-        /// </summary>
-        /// <remarks>This is used to tie back to the site name to configure when an application configuration file is used.</remarks>
-        public string ProjectName { get; private set; }
+		/// <summary>
+		/// Gets the name of the web application project.
+		/// </summary>
+		/// <remarks>This is used to tie back to the site name to configure when an application configuration file is used.</remarks>
+		public string ProjectName { get; private set; }
+
+		public string MSBuildOverride { get; set; }
 
 		private void StartIISExpress()
 		{
-            _iisExpressProcess = new IISExpressProcess(_publishDir, ApplicationHostConfigurationFile, ProjectName);
+			_iisExpressProcess = new IISExpressProcess(_publishDir, ApplicationHostConfigurationFile, ProjectName);
 			_iisExpressProcess.Start();
 
 			MvcWebApp.BaseUrl = "http://localhost:" + _iisExpressProcess.PortNumber;
@@ -40,10 +42,12 @@ namespace SpecsFor.Mvc.IIS
 		{
 			var arguments = "/p:" + string.Join(";", properties.Select(kvp => kvp.Key + "=" + kvp.Value)) + " \"" + ProjectPath + "\"";
 
+			var msBuildPath = MSBuildOverride ?? Path.Combine(System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory(), "msbuild.exe");
+
 			var msBuildProc = new Process();
 			msBuildProc.StartInfo = new ProcessStartInfo
 				{
-					FileName = Path.Combine(System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory(), "msbuild.exe"),
+					FileName = msBuildPath,
 					Arguments = arguments,
 					RedirectStandardError = true,
 					RedirectStandardOutput = true,
@@ -83,22 +87,22 @@ namespace SpecsFor.Mvc.IIS
 		{
 			//TODO: Make sure the config is valid!
 
-            if (ProjectPath.Contains("\\"))
-            {
-                ProjectName = ProjectPath.Substring(ProjectPath.LastIndexOf("\\") + 1);
-            }
-            else
-            {
-                ProjectName = ProjectPath;
-            }
+			if (ProjectPath.Contains("\\"))
+			{
+				ProjectName = ProjectPath.Substring(ProjectPath.LastIndexOf("\\") + 1);
+			}
+			else
+			{
+				ProjectName = ProjectPath;
+			}
 
-            ProjectName = ProjectName.Replace(".csproj", string.Empty).Replace(".vbproj", string.Empty);
+			ProjectName = ProjectName.Replace(".csproj", string.Empty).Replace(".vbproj", string.Empty);
 
 			_publishDir = Path.Combine(Directory.GetCurrentDirectory(), "SpecsForMvc.TestSite");
 			_intermediateDir = Path.Combine(Directory.GetCurrentDirectory(), "SpecsForMvc.TempIntermediateDir");
 
 			var properties = new Dictionary<string, string>
-			                 	{
+								{
 									{"DeployOnBuild", "true"},
 									{"DeployTarget", "Package"},
 									{"_PackageTempDir", "\"" + _publishDir + "\""},
@@ -111,7 +115,7 @@ namespace SpecsFor.Mvc.IIS
 									{"Platform", Platform ?? "AnyCPU" },
 									//Needed for Post-Build events that reference the SolutionDir macro/property.  
 									{"SolutionDir", "\"" + Directory.GetParent(Path.GetDirectoryName(ProjectPath)).FullName + "\\\\\""}
-			                 	};
+								};
 
 			if (!string.IsNullOrEmpty(Configuration))
 			{
