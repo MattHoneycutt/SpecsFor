@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Linq.Expressions;
 using Should;
@@ -19,7 +19,7 @@ namespace SpecsFor.ShouldExtensions
 			}
 			else if (newArrayExpression != null)
 			{
-				var actualAsIEnumerable = actual as IEnumerable<object>;
+				var actualAsIEnumerable = actual as IEnumerable;
 
 				if (actualAsIEnumerable == null)
 				{
@@ -35,9 +35,19 @@ namespace SpecsFor.ShouldExtensions
 			}
 		}
 
-		private static void ShouldMatchIEnumerable(IEnumerable<object> actual, NewArrayExpression arrayExpression)
+		private static void ShouldMatchIEnumerable(IEnumerable actual, NewArrayExpression arrayExpression)
 		{
-			var array = actual.ToArray();
+			var array = actual.Cast<object>().ToArray();
+
+			if (arrayExpression.Expressions.Any(x => !(x is MemberInitExpression)))
+			{
+				var expectedArray = ((IEnumerable)Expression.Lambda<Func<object>>(arrayExpression).Compile()()).Cast<object>().ToArray();
+
+				array.ShouldLookLike(expectedArray); 
+				
+				return;
+			}
+
 			for (int i = 0; i < arrayExpression.Expressions.Count; i++)
 			{
 				ShouldMatch(array[i], arrayExpression.Expressions[i] as MemberInitExpression);
@@ -64,7 +74,7 @@ namespace SpecsFor.ShouldExtensions
 				else if (bindingAsAnotherExpression != null &&
 						bindingAsAnotherExpression.Expression.NodeType == ExpressionType.NewArrayInit)
 				{
-					ShouldMatchIEnumerable(actualValue as IEnumerable<object>, bindingAsAnotherExpression.Expression as NewArrayExpression);
+					ShouldMatchIEnumerable(actualValue as IEnumerable, bindingAsAnotherExpression.Expression as NewArrayExpression);
 				}
 				else 
 				{

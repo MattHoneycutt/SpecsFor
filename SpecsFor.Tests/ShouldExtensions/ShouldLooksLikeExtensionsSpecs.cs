@@ -367,5 +367,22 @@ namespace SpecsFor.Tests.ShouldExtensions
 				SUT.ShouldLookLike(() => testObject);
 			});
 		}
+
+		public class WidgetWithPrimitiveArray
+		{
+			public int[] Ints { get; set; }
+		}
+
+		[Test]
+		public void then_it_passes_with_primitive_array_properties_that_are_the_same()
+		{
+			var actual = new WidgetWithPrimitiveArray {Ints = new[] {1, 2, 3}};
+			actual.ShouldLookLike(() =>
+				new WidgetWithPrimitiveArray
+				{
+					Ints = new[] {1, 2, 3}
+				}
+			);
+		}
 	}
 }
