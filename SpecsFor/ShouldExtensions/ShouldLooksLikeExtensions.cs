@@ -41,7 +41,8 @@ namespace SpecsFor.ShouldExtensions
 
 			if (arrayExpression.Expressions.Any(x => !(x is MemberInitExpression)))
 			{
-				var expectedArray = ((IEnumerable)Expression.Lambda<Func<object>>(arrayExpression).Compile()()).Cast<object>().ToArray();
+				var expected = (IEnumerable)Expression.Lambda<Func<object>>(arrayExpression).Compile()();
+				var expectedArray = expected.Cast<object>().ToArray();
 
 				array.ShouldLookLike(expectedArray); 
 				
