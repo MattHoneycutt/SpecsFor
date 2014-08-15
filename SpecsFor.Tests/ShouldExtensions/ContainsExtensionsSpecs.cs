@@ -4,7 +4,7 @@ using SpecsFor.ShouldExtensions;
 
 namespace SpecsFor.Tests.ShouldExtensions
 {
-	public class ContainsExtensionsSpecs : SpecsFor<IEnumerable<string>>
+	public class ContainsExtensionsSpecs : SpecsFor<string[]>
 	{
 		protected override void InitializeClassUnderTest()
 		{

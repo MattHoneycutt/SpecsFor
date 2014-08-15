@@ -34,6 +34,6 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("4.1.0")]
 [assembly: AssemblyFileVersion("4.1.0")]
-[assembly: AssemblyInformationalVersion("4.1.0-rc02")]
+[assembly: AssemblyInformationalVersion("4.1.0-rc03")]
 [assembly: InternalsVisibleTo("SpecsFor.Tests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

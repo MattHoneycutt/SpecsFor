@@ -59,7 +59,7 @@ namespace SpecsFor.Tests
 			}
 		}
 		
-		public class when_tearing_down_after_a_test_given_SUT_implements_IDisposable : SpecsFor<IDisposable>
+		public class when_tearing_down_after_a_test_given_SUT_implements_IDisposable : SpecsFor<object>
 		{
 			protected override void InitializeClassUnderTest()
 			{

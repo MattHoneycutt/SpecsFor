@@ -64,17 +64,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Should.1.1.20\lib\Should.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="StructureMap, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\structuremap.3.0.3.116\lib\net40\StructureMap.dll</HintPath>
+      <HintPath>..\packages\structuremap.3.1.0.133\lib\net40\StructureMap.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap.AutoMocking.Moq, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="StructureMap.AutoMocking.Moq, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\structuremap.automocking.moq.3.0.2.115\lib\net40\StructureMap.AutoMocking.Moq.dll</HintPath>
+      <HintPath>..\packages\structuremap.automocking.moq.3.1.0.133\lib\net40\StructureMap.AutoMocking.Moq.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap.Net4, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="StructureMap.Net4, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\structuremap.3.0.3.116\lib\net40\StructureMap.Net4.dll</HintPath>
+      <HintPath>..\packages\structuremap.3.1.0.133\lib\net40\StructureMap.Net4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
