@@ -29,6 +29,11 @@ namespace SpecsFor
 			context.Initialize(_specs);
 		}
 
+		public void ApplyContext(IContext context)
+		{
+			context.Initialize(_specs);
+		}
+
 		public void Init()
 		{
 			_validator.ValidateSpec(_specs);

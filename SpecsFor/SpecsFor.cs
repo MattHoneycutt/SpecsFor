@@ -61,7 +61,7 @@ namespace SpecsFor
 		public MoqAutoMocker<T> Mocker
 		{
 			get { return _engine.Mocker;}
-		} 
+		}
 
 		protected void Given<TContext>() where TContext : IContext<T>, new()
 		{
@@ -69,6 +69,11 @@ namespace SpecsFor
 		}
 
 		protected void Given(IContext<T> context)
+		{
+			_engine.ApplyContext(context);
+		}
+	
+		protected void Given(SpecsFor.IContext context)
 		{
 			_engine.ApplyContext(context);
 		}
