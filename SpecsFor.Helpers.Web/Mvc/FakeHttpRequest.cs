@@ -7,55 +7,28 @@ namespace SpecsFor.Helpers.Web.Mvc
 {
 	public class FakeHttpRequest : HttpRequestBase
 	{
-		private readonly NameValueCollection _formParams;
-
-		private readonly NameValueCollection _queryStringParams;
-
-		private readonly HttpCookieCollection _cookies;
-
 		private Uri _url;
-
 		private string _method;
-
 		private bool _isAuthenticated;
-
 		private string _pathInfo;
-
 		private Mock<HttpBrowserCapabilitiesBase> _browser;
-
-		public FakeHttpRequest(string method)
-			: this(null, null, null)
-		{
-			_method = method;
-		}
-
-		public FakeHttpRequest(NameValueCollection formParams, NameValueCollection queryStringParams, HttpCookieCollection cookies)
-		{
-			_browser = new Mock<HttpBrowserCapabilitiesBase>();
-			_formParams = formParams;
-			_queryStringParams = queryStringParams;
-			_cookies = cookies;
-		}
+		private readonly IFormParamsProvider _formParams;
+		private readonly IQueryStringParamsProvider _queryStringParams;
+		private readonly ICookieProvider _cookies;
 
 		public override HttpBrowserCapabilitiesBase Browser
 		{
 			get
 			{
-				return _browser.Object;
+				return this._browser.Object;
 			}
-		}
-
-		public void SetBrowser(string name, string version)
-		{
-			_browser.SetupGet(b => b.Browser).Returns(name);
-			_browser.SetupGet(b => b.Version).Returns(version);
 		}
 
 		public override NameValueCollection Form
 		{
 			get
 			{
-				return _formParams;
+				return _formParams.Values ?? new NameValueCollection();
 			}
 		}
 
@@ -63,7 +36,7 @@ namespace SpecsFor.Helpers.Web.Mvc
 		{
 			get
 			{
-				return _queryStringParams;
+				return _queryStringParams.Values ?? new NameValueCollection();
 			}
 		}
 
@@ -71,7 +44,7 @@ namespace SpecsFor.Helpers.Web.Mvc
 		{
 			get
 			{
-				return _cookies;
+				return _cookies.Cookies ?? new HttpCookieCollection();
 			}
 		}
 
@@ -79,7 +52,7 @@ namespace SpecsFor.Helpers.Web.Mvc
 		{
 			get
 			{
-				return _url;
+				return this._url;
 			}
 		}
 
@@ -91,51 +64,21 @@ namespace SpecsFor.Helpers.Web.Mvc
 			}
 		}
 
-		public void SetUrl(string url)
-		{
-			if (url.StartsWith("~/"))
-			{
-				//Grab path info.
-				_pathInfo = url.Remove(0, 2);
-				url = "http://www.example.com" + url.Remove(0, 1);
-			}
-			else if (url.StartsWith("/"))
-			{
-				//Grab path info
-				_pathInfo = url;
-				url = "http://www.example.com" + url;
-			}
-
-			_url = new Uri(url);
-		}
-
 		public override string HttpMethod
 		{
 			get
 			{
-				return _method ?? base.HttpMethod;
+				return this._method ?? base.HttpMethod;
 			}
-		}
-
-		public void SetHttpMethod(string method)
-		{
-			_method = method;
 		}
 
 		public override bool IsAuthenticated
 		{
 			get
 			{
-				return _isAuthenticated;
+				return this._isAuthenticated;
 			}
 		}
-
-
-		public void SetIsAuthenticated(bool isAuthenticated)
-		{
-			_isAuthenticated = isAuthenticated;
-		}
-
 
 		public override string AppRelativeCurrentExecutionFilePath
 		{
@@ -149,8 +92,54 @@ namespace SpecsFor.Helpers.Web.Mvc
 		{
 			get
 			{
-				return _pathInfo ?? "";
+				return this._pathInfo ?? "";
 			}
+		}
+
+		//TODO: Remove? 
+		//public FakeHttpRequest(string method)
+		// : this((NameValueCollection)null, (NameValueCollection)null, (HttpCookieCollection)null)
+		//{
+		// this._method = method;
+		//}
+
+		public FakeHttpRequest(IFormParamsProvider formParams = null, IQueryStringParamsProvider queryStringParams = null, ICookieProvider cookies = null)
+		{
+			_browser = new Mock<HttpBrowserCapabilitiesBase>();
+			_formParams = formParams ?? new EmptyFormsParamProvider();
+			_queryStringParams = queryStringParams ?? new EmptyQueryStringParamProvider();
+			_cookies = cookies ?? new EmptyCookieProvider();
+		}
+
+		public void SetBrowser(string name, string version)
+		{
+			_browser.SetupGet(b => b.Browser).Returns(name);
+			_browser.SetupGet(b => b.Version).Returns(version);
+		}
+
+		public void SetUrl(string url)
+		{
+			if (url.StartsWith("~/"))
+			{
+				_pathInfo = url.Remove(0, 2);
+				url = "http://www.example.com" + url.Remove(0, 1);
+			}
+			else if (url.StartsWith("/"))
+			{
+				this._pathInfo = url;
+				url = "http://www.example.com" + url;
+			}
+			this._url = new Uri(url);
+		}
+
+		public void SetHttpMethod(string method)
+		{
+			this._method = method;
+		}
+
+		public void SetIsAuthenticated(bool isAuthenticated)
+		{
+			this._isAuthenticated = isAuthenticated;
 		}
 	}
 }

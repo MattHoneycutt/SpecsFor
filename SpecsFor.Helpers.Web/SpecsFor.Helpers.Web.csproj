@@ -104,7 +104,13 @@
     <Compile Include="Mvc\FakeHttpSessionState.cs" />
     <Compile Include="Mvc\FakeIdentity.cs" />
     <Compile Include="Mvc\FakePrincipal.cs" />
+    <Compile Include="Mvc\FakeRequestContext.cs" />
+    <Compile Include="Mvc\FakeUrlHelper.cs" />
     <Compile Include="Mvc\FakeViewContext.cs" />
+    <Compile Include="Mvc\ICookieProvider.cs" />
+    <Compile Include="Mvc\IFormParamsProvider.cs" />
+    <Compile Include="Mvc\IHttpContextBehavior.cs" />
+    <Compile Include="Mvc\IQueryStringParamsProvider.cs" />
     <Compile Include="Mvc\RouteTestingHelpers.cs" />
     <Compile Include="Mvc\ShouldActionResultExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
