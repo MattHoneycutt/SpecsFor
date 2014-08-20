@@ -31,9 +31,12 @@ namespace SpecsFor.Mvc.IIS
 		public string MSBuildOverride { get; set; }
 		public string SolutionPath { get; set; }
 
+		public int? PortNumber { get; set; }
+
 		private void StartIISExpress()
 		{
 			_iisExpressProcess = new IISExpressProcess(_publishDir, ApplicationHostConfigurationFile, ProjectName);
+			_iisExpressProcess.PortNumber = PortNumber;
 			_iisExpressProcess.Start();
 
 			MvcWebApp.BaseUrl = "http://localhost:" + _iisExpressProcess.PortNumber;

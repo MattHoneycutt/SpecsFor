@@ -87,5 +87,12 @@ namespace SpecsFor.Mvc.IIS
 
 			return this;
 		}
+
+		public IISExpressConfigBuilder UsePort(int portNumber)
+		{
+			_action.PortNumber = portNumber;
+
+			return this;
+		}
 	}
 }
