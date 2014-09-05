@@ -111,6 +111,7 @@
     <Compile Include="Mvc\IFormParamsProvider.cs" />
     <Compile Include="Mvc\IHttpContextBehavior.cs" />
     <Compile Include="Mvc\IQueryStringParamsProvider.cs" />
+    <Compile Include="Mvc\RouteTableTestingExtensions.cs" />
     <Compile Include="Mvc\RouteTestingHelpers.cs" />
     <Compile Include="Mvc\ShouldActionResultExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

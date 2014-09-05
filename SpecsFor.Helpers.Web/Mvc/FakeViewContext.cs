@@ -4,9 +4,9 @@ namespace SpecsFor.Helpers.Web.Mvc
 {
 	public class FakeViewContext : ViewContext
 	{
-		public FakeViewContext()
+		public FakeViewContext(FakeHttpContext context = null)
 		{
-			HttpContext = new FakeHttpContext();
+			HttpContext = context ?? new FakeHttpContext();
 		}
 	}
 }

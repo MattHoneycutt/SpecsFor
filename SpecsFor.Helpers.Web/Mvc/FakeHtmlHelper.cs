@@ -5,8 +5,8 @@ namespace SpecsFor.Helpers.Web.Mvc
 {
 	public class FakeHtmlHelper : HtmlHelper
 	{
-		public FakeHtmlHelper(IViewDataContainer viewDataContainer = null)
-			: base(new FakeViewContext(), viewDataContainer ?? new Mock<IViewDataContainer>().Object)
+		public FakeHtmlHelper(FakeViewContext viewContext, IViewDataContainer viewDataContainer = null)
+			: base(viewContext ?? new FakeViewContext(), viewDataContainer ?? new Mock<IViewDataContainer>().Object)
 		{
 
 		}
@@ -14,8 +14,8 @@ namespace SpecsFor.Helpers.Web.Mvc
 
 	public class FakeHtmlHelper<TModel> : HtmlHelper<TModel> where TModel : class
 	{
-		public FakeHtmlHelper(TModel model)
-			: base(new FakeViewContext(), GetMockContainer(model))
+		public FakeHtmlHelper(TModel model, FakeViewContext viewContext = null)
+			: base(viewContext ?? new FakeViewContext(), GetMockContainer(model))
 		{
 
 		}
