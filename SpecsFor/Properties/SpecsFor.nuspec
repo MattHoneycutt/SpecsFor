@@ -7,7 +7,7 @@
 		<owners>Matt Honeycutt</owners>
 		<licenseUrl>https://github.com/MattHoneycutt/SpecsFor/blob/master/LICENSE.md</licenseUrl>
 		<projectUrl>http://specsfor.com/</projectUrl>
-		<iconUrl>http://specsfor.com/images/specsfor-icon-200x200.png</iconUrl>
+		<iconUrl>http://specsfor.com/images/specsfor-icon-128x128.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>SpecsFor is another Behavior-Driven Development framework that focuses on ease of use for *developers* by minimizing testing friction.</description>
 		<tags>testing tdd bdd specs</tags>
