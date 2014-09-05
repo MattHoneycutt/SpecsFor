@@ -99,7 +99,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="SpecsFor.nuspec" />
+    <None Include="Properties\SpecsFor.nuspec" />
     <None Include="targets\Microsoft.Application.targets" />
     <None Include="tools\Install.ps1" />
   </ItemGroup>

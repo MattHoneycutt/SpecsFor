@@ -96,13 +96,6 @@ namespace SpecsFor.Helpers.Web.Mvc
 			}
 		}
 
-		//TODO: Remove? 
-		//public FakeHttpRequest(string method)
-		// : this((NameValueCollection)null, (NameValueCollection)null, (HttpCookieCollection)null)
-		//{
-		// this._method = method;
-		//}
-
 		public FakeHttpRequest(IFormParamsProvider formParams = null, IQueryStringParamsProvider queryStringParams = null, ICookieProvider cookies = null)
 		{
 			_browser = new Mock<HttpBrowserCapabilitiesBase>();
