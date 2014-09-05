@@ -52,8 +52,9 @@
     <Reference Include="Should">
       <HintPath>..\packages\Should.1.1.20\lib\Should.dll</HintPath>
     </Reference>
-    <Reference Include="SpecsFor">
-      <HintPath>..\packages\SpecsFor.4.0.2\lib\net40\SpecsFor.dll</HintPath>
+    <Reference Include="SpecsFor, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SpecsFor.4.1.0\lib\net40\SpecsFor.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -119,7 +120,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="SpecsFor.Helpers.Web.nuspec" />
+    <None Include="Properties\SpecsFor.Helpers.Web.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
