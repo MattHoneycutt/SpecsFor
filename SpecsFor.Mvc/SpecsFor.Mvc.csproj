@@ -87,6 +87,7 @@
     <Compile Include="AssertionException.cs" />
     <Compile Include="BasicTestRunnerAction.cs" />
     <Compile Include="BrowserDriver.cs" />
+    <Compile Include="DriverNotFoundException.cs" />
     <Compile Include="ElementNotFoundException.cs" />
     <Compile Include="Helpers\FakeHttpContext.cs" />
     <Compile Include="Helpers\FakeHttpRequest.cs" />
@@ -129,7 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="SpecsFor.Mvc.nuspec" />
+    <None Include="Properties\SpecsFor.Mvc.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

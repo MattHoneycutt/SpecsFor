@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.IE;
@@ -46,7 +47,18 @@ namespace SpecsFor.Mvc
 
 		public IWebDriver GetDriver()
 		{
-			return _driver ?? (_driver = _browserFactory());
+			try
+			{
+				return _driver ?? (_driver = _browserFactory());
+			}
+			catch (DriverServiceNotFoundException ex)
+			{
+				throw new DriverNotFoundException(
+					"The configured web driver could not be initialized because the driver executable was not found in '" +
+					Directory.GetCurrentDirectory() +
+					"'.  Make sure the driver is copied to the output directory of your spec project, or install the " +
+					"driver in a location, and add that location to your PATH environment variable.", ex);
+			}
 		}
 
 		public void Shutdown()
