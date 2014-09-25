@@ -12,9 +12,13 @@ namespace SpecsFor.Helpers.Web.Mvc
 	{
 		private static object GetValue(this RouteValueDictionary routeValues, string key)
 		{
-			return (from routeValueKey in routeValues.Keys 
-				where string.Equals(routeValueKey, key, StringComparison.InvariantCultureIgnoreCase) 
-				select routeValues[routeValueKey] as string).FirstOrDefault();
+			var value = (from routeValueKey in routeValues.Keys
+						 where string.Equals(routeValueKey, key, StringComparison.InvariantCultureIgnoreCase)
+						 select routeValues[routeValueKey]).FirstOrDefault();
+
+			value = value == null ? null : value.ToString();
+
+			return value;
 		}
 
 		public static void ShouldMapTo<TController>(this RouteData routeData, Expression<Action<TController>> action)
