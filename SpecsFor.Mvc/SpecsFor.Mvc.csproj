@@ -106,7 +106,6 @@
     <Compile Include="ITestRunnerAction.cs" />
     <Compile Include="MultipleMatchesException.cs" />
     <Compile Include="MvcWebApp.cs" />
-    <Compile Include="MvcWebAppAssertionExtensions.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeleniumExtensions\WebElementExtensions.cs" />

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SpecsFor.Mvc
 {
-	public class FluentForm<T>
+	public class FluentForm<TModel> where TModel : class
 	{
 		private IWebElement _lastField;
 
@@ -16,9 +16,9 @@ namespace SpecsFor.Mvc
 			WebApp = webApp;
 		}
 
-		public FluentField<T,TProp> Field<TProp>(Expression<Func<T, TProp>> property)
+		public FluentField<TModel,TProp> Field<TProp>(Expression<Func<TModel, TProp>> property)
 		{
-			var field = new FluentField<T, TProp>(this, WebApp, property);
+			var field = new FluentField<TModel, TProp>(this, WebApp, property);
 			
 			//Store the last field that is accessed.  This is used to submit the form.
 			_lastField = field.Field;

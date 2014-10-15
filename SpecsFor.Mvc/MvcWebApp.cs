@@ -27,6 +27,8 @@ namespace SpecsFor.Mvc
         public static IHandleAuthentication Authentication { get; set; }
         public static TimeSpan Delay { get; set; }
 
+	    public static IElementLocationConventions ElementLocationConventions = new DefaultElementLocationConventions();
+
         public IWebDriver Browser { get; private set; }
 
         static MvcWebApp()
@@ -60,12 +62,12 @@ namespace SpecsFor.Mvc
             }
         }
 
-        public FluentForm<T> FindFormFor<T>()
+		public FluentForm<TModel> FindFormFor<TModel>() where TModel : class
         {
-            return new FluentForm<T>(this);
+            return new FluentForm<TModel>(this);
         }
 
-        public FluentDisplay<T> FindDisplayFor<T>()
+		public FluentDisplay<T> FindDisplayFor<T>() where T : class
         {
             return new FluentDisplay<T>(this);
         }
@@ -134,6 +136,17 @@ namespace SpecsFor.Mvc
             return element;
         }
 
+		public void UrlShouldMapTo<TController>(Expression<Action<TController>> action) where TController : Controller
+		{
+			var helper = new HtmlHelper(new ViewContext { HttpContext = FakeHttpContext.Root() }, new FakeViewDataContainer());
+			//TODO: workaround to fixes MattHoneycutt/SpecsFor#25
+			var url = BuildUrlFromExpression(helper.ViewContext.RequestContext, helper.RouteCollection, action);
+			var expectedUrl = MvcWebApp.BaseUrl + helper.BuildUrlFromExpression(action);
+
+			if (Browser.Url != expectedUrl) 
+				throw new AssertionException(string.Format("URL does not match target action. \r\n\tExpected {0}\r\n\tActual:{1}", expectedUrl, Browser.Url));
+		}
+
         internal void Pause()
         {
             if (Delay != default(TimeSpan))
@@ -152,13 +165,24 @@ namespace SpecsFor.Mvc
             PreTestCallbacks.Add(action);
         }
 
+		[Obsolete("Use either FindElementByExpressionUsingDisplayConvention or FindElementByExpressionUsingEditorConvention instead!")]
         public IWebElement FindElementByExpression<T, TProp>(Expression<Func<T, TProp>> property)
         {
-            var name = ExpressionHelper.GetExpressionText(property);
+			var name = ExpressionHelper.GetExpressionText(property);
             name = TagBuilder.CreateSanitizedId(name);
 
             var field = Browser.FindElement(By.Id(name));
             return field;
+        }
+
+		public IWebElement FindElementByExpressionUsingDisplayConvention<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class
+        {
+	        return Browser.FindElement(ElementLocationConventions.FindDisplayElementByExpressionFor(property));
+        }
+
+		public IWebElement FindElementByExpressionUsingEditorConvention<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class
+        {
+	        return Browser.FindElement(ElementLocationConventions.FindEditorElementByExpressionFor(property));
         }
 
         public string AllText()
@@ -283,4 +307,29 @@ namespace SpecsFor.Mvc
         }
         #endregion
     }
+
+	public class DefaultElementLocationConventions : IElementLocationConventions
+	{
+		public virtual By FindDisplayElementByExpressionFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class
+		{
+			var name = ExpressionHelper.GetExpressionText(property);
+			var id = TagBuilder.CreateSanitizedId(name);
+
+			return By.Id(id);
+		}
+
+		public virtual By FindEditorElementByExpressionFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class
+		{
+			var name = ExpressionHelper.GetExpressionText(property);
+			var id = TagBuilder.CreateSanitizedId(name);
+
+			return By.Id(id);
+		}
+	}
+
+	public interface IElementLocationConventions
+	{
+		By FindDisplayElementByExpressionFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class;
+		By FindEditorElementByExpressionFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class;
+	}
 }

@@ -4,7 +4,7 @@ using OpenQA.Selenium;
 
 namespace SpecsFor.Mvc
 {
-	public class FluentDisplay<TModel>
+	public class FluentDisplay<TModel> where TModel : class
 	{
 		public MvcWebApp WebApp { get; private set; }
 
@@ -16,7 +16,7 @@ namespace SpecsFor.Mvc
 		//TODO: Do we wrap this in a strongly-typed wrapper to make it easier to work with?
 		public IWebElement DisplayFor<TProp>(Expression<Func<TModel, TProp>> property)
 		{
-			return WebApp.FindElementByExpression(property);
+			return WebApp.FindElementByExpressionUsingDisplayConvention(property);
 		}
 	}
 }

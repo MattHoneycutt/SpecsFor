@@ -6,20 +6,20 @@ using OpenQA.Selenium.Support.UI;
 
 namespace SpecsFor.Mvc
 {
-	public class FluentField<T,TProp>
+	public class FluentField<TModel, TProp> where TModel : class
 	{
-		public FluentForm<T> FluentForm { get; private set; }
+		public FluentForm<TModel> FluentForm { get; private set; }
 		public MvcWebApp WebApp { get; private set; }
 		public IWebElement Field { get; private set; }
 
-		public FluentField(FluentForm<T> fluentForm, MvcWebApp webApp, Expression<Func<T, TProp>> property)
+		public FluentField(FluentForm<TModel> fluentForm, MvcWebApp webApp, Expression<Func<TModel, TProp>> property) 
 		{
 			FluentForm = fluentForm;
 			WebApp = webApp;
-			Field = webApp.FindElementByExpression(property);
+			Field = webApp.FindElementByExpressionUsingEditorConvention(property);
 		}
 
-		public FluentForm<T> ShouldBeInvalid()
+		public FluentForm<TModel> ShouldBeInvalid()
 		{
 			var validation = WebApp.Browser.FindElements(By.CssSelector("span.field-validation-error[data-valmsg-for=\"" + Field.GetAttribute("Name") + "\"]")).SingleOrDefault();
 
@@ -31,7 +31,7 @@ namespace SpecsFor.Mvc
 			return FluentForm;
 		}
 
-        public FluentForm<T> SetValueTo(string value)
+        public FluentForm<TModel> SetValueTo(string value)
         {
             Field.Clear();
             Field.SendKeys(value);
@@ -40,7 +40,7 @@ namespace SpecsFor.Mvc
 
             return FluentForm;
         }
-        public FluentForm<T> SelectByValue(string value)
+        public FluentForm<TModel> SelectByValue(string value)
         {
             //create select element object 
             var selectElement = new SelectElement(Field);
@@ -53,7 +53,7 @@ namespace SpecsFor.Mvc
             return FluentForm;
         }
 
-        public FluentForm<T> SelecyByText(string text)
+        public FluentForm<TModel> SelecyByText(string text)
         {
             //create select element object 
             var selectElement = new SelectElement(Field);
@@ -66,14 +66,14 @@ namespace SpecsFor.Mvc
             return FluentForm;
         }
 
-		public FluentForm<T> Click()
+		public FluentForm<TModel> Click()
 		{
 			Field.Click();
 
 			return FluentForm;
 		} 
 
-		public FluentForm<T> InteractWithField(Action<IWebElement> callback)
+		public FluentForm<TModel> InteractWithField(Action<IWebElement> callback)
 		{
 			callback(Field);
 
