@@ -108,6 +108,7 @@
     <Compile Include="Mvc\FakeRequestContext.cs" />
     <Compile Include="Mvc\FakeUrlHelper.cs" />
     <Compile Include="Mvc\FakeViewContext.cs" />
+    <Compile Include="Mvc\FakeViewDataContainer.cs" />
     <Compile Include="Mvc\ICookieProvider.cs" />
     <Compile Include="Mvc\IFormParamsProvider.cs" />
     <Compile Include="Mvc\IHttpContextBehavior.cs" />

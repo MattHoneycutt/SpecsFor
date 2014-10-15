@@ -37,7 +37,7 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 		}
 
 		[TearDown]
-		public void TearDownTestRun()
+		public void TearDownTestRun() 
 		{
 			_host.Shutdown();
 		}

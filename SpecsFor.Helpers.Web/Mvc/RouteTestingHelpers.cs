@@ -8,7 +8,7 @@ using Should.Core.Exceptions;
 
 namespace SpecsFor.Helpers.Web.Mvc
 {
-	internal static class RouteTestingHelpers
+	public static class RouteTestingHelpers
 	{
 		private static object GetValue(this RouteValueDictionary routeValues, string key)
 		{

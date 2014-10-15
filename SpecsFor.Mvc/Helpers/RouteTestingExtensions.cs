@@ -8,6 +8,7 @@ namespace SpecsFor.Mvc.Helpers
 	/// <summary>
 	/// Used to simplify testing routes.  Adapted from MvcContrib. 
 	/// </summary>
+	[Obsolete("Favor use of the helpers in SpecsFor.Helpers.Web over these.")]
 	public static class RouteTestingExtensions
 	{
 		public static void AssertSameStringAs(this string expected, string actual)

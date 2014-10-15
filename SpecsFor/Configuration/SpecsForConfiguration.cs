@@ -11,16 +11,40 @@ namespace SpecsFor.Configuration
 		private readonly List<IConditionalBehavior> _behaviors = new List<IConditionalBehavior>();
 		private readonly List<ConditionalInitializer> _initializers = new List<ConditionalInitializer>();
 
-		[SetUp]
-		public void ApplyConfiguration()
+		protected virtual void BeforeConfigurationApplied()
 		{
+			return;
+		}
+
+		[SetUp]
+		public virtual void ApplyConfiguration()
+		{
+			BeforeConfigurationApplied();
 			BehaviorStack.Push(this);
+			AfterConfigurationApplied();
+		}
+
+		protected virtual void AfterConfigurationApplied()
+		{
+			return;
+		}
+
+		protected virtual void BeforeConfigurationRemoved()
+		{
+			return;
 		}
 
 		[TearDown]
-		public void RemoveConfiguration()
+		public virtual void RemoveConfiguration()
 		{
+			BeforeConfigurationRemoved();
 			BehaviorStack.Pop();
+			AfterConfigurationRemoved();
+		}
+
+		protected virtual void AfterConfigurationRemoved()
+		{
+			return;
 		}
 
 		protected ISpecsForConfigurationExpression<T> WhenTesting<T>() where T : class
