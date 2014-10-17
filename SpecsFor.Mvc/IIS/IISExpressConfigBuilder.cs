@@ -94,5 +94,11 @@ namespace SpecsFor.Mvc.IIS
 
 			return this;
 		}
+
+		public IISExpressConfigBuilder WithTemporaryDirectoryName(string name)
+		{
+			_action.TemporaryDirectoryName = name;
+			return this;
+		}
 	}
 }

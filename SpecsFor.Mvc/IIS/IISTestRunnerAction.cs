@@ -33,6 +33,8 @@ namespace SpecsFor.Mvc.IIS
 
 		public int? PortNumber { get; set; }
 
+		public string TemporaryDirectoryName { get; set; }
+
 		private void StartIISExpress()
 		{
 			_iisExpressProcess = new IISExpressProcess(_publishDir, ApplicationHostConfigurationFile, ProjectName);
@@ -104,7 +106,7 @@ namespace SpecsFor.Mvc.IIS
 
 			ProjectName = ProjectName.Replace(".csproj", string.Empty).Replace(".vbproj", string.Empty);
 
-			_publishDir = Path.Combine(Directory.GetCurrentDirectory(), "SpecsForMvc.TestSite");
+			_publishDir = Path.Combine(Directory.GetCurrentDirectory(), TemporaryDirectoryName ?? "SpecsForMvc.TestSite");
 			_intermediateDir = Path.Combine(Directory.GetCurrentDirectory(), "SpecsForMvc.TempIntermediateDir");
 
 			var properties = new Dictionary<string, string>
