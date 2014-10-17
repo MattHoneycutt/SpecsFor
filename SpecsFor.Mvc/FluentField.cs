@@ -3,17 +3,21 @@ using System.Linq;
 using System.Linq.Expressions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using SpecsFor.Mvc.SeleniumExtensions;
 
 namespace SpecsFor.Mvc
 {
 	public class FluentField<TModel, TProp> where TModel : class
 	{
+		private readonly Expression<Func<TModel, TProp>> _property;
+
 		public FluentForm<TModel> FluentForm { get; private set; }
 		public MvcWebApp WebApp { get; private set; }
 		public IWebElement Field { get; private set; }
 
 		public FluentField(FluentForm<TModel> fluentForm, MvcWebApp webApp, Expression<Func<TModel, TProp>> property) 
 		{
+			_property = property;
 			FluentForm = fluentForm;
 			WebApp = webApp;
 			Field = webApp.FindElementByExpressionUsingEditorConvention(property);
@@ -27,6 +31,15 @@ namespace SpecsFor.Mvc
 			{
 				throw new AssertionException("No validation message found.");
 			}
+
+			return FluentForm;
+		}
+
+		public FluentForm<TModel> ValueShouldEqual(string value)
+		{
+			if (!string.Equals(Field.Value(), value))
+				throw new AssertionException(
+					string.Format("Field for {0} does not have expected value. \r\n\tExpected: {1}\r\n\tActual: {2}", _property, value, Field.Value()));
 
 			return FluentForm;
 		}
