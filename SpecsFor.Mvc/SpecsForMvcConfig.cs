@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
 using SpecsFor.Mvc.Authentication;
@@ -61,6 +63,15 @@ namespace SpecsFor.Mvc
 				mapAttributeRoutesMethod.Invoke(null, new object[] { RouteTable.Routes, controllerTypes });				
 			});
 		}
+
+		public void LocateElementsUsingConventions<TConventions>() where TConventions : IElementLocationConventions, new()
+		{
+			AddNewAction(() =>
+			{
+				MvcWebApp.ElementLocationConventions = new TConventions();
+			});
+		}
+
 		public void RegisterArea<T>(object state = null) where T : AreaRegistration, new()
 		{
 			AddNewAction(() =>

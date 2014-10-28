@@ -15,6 +15,5 @@
 	</metadata>
 	<files>
 		<file src="Tools\**\*.*" target="tools" />
-		<file src="..\WebDrivers\**\*.*" target="tools" />
 	</files>
 </package>
