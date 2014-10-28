@@ -79,25 +79,11 @@ namespace SpecsFor.Mvc
 		{
 			AddNewAction(() => MvcWebApp.Delay = delay);
 		}
-	}
 
-	public class BrowserDriverAction : ITestRunnerAction
-	{
-		private readonly BrowserDriver _driver;
-
-		public BrowserDriverAction(BrowserDriver driver)
+		public void AssertConfigurationValid()
 		{
-			_driver = driver;
-		}
-
-		public void Startup()
-		{
-			MvcWebApp.Driver = _driver;
-		}
-
-		public void Shutdown()
-		{
-			_driver.Shutdown();
+			if (!TestRunnerActions.Any(x => x is BrowserDriverAction)) 
+				throw new InvalidOperationException("You must configure the browser driver to use by calling SpecsForMvcConfig.UseBrowser.");
 		}
 	}
 }

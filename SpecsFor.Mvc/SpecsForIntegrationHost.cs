@@ -16,6 +16,7 @@ namespace SpecsFor.Mvc
 			//Clear out existing MvcWebApp configuration that may be left-over
 			//from a previous host that was created in this app.
 			MvcWebApp.PreTestCallbacks.Clear();
+			_config.AssertConfigurationValid();
 			foreach (var action in _config.TestRunnerActions)
 			{
 				action.Startup();
