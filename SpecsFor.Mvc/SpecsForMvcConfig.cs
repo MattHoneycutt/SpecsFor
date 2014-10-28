@@ -32,6 +32,35 @@ namespace SpecsFor.Mvc
 			AddNewAction(() => configAction(RouteTable.Routes));
 		}
 
+		public void BuildRoutesUsingAttributeRoutingFromAssemblyContaining<TType>()
+		{
+			AddNewAction(() =>
+			{
+				//NOTE: This is duplicated from SpecsFor.Helpers.Web for now.  SpecsFor.Helpers.Web has a dependency on
+				//		SpecsFor, which this doesn't (yet).
+				var targetAssembly = typeof(TType).Assembly;
+
+				var controllerTypes = (from type in targetAssembly.GetExportedTypes()
+									   where
+									   type != null && type.IsPublic
+									   && type.Name.EndsWith("Controller", StringComparison.OrdinalIgnoreCase)
+									   && !type.IsAbstract && typeof(IController).IsAssignableFrom(type)
+									   select type).ToList();
+
+				var attributeRoutingAssembly = typeof(RouteCollectionAttributeRoutingExtensions).Assembly;
+				var attributeRoutingMapperType =
+				attributeRoutingAssembly.GetType("System.Web.Mvc.Routing.AttributeRoutingMapper");
+
+				var mapAttributeRoutesMethod = attributeRoutingMapperType.GetMethod(
+					"MapAttributeRoutes",
+					BindingFlags.Public | BindingFlags.Static,
+					null,
+					new[] { typeof(RouteCollection), typeof(IEnumerable<Type>) },
+					null);
+
+				mapAttributeRoutesMethod.Invoke(null, new object[] { RouteTable.Routes, controllerTypes });				
+			});
+		}
 		public void RegisterArea<T>(object state = null) where T : AreaRegistration, new()
 		{
 			AddNewAction(() =>
