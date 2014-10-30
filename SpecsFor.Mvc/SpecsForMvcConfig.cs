@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
@@ -17,6 +18,19 @@ namespace SpecsFor.Mvc
 		public SpecsForMvcConfig()
 		{
 			TestRunnerActions = new List<ITestRunnerAction>();
+
+			AssertEnvironemntValid();
+		}
+
+		private void AssertEnvironemntValid()
+		{
+			//Make sure the MS Build tools are installed
+			var msbuildExe = @"MSBuild\12.0\bin\msbuild.exe";
+			if (!File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), msbuildExe)) &&
+				!File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), msbuildExe)))
+			{
+				throw new InvalidOperationException("Unable to find required Microsoft Build Tools 2013 installation folder.  Be sure you install Microsoft Build Tools 2013 from http://www.microsoft.com/en-us/download/details.aspx?id=40760");
+			}
 		}
 
 		private void AddNewAction(Action action)

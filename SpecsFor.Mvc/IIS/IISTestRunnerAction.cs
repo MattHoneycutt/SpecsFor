@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using Microsoft.Build.Utilities;
 
 namespace SpecsFor.Mvc.IIS
 {
@@ -50,7 +51,8 @@ namespace SpecsFor.Mvc.IIS
 
 			Console.WriteLine(arguments);
 
-			var msBuildPath = MSBuildOverride ?? Path.Combine(System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory(), "msbuild.exe");
+			var msBuildPath = MSBuildOverride ??
+			                  ToolLocationHelper.GetPathToBuildToolsFile("msbuild.exe", ToolLocationHelper.CurrentToolsVersion);
 
 			var msBuildProc = new Process();
 			msBuildProc.StartInfo = new ProcessStartInfo

@@ -1,7 +1,8 @@
 #Remove existing packages
 Remove-Item *.nupkg
 #Create package
-nuget pack SpecsFor.Mvc.csproj -Build -Properties Configuration=Debug
+msbuild SpecsFor.Mvc.csproj "/p:Configuration=Release"
+nuget pack SpecsFor.Mvc.csproj -Properties Configuration=Release
 #Push
 $PackageName = gci "*.nupkg"
 nuget push $PackageName
