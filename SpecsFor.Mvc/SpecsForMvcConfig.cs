@@ -78,11 +78,11 @@ namespace SpecsFor.Mvc
 			});
 		}
 
-		public void LocateElementsUsingConventions<TConventions>() where TConventions : IElementLocationConventions, new()
+		public void UseConventions<TConventions>() where TConventions : IElementConventions, new()
 		{
 			AddNewAction(() =>
 			{
-				MvcWebApp.ElementLocationConventions = new TConventions();
+				MvcWebApp.ElementConventions = new TConventions();
 			});
 		}
 

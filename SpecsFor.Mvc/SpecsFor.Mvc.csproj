@@ -89,7 +89,7 @@
     <Compile Include="BasicTestRunnerAction.cs" />
     <Compile Include="BrowserDriver.cs" />
     <Compile Include="BrowserDriverAction.cs" />
-    <Compile Include="DefaultElementLocationConventions.cs" />
+    <Compile Include="DefaultElementConventions.cs" />
     <Compile Include="DriverNotFoundException.cs" />
     <Compile Include="ElementNotFoundException.cs" />
     <Compile Include="Helpers\FakeHttpContext.cs" />
@@ -103,7 +103,7 @@
     <Compile Include="Authentication\IHandleAuthentication.cs" />
     <Compile Include="Helpers\RouteAssertionException.cs" />
     <Compile Include="Helpers\RouteTestingExtensions.cs" />
-    <Compile Include="IElementLocationConventions.cs" />
+    <Compile Include="IElementConventions.cs" />
     <Compile Include="IIS\IISExpressConfigBuilder.cs" />
     <Compile Include="IIS\IISExpressProcess.cs" />
     <Compile Include="IIS\IISTestRunnerAction.cs" />

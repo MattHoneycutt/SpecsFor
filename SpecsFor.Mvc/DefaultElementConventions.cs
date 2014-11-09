@@ -5,7 +5,7 @@ using OpenQA.Selenium;
 
 namespace SpecsFor.Mvc
 {
-	public class DefaultElementLocationConventions : IElementLocationConventions
+	public class DefaultElementConventions : IElementConventions
 	{
 		public virtual By FindDisplayElementByExpressionFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class
 		{
@@ -23,9 +23,14 @@ namespace SpecsFor.Mvc
 			return By.Id(id);
 		}
 
-		public By FindValidationSummary()
+		public virtual By FindValidationSummary()
 		{
 			return By.ClassName("validation-summary-errors");
+		}
+
+		public virtual bool IsFieldInvalid(IWebElement field)
+		{
+			return field.GetAttribute("class").Contains("input-validation-error");
 		}
 	}
 }

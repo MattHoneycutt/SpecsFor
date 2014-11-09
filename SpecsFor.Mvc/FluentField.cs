@@ -25,7 +25,7 @@ namespace SpecsFor.Mvc
 
 		public FluentForm<TModel> ShouldBeInvalid()
 		{
-			if (!Field.GetAttribute("class").Contains("input-validation-error"))
+			if (!WebApp.IsFieldInvalidByConvention(Field))
 				throw new AssertionException("Field is not marked as invalid!");
 
 			return FluentForm;

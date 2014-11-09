@@ -28,7 +28,7 @@ namespace SpecsFor.Mvc
         public static IHandleAuthentication Authentication { get; set; }
         public static TimeSpan Delay { get; set; }
 
-	    public static IElementLocationConventions ElementLocationConventions = new DefaultElementLocationConventions();
+	    public static IElementConventions ElementConventions = new DefaultElementConventions();
 
         public RemoteWebDriver Browser { get; private set; }
 
@@ -79,11 +79,11 @@ namespace SpecsFor.Mvc
             {
 	            try
 	            {
-		            return Browser.FindElement(ElementLocationConventions.FindValidationSummary());
+		            return Browser.FindElement(ElementConventions.FindValidationSummary());
 	            }
 	            catch (NoSuchElementException)
 	            {
-					throw new NoSuchElementException("Unable to find a validation summary using the configured convention.  You can change the convention by calling SpecsForMvcConfig.LocateElementsUsingConventions<TConventions>() with your custom conventions.");
+					throw new NoSuchElementException("Unable to find a validation summary using the configured convention.  You can change the convention by calling SpecsForMvcConfig.UseConventions<TConventions>() with your custom conventions.");
 	            }
             }
         }
@@ -196,15 +196,20 @@ namespace SpecsFor.Mvc
 
 		public IWebElement FindElementByExpressionUsingDisplayConvention<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class
         {
-	        return Browser.FindElement(ElementLocationConventions.FindDisplayElementByExpressionFor(property));
+	        return Browser.FindElement(ElementConventions.FindDisplayElementByExpressionFor(property));
         }
 
 		public IWebElement FindElementByExpressionUsingEditorConvention<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class
         {
-	        return Browser.FindElement(ElementLocationConventions.FindEditorElementByExpressionFor(property));
+	        return Browser.FindElement(ElementConventions.FindEditorElementByExpressionFor(property));
         }
 
-        public string AllText()
+		public bool IsFieldInvalidByConvention(IWebElement field)
+		{
+			return ElementConventions.IsFieldInvalid(field);
+		}
+		
+		public string AllText()
         {
             return Browser.FindElement(By.TagName("body")).Text;
         }
