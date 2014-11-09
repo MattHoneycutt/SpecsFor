@@ -25,12 +25,8 @@ namespace SpecsFor.Mvc
 
 		public FluentForm<TModel> ShouldBeInvalid()
 		{
-			var validation = WebApp.Browser.FindElements(By.CssSelector("span.field-validation-error[data-valmsg-for=\"" + Field.GetAttribute("Name") + "\"]")).SingleOrDefault();
-
-			if (validation == null)
-			{
-				throw new AssertionException("No validation message found.");
-			}
+			if (!Field.GetAttribute("class").Contains("input-validation-error"))
+				throw new AssertionException("Field is not marked as invalid!");
 
 			return FluentForm;
 		}

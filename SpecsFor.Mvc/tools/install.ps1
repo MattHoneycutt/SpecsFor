@@ -12,3 +12,6 @@ if ($MissingDependencies) {
 } 
 $DTE.ItemOperations.Navigate($Url)
 #Write-Host "Target URL: $Url"
+
+#Make sure any necessary binding redirects have been added.
+Add-BindingRedirect

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using OpenQA.Selenium;
 using Microsoft.Web.Mvc;
+using OpenQA.Selenium.Remote;
 using SpecsFor.Mvc.Authentication;
 using SpecsFor.Mvc.Helpers;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace SpecsFor.Mvc
 
 	    public static IElementLocationConventions ElementLocationConventions = new DefaultElementLocationConventions();
 
-        public IWebDriver Browser { get; private set; }
+        public RemoteWebDriver Browser { get; private set; }
 
         static MvcWebApp()
         {
@@ -76,7 +77,14 @@ namespace SpecsFor.Mvc
         {
             get
             {
-                return Browser.FindElement(By.ClassName("validation-summary-errors"));
+	            try
+	            {
+		            return Browser.FindElement(ElementLocationConventions.FindValidationSummary());
+	            }
+	            catch (NoSuchElementException)
+	            {
+					throw new NoSuchElementException("Unable to find a validation summary using the configured convention.  You can change the convention by calling SpecsForMvcConfig.LocateElementsUsingConventions<TConventions>() with your custom conventions.");
+	            }
             }
         }
 
@@ -136,15 +144,26 @@ namespace SpecsFor.Mvc
             return element;
         }
 
-		public void UrlShouldMapTo<TController>(Expression<Action<TController>> action) where TController : Controller
+		public bool UrlMapsTo<TController>(Expression<Action<TController>> action) where TController : Controller
 		{
 			var helper = new HtmlHelper(new ViewContext { HttpContext = FakeHttpContext.Root() }, new FakeViewDataContainer());
 			//TODO: workaround to fixes MattHoneycutt/SpecsFor#25
 			var url = BuildUrlFromExpression(helper.ViewContext.RequestContext, helper.RouteCollection, action);
 			var expectedUrl = MvcWebApp.BaseUrl + helper.BuildUrlFromExpression(action);
 
-			if (Browser.Url != expectedUrl) 
-				throw new AssertionException(string.Format("URL does not match target action. \r\n\tExpected {0}\r\n\tActual:{1}", expectedUrl, Browser.Url));
+			return (Browser.Url == expectedUrl);
+		}
+
+		public void UrlShouldMapTo<TController>(Expression<Action<TController>> action) where TController : Controller
+		{
+			if (!UrlMapsTo(action))
+			{
+				var helper = new HtmlHelper(new ViewContext { HttpContext = FakeHttpContext.Root() }, new FakeViewDataContainer());
+				var expectedUrl = MvcWebApp.BaseUrl + helper.BuildUrlFromExpression(action);
+
+				throw new AssertionException(string.Format("URL does not match target action. \r\n\tExpected {0}\r\n\tActual:{1}",
+					expectedUrl, Browser.Url));
+			}
 		}
 
         internal void Pause()
@@ -307,29 +326,4 @@ namespace SpecsFor.Mvc
         }
         #endregion
     }
-
-	public class DefaultElementLocationConventions : IElementLocationConventions
-	{
-		public virtual By FindDisplayElementByExpressionFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class
-		{
-			var name = ExpressionHelper.GetExpressionText(property);
-			var id = TagBuilder.CreateSanitizedId(name);
-
-			return By.Id(id);
-		}
-
-		public virtual By FindEditorElementByExpressionFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class
-		{
-			var name = ExpressionHelper.GetExpressionText(property);
-			var id = TagBuilder.CreateSanitizedId(name);
-
-			return By.Id(id);
-		}
-	}
-
-	public interface IElementLocationConventions
-	{
-		By FindDisplayElementByExpressionFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class;
-		By FindEditorElementByExpressionFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class;
-	}
 }

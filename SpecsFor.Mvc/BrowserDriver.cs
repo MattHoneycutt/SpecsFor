@@ -11,12 +11,12 @@ namespace SpecsFor.Mvc
 	//TODO: Split this so that the implementation and DSL aren't sharing classes. 
 	public class BrowserDriver
 	{
-		private readonly Func<IWebDriver> _browserFactory;
+		private readonly Func<RemoteWebDriver> _browserFactory;
 
 		public static readonly BrowserDriver InternetExplorer;
 		public static readonly BrowserDriver Firefox;
 		public static readonly BrowserDriver Chrome;
-		private IWebDriver _driver;
+		private RemoteWebDriver _driver;
 
 		static BrowserDriver()
 		{
@@ -40,12 +40,12 @@ namespace SpecsFor.Mvc
 				});
 		}
 
-		private BrowserDriver(Func<IWebDriver> browserFactory)
+		private BrowserDriver(Func<RemoteWebDriver> browserFactory)
 		{
 			_browserFactory = browserFactory;
 		}
 
-		public IWebDriver GetDriver()
+		public RemoteWebDriver GetDriver()
 		{
 			try
 			{

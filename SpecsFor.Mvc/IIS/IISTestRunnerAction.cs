@@ -49,8 +49,6 @@ namespace SpecsFor.Mvc.IIS
 		{
 			var arguments = "/p:" + string.Join(";", properties.Select(kvp => kvp.Key + "=" + kvp.Value)) + " \"" + ProjectPath + "\"";
 
-			Console.WriteLine(arguments);
-
 			var msBuildPath = MSBuildOverride ??
 			                  ToolLocationHelper.GetPathToBuildToolsFile("msbuild.exe", ToolLocationHelper.CurrentToolsVersion);
 
@@ -74,9 +72,15 @@ namespace SpecsFor.Mvc.IIS
 
 			if (!success)
 			{
-				Console.WriteLine("The publish failed.  Dumping MSBuild output:");
+				Console.WriteLine("***The publish failed.  Please ensure that your project compiles manually with MSBuild.***");
+				Console.WriteLine("Here's some information to help you:");
+				Console.WriteLine("MSBuild Arguments: ");
+				Console.WriteLine(arguments);
+				Console.WriteLine("---------------------------------------");
+				Console.WriteLine("MSBuild Output:");
 				Console.WriteLine(stdout);
 				Console.WriteLine(stderr);
+				Console.WriteLine("---------------------------------------");
 				throw new ApplicationException("Build failed.");
 			}
 		}
