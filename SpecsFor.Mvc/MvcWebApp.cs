@@ -7,6 +7,7 @@ using System.Web.Routing;
 using OpenQA.Selenium;
 using Microsoft.Web.Mvc;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Support.UI;
 using SpecsFor.Mvc.Authentication;
 using SpecsFor.Mvc.Helpers;
 using System.Linq;
@@ -208,6 +209,23 @@ namespace SpecsFor.Mvc
 		{
 			return ElementConventions.IsFieldInvalid(field);
 		}
+
+		public IWebElement WaitForElementToBeVisible(By selector, TimeSpan? timeout = null, bool throwOnTimeout = false)
+		{
+			timeout = timeout ?? TimeSpan.FromSeconds(10);
+			try
+			{
+				return new WebDriverWait(Browser, timeout.Value)
+					.Until(ExpectedConditions.ElementIsVisible(selector));
+			}
+			catch (WebDriverTimeoutException)
+			{
+				if (throwOnTimeout) throw;
+			}
+
+			return null;
+		}
+
 		
 		public string AllText()
         {
