@@ -40,6 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculator.cs" />
+    <Compile Include="MockingBasics\Car.cs" />
+    <Compile Include="MockingBasics\CarFactory.cs" />
+    <Compile Include="MockingBasics\Engine.cs" />
+    <Compile Include="MockingBasics\IEngineFactory.cs" />
+    <Compile Include="MockingBasics\RealEngineFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
