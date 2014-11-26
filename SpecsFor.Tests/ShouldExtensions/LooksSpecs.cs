@@ -66,5 +66,45 @@ namespace SpecsFor.Tests.ShouldExtensions
 
 			Assert.Throws<MockException>(() => mock.Verify(s => s.DoStuff(Looks.LikePartialOf<TestObject>(new {ID = 1, Name = "Not Name"}))));
 		}
+
+		[Test]
+		public void moq_will_match_on_a_strongly_typed_partial_object()
+		{
+			var mock = GetMockFor<ITestService>();
+
+			mock.Object.DoStuff(new TestObject { ID = 1, Name = "Test" });
+
+			Assert.DoesNotThrow(() => mock.Verify(s => s.DoStuff(Looks.Like(() => new TestObject { ID = 1, Name = "Test" }))));
+		}
+
+		[Test]
+		public void moq_will_not_match_on_a_strongly_typed_partial_object_that_differs()
+		{
+			var mock = GetMockFor<ITestService>();
+
+			mock.Object.DoStuff(new TestObject { ID = 1, Name = "Test" });
+
+			Assert.Throws<MockException>(() => mock.Verify(s => s.DoStuff(Looks.Like(() => new TestObject { ID = 2 }))));
+		}
+
+		[Test]
+		public void moq_will_match_on_a_strongly_typed_partial_object_with_a_mock_matcher()
+		{
+			var mock = GetMockFor<ITestService>();
+
+			mock.Object.DoStuff(new TestObject { ID = 1, Name = "Test" });
+
+			Assert.DoesNotThrow(() => mock.Verify(s => s.DoStuff(Looks.Like(() => new TestObject { ID = It.Is<int>(x => x == 1) }))));
+		}
+
+		[Test]
+		public void moq_will_not_match_on_a_strongly_typed_partial_object_with_a_mock_matcher_that_should_not_match()
+		{
+			var mock = GetMockFor<ITestService>();
+
+			mock.Object.DoStuff(new TestObject { ID = 1, Name = "Test" });
+
+			Assert.Throws<MockException>(() => mock.Verify(s => s.DoStuff(Looks.Like(() => new TestObject { ID = It.Is<int>(x => x == 2) }))));
+		}
 	}
 }

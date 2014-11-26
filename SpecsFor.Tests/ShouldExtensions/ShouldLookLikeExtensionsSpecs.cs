@@ -1,11 +1,12 @@
 ﻿using System;
+using Moq;
 using NUnit.Framework;
 using Should.Core.Exceptions;
 using SpecsFor.ShouldExtensions;
 
 namespace SpecsFor.Tests.ShouldExtensions
 {
-	public class ShouldLooksLikeExtensionsSpecs : SpecsFor<ShouldLooksLikeExtensionsSpecs.TestObject>
+	public class ShouldLookLikeExtensionsSpecs : SpecsFor<ShouldLookLikeExtensionsSpecs.TestObject>
 	{
 		public class TestObject
 		{
@@ -37,6 +38,33 @@ namespace SpecsFor.Tests.ShouldExtensions
 			Assert.DoesNotThrow(() => SUT.ShouldLookLike(() => new TestObject
 			{
 				TestObjectId = SUT.TestObjectId
+			}));
+		}
+
+		[Test]
+		public void then_it_should_pass_when_used_with_moq_matcher_that_matches_anything()
+		{
+			Assert.DoesNotThrow(() => SUT.ShouldLookLike(() => new TestObject
+			{
+				TestObjectId = It.IsAny<Guid>()
+			}));
+		}
+
+		[Test]
+		public void then_it_should_pass_when_used_with_moq_matcher_that_matches_a_specific_check()
+		{
+			Assert.DoesNotThrow(() => SUT.ShouldLookLike(() => new TestObject
+			{
+				TestObjectId = It.Is<Guid>(x => x != Guid.Empty)
+			}));
+		}
+
+		[Test]
+		public void then_it_should_fail_when_used_with_moq_matcher_that_does_not_match_a_specific_check()
+		{
+			Assert.Throws<EqualException>(() => SUT.ShouldLookLike(() => new TestObject
+			{
+				TestObjectId = It.Is<Guid>(x => x == Guid.Empty)
 			}));
 		}
 

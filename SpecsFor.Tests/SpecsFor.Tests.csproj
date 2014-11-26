@@ -81,7 +81,7 @@
   <ItemGroup>
     <Compile Include="ComposingContext\CompositionalContextSpecs.cs" />
     <Compile Include="ComposingContext\ComposingContextConfig.cs" />
-    <Compile Include="ShouldExtensions\ShouldLooksLikeExtensionsSpecs.cs" />
+    <Compile Include="ShouldExtensions\ShouldLookLikeExtensionsSpecs.cs" />
     <Compile Include="SpecsForEngineSpecs.cs" />
     <Compile Include="ComposingContext\StackingContext\StackingContextConfig.cs" />
     <Compile Include="ComposingContext\StackingContext\StackingContextSpecs.cs" />

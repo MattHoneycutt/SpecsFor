@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Linq;
 using System.Linq.Expressions;
+using Moq;
 using Should;
+using Should.Core.Exceptions;
 
 namespace SpecsFor.ShouldExtensions
 {
@@ -57,6 +59,8 @@ namespace SpecsFor.ShouldExtensions
 
 		private static void ShouldMatch(object actual, MemberInitExpression expression)
 		{
+			var fluentMockContext = new FluentMockContextWrapper();
+
 			var expected = Expression.Lambda<Func<object>>(expression).Compile()();
 			var type = actual.GetType();
 
@@ -77,11 +81,32 @@ namespace SpecsFor.ShouldExtensions
 				{
 					ShouldMatchIEnumerable(actualValue as IEnumerable, bindingAsAnotherExpression.Expression as NewArrayExpression);
 				}
+				else if (IsMoqExpression(bindingAsAnotherExpression))
+				{
+					var expectedExpression = (MethodCallExpression)bindingAsAnotherExpression.Expression;
+
+					if (!fluentMockContext.LastMatcherMatches(actualValue))
+					{
+						throw new EqualException(expectedExpression, actualValue);
+					}						
+				}
 				else 
 				{
 					actualValue.ShouldEqual(expectedValue);
 				}
 			}
+		}
+
+		private static bool IsMoqExpression(MemberAssignment bindingAsAnotherExpression)
+		{
+			
+			if (bindingAsAnotherExpression == null || bindingAsAnotherExpression.Expression.NodeType != ExpressionType.Call) return false;
+
+			var callExpression = (MethodCallExpression) bindingAsAnotherExpression.Expression;
+
+			if (callExpression.Method.DeclaringType != typeof (It)) return false;
+
+			return true;
 		}
 	}
 }
