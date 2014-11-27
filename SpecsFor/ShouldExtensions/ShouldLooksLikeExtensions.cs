@@ -59,40 +59,41 @@ namespace SpecsFor.ShouldExtensions
 
 		private static void ShouldMatch(object actual, MemberInitExpression expression)
 		{
-			var fluentMockContext = new FluentMockContextWrapper();
-
-			var expected = Expression.Lambda<Func<object>>(expression).Compile()();
-			var type = actual.GetType();
-
-			foreach (var memberBinding in expression.Bindings)
+			using (var fluentMockContext = new FluentMockContextWrapper())
 			{
-				var actualValue = type.GetProperty(memberBinding.Member.Name).GetValue(actual, null);
-				var expectedValue = type.GetProperty(memberBinding.Member.Name).GetValue(expected, null);
+				var expected = Expression.Lambda<Func<object>>(expression).Compile()();
+				var type = actual.GetType();
 
-				var bindingAsAnotherExpression = memberBinding as MemberAssignment;
+				foreach (var memberBinding in expression.Bindings)
+				{
+					var actualValue = type.GetProperty(memberBinding.Member.Name).GetValue(actual, null);
+					var expectedValue = type.GetProperty(memberBinding.Member.Name).GetValue(expected, null);
 
-				if (bindingAsAnotherExpression != null &&
-					bindingAsAnotherExpression.Expression.NodeType == ExpressionType.MemberInit)
-				{
-					ShouldMatch(actualValue, bindingAsAnotherExpression.Expression as MemberInitExpression);
-				}
-				else if (bindingAsAnotherExpression != null &&
-						bindingAsAnotherExpression.Expression.NodeType == ExpressionType.NewArrayInit)
-				{
-					ShouldMatchIEnumerable(actualValue as IEnumerable, bindingAsAnotherExpression.Expression as NewArrayExpression);
-				}
-				else if (IsMoqExpression(bindingAsAnotherExpression))
-				{
-					var expectedExpression = (MethodCallExpression)bindingAsAnotherExpression.Expression;
+					var bindingAsAnotherExpression = memberBinding as MemberAssignment;
 
-					if (!fluentMockContext.LastMatcherMatches(actualValue))
+					if (bindingAsAnotherExpression != null &&
+					    bindingAsAnotherExpression.Expression.NodeType == ExpressionType.MemberInit)
 					{
-						throw new EqualException(expectedExpression, actualValue);
-					}						
-				}
-				else 
-				{
-					actualValue.ShouldEqual(expectedValue);
+						ShouldMatch(actualValue, bindingAsAnotherExpression.Expression as MemberInitExpression);
+					}
+					else if (bindingAsAnotherExpression != null &&
+					         bindingAsAnotherExpression.Expression.NodeType == ExpressionType.NewArrayInit)
+					{
+						ShouldMatchIEnumerable(actualValue as IEnumerable, bindingAsAnotherExpression.Expression as NewArrayExpression);
+					}
+					else if (IsMoqExpression(bindingAsAnotherExpression))
+					{
+						var expectedExpression = (MethodCallExpression) bindingAsAnotherExpression.Expression;
+
+						if (!fluentMockContext.LastMatcherMatches(actualValue))
+						{
+							throw new EqualException(expectedExpression, actualValue);
+						}
+					}
+					else
+					{
+						actualValue.ShouldEqual(expectedValue);
+					}
 				}
 			}
 		}
