@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Moq;
 using NUnit.Framework;
 using Should;
 using System.Linq;
 using SpecsFor.Tests.TestObjects;
+using StructureMap;
 
 namespace SpecsFor.Tests
 {
@@ -58,12 +60,15 @@ namespace SpecsFor.Tests
 				_givenCount.ShouldEqual(1);
 			}
 		}
-		
-		public class when_tearing_down_after_a_test_given_SUT_implements_IDisposable : SpecsFor<object>
+
+		public class when_tearing_down_and_the_system_under_test_is_disposable : SpecsFor<object>
 		{
+			private Mock<IDisposable> _sutMock;
+
 			protected override void InitializeClassUnderTest()
 			{
-				SUT = GetMockFor<IDisposable>().Object;
+				_sutMock = new Mock<IDisposable>();
+				SUT = _sutMock.Object;
 			}
 
 			protected override void When()
@@ -72,10 +77,9 @@ namespace SpecsFor.Tests
 			}
 
 			[Test]
-			public void then_it_should_call_Dispose()
+			public void then_it_should_call_Dispose_on_the_SUT()
 			{
-				GetMockFor<IDisposable>()
-					.Verify(d => d.Dispose());
+				_sutMock.Verify(d => d.Dispose());
 			}
 		}
 
