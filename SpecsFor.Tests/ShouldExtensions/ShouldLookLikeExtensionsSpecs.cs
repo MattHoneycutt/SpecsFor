@@ -46,7 +46,8 @@ namespace SpecsFor.Tests.ShouldExtensions
 		{
 			Assert.DoesNotThrow(() => SUT.ShouldLookLike(() => new TestObject
 			{
-				TestObjectId = It.IsAny<Guid>()
+				TestObjectId = It.IsAny<Guid>(),
+				Name = It.IsAny<string>()
 			}));
 		}
 

@@ -85,6 +85,10 @@ namespace SpecsFor.ShouldExtensions
 					{
 						var expectedExpression = (MethodCallExpression) bindingAsAnotherExpression.Expression;
 
+						//Re-invoke the expression.  This is needed so that it will be the last matcher on the stack.
+						Expression expressionAsObject = Expression.Convert(expectedExpression, typeof(object));
+						Expression.Lambda<Func<object>>(expressionAsObject).Compile()();
+
 						if (!fluentMockContext.LastMatcherMatches(actualValue))
 						{
 							throw new EqualException(expectedExpression, actualValue);
