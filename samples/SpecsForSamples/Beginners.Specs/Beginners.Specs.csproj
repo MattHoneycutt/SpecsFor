@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="CalculatorSpecs.cs" />
     <Compile Include="ContainerConfiguration\ContainerConfigurationSpecs.cs" />
+    <Compile Include="GivenWhenThen\GivenWhenThenExampleSpecs.cs" />
     <Compile Include="MockingBasics\CarFactorySpecs.cs" />
     <Compile Include="PartialMatching\ITrainYard.cs" />
     <Compile Include="PartialMatching\LooksLikeSpecs.cs" />

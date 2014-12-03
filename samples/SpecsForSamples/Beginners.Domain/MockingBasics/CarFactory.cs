@@ -11,10 +11,7 @@
 
 		public Car BuildMuscleCar()
 		{
-			return new Car
-			{
-				Engine = _engineFactory.GetEngine("V8")
-			};
+			return new Car(_engineFactory.GetEngine("V8"));
 		}
 	}
 }
