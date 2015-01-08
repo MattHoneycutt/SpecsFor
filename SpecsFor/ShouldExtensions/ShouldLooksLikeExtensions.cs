@@ -3,8 +3,10 @@ using System.Collections;
 using System.Linq;
 using System.Linq.Expressions;
 using Moq;
+using NUnit.Framework;
 using Should;
 using Should.Core.Exceptions;
+using StructureMap.TypeRules;
 
 namespace SpecsFor.ShouldExtensions
 {
@@ -59,57 +61,71 @@ namespace SpecsFor.ShouldExtensions
 
 		private static void ShouldMatch(object actual, MemberInitExpression expression)
 		{
-			using (var fluentMockContext = new FluentMockContextWrapper())
+			var expected = Expression.Lambda<Func<object>>(expression).Compile()();
+			var type = actual.GetType();
+
+			foreach (var memberBinding in expression.Bindings)
 			{
-				var expected = Expression.Lambda<Func<object>>(expression).Compile()();
-				var type = actual.GetType();
+				var actualValue = type.GetProperty(memberBinding.Member.Name).GetValue(actual, null);
+				var expectedValue = type.GetProperty(memberBinding.Member.Name).GetValue(expected, null);
 
-				foreach (var memberBinding in expression.Bindings)
+				var bindingAsAnotherExpression = memberBinding as MemberAssignment;
+
+				if (bindingAsAnotherExpression != null &&
+				    bindingAsAnotherExpression.Expression.NodeType == ExpressionType.MemberInit)
 				{
-					var actualValue = type.GetProperty(memberBinding.Member.Name).GetValue(actual, null);
-					var expectedValue = type.GetProperty(memberBinding.Member.Name).GetValue(expected, null);
+					ShouldMatch(actualValue, bindingAsAnotherExpression.Expression as MemberInitExpression);
+				}
+				else if (bindingAsAnotherExpression != null &&
+				         bindingAsAnotherExpression.Expression.NodeType == ExpressionType.NewArrayInit)
+				{
+					ShouldMatchIEnumerable(actualValue as IEnumerable, bindingAsAnotherExpression.Expression as NewArrayExpression);
+				}
+				else if (IsMoqExpression(bindingAsAnotherExpression))
+				{
+					Assert.Fail("Moq's matchers cannot be used with SpecsFor's partial matching.  Instead, use the Some.Of and Any.Of methods in SpecsFor.");
+				}
+				else if (IsSpecsForAnyExpression(bindingAsAnotherExpression))
+				{
+					var expectedExpression = (MethodCallExpression) bindingAsAnotherExpression.Expression;
 
-					var bindingAsAnotherExpression = memberBinding as MemberAssignment;
+					//Re-invoke the expression.  This is needed so that it will be the last matcher on the stack.
+					Matcher.LastMatcher = null;
+					Expression expressionAsObject = Expression.Convert(expectedExpression, typeof (object));
+					Expression.Lambda<Func<object>>(expressionAsObject).Compile()();
 
-					if (bindingAsAnotherExpression != null &&
-					    bindingAsAnotherExpression.Expression.NodeType == ExpressionType.MemberInit)
+					if (Matcher.LastMatcher == null ||
+					    !Matcher.LastMatcher.Equals(actualValue))
 					{
-						ShouldMatch(actualValue, bindingAsAnotherExpression.Expression as MemberInitExpression);
+						throw new EqualException(expectedExpression, actualValue);
 					}
-					else if (bindingAsAnotherExpression != null &&
-					         bindingAsAnotherExpression.Expression.NodeType == ExpressionType.NewArrayInit)
-					{
-						ShouldMatchIEnumerable(actualValue as IEnumerable, bindingAsAnotherExpression.Expression as NewArrayExpression);
-					}
-					else if (IsMoqExpression(bindingAsAnotherExpression))
-					{
-						var expectedExpression = (MethodCallExpression) bindingAsAnotherExpression.Expression;
-
-						//Re-invoke the expression.  This is needed so that it will be the last matcher on the stack.
-						Expression expressionAsObject = Expression.Convert(expectedExpression, typeof(object));
-						Expression.Lambda<Func<object>>(expressionAsObject).Compile()();
-
-						if (!fluentMockContext.LastMatcherMatches(actualValue))
-						{
-							throw new EqualException(expectedExpression, actualValue);
-						}
-					}
-					else
-					{
-						actualValue.ShouldEqual(expectedValue);
-					}
+				}
+				else
+				{
+					actualValue.ShouldEqual(expectedValue);
 				}
 			}
 		}
 
 		private static bool IsMoqExpression(MemberAssignment bindingAsAnotherExpression)
 		{
-			
 			if (bindingAsAnotherExpression == null || bindingAsAnotherExpression.Expression.NodeType != ExpressionType.Call) return false;
 
 			var callExpression = (MethodCallExpression) bindingAsAnotherExpression.Expression;
 
 			if (callExpression.Method.DeclaringType != typeof (It)) return false;
+
+			return true;
+		}
+
+		private static bool IsSpecsForAnyExpression(MemberAssignment bindingAsAnotherExpression)
+		{
+			if (bindingAsAnotherExpression == null || bindingAsAnotherExpression.Expression.NodeType != ExpressionType.Call) return false;
+
+			var callExpression = (MethodCallExpression)bindingAsAnotherExpression.Expression;
+
+			if (callExpression.Method.DeclaringType != typeof(Any) &&
+				callExpression.Method.DeclaringType != typeof(Some)) return false;
 
 			return true;
 		}

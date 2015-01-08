@@ -42,31 +42,45 @@ namespace SpecsFor.Tests.ShouldExtensions
 		}
 
 		[Test]
-		public void then_it_should_pass_when_used_with_moq_matcher_that_matches_anything()
+		public void then_it_should_pass_when_used_with_matcher_that_matches_anything()
 		{
 			Assert.DoesNotThrow(() => SUT.ShouldLookLike(() => new TestObject
 			{
-				TestObjectId = It.IsAny<Guid>(),
-				Name = It.IsAny<string>()
+				TestObjectId = Any.ValueOf<Guid>(),
+				Name = Any.ValueOf<string>()
 			}));
 		}
 
 		[Test]
-		public void then_it_should_pass_when_used_with_moq_matcher_that_matches_a_specific_check()
+		public void then_it_should_pass_when_used_with_matcher_that_matches_any_non_null_or_default()
 		{
 			Assert.DoesNotThrow(() => SUT.ShouldLookLike(() => new TestObject
 			{
-				TestObjectId = It.Is<Guid>(x => x != Guid.Empty)
+				TestObjectId = Any.NonDefaultValueOf<Guid>(),
+				Name = Any.NonNullValueOf<string>()
 			}));
 		}
 
 		[Test]
-		public void then_it_should_fail_when_used_with_moq_matcher_that_does_not_match_a_specific_check()
+		public void then_it_should_pass_when_used_with_matcher_that_matches_a_specific_check()
+		{
+			Assert.DoesNotThrow(() => SUT.ShouldLookLike(() => new TestObject
+			{
+				TestObjectId = Some.ValueOf<Guid>(x => x != Guid.Empty)
+			}));
+		}
+
+		[Test]
+		public void then_it_should_fail_when_used_with_a_matcher_that_does_not_match_a_specific_check()
 		{
 			Assert.Throws<EqualException>(() => SUT.ShouldLookLike(() => new TestObject
 			{
-				TestObjectId = It.Is<Guid>(x => x == Guid.Empty)
+				TestObjectId = Some.ValueOf<Guid>(x => x == Guid.Empty)
 			}));
+			SUT.ShouldLookLike(() => new TestObject
+			{
+				TestObjectId = Some.ValueOf<Guid>(x => x == Guid.Empty)
+			});
 		}
 
 		[Test]
