@@ -1,13 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Beginners", "Beginners", "{E6355F89-65EB-4853-8FE2-6E9BCC64B3EB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beginners.Specs", "Beginners.Specs\Beginners.Specs.csproj", "{FC3B1F20-985D-4A5F-81FF-0811A17B9515}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beginners.Domain", "Beginners.Domain\Beginners.Domain.csproj", "{DCAEC9E7-AE22-4CCE-AB9F-F918D3FC58D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helpers", "Helpers", "{1A3765C4-1581-424B-890C-78610805A8F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsForWebHelpers.Web", "SpecsForWebHelpers.Web\SpecsForWebHelpers.Web.csproj", "{B74EE30C-B4C5-470A-975C-143C5E80F0C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsForWebHelpers.Specs", "SpecsForWebHelpers.Specs\SpecsForWebHelpers.Specs.csproj", "{CF8FA82E-0381-4522-8DB8-5E8AE9AA6FEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +29,14 @@ Global
 		{DCAEC9E7-AE22-4CCE-AB9F-F918D3FC58D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCAEC9E7-AE22-4CCE-AB9F-F918D3FC58D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCAEC9E7-AE22-4CCE-AB9F-F918D3FC58D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B74EE30C-B4C5-470A-975C-143C5E80F0C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B74EE30C-B4C5-470A-975C-143C5E80F0C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B74EE30C-B4C5-470A-975C-143C5E80F0C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B74EE30C-B4C5-470A-975C-143C5E80F0C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF8FA82E-0381-4522-8DB8-5E8AE9AA6FEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF8FA82E-0381-4522-8DB8-5E8AE9AA6FEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF8FA82E-0381-4522-8DB8-5E8AE9AA6FEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF8FA82E-0381-4522-8DB8-5E8AE9AA6FEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,5 +44,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{FC3B1F20-985D-4A5F-81FF-0811A17B9515} = {E6355F89-65EB-4853-8FE2-6E9BCC64B3EB}
 		{DCAEC9E7-AE22-4CCE-AB9F-F918D3FC58D4} = {E6355F89-65EB-4853-8FE2-6E9BCC64B3EB}
+		{B74EE30C-B4C5-470A-975C-143C5E80F0C2} = {1A3765C4-1581-424B-890C-78610805A8F0}
+		{CF8FA82E-0381-4522-8DB8-5E8AE9AA6FEA} = {1A3765C4-1581-424B-890C-78610805A8F0}
 	EndGlobalSection
 EndGlobal
