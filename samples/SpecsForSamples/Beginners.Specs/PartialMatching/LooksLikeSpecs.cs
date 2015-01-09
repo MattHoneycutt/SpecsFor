@@ -36,7 +36,7 @@ namespace Beginners.PartialMatching
 					.Verify(x => x.RetrieveLuggage(Looks.Like(() => new LuggageTicket
 					{
 						IssuedTo = "Jane Doe",
-						Issued = It.Is<DateTime>(d => DateTime.Now.Subtract(d) < TimeSpan.FromSeconds(1))
+						Issued = Some.ValueOf<DateTime>(d => DateTime.Now.Subtract(d) < TimeSpan.FromSeconds(1))
 					})));
 			}
 		}

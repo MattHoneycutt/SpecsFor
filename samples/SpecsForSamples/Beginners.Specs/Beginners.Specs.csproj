@@ -44,7 +44,7 @@
     </Reference>
     <Reference Include="SpecsFor, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SpecsFor.4.3.0-RC08\lib\net40\SpecsFor.dll</HintPath>
+      <HintPath>..\packages\SpecsFor.4.3.0-RC10\lib\net40\SpecsFor.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.0.133\lib\net40\StructureMap.dll</HintPath>
