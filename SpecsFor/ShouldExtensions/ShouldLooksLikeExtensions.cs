@@ -87,7 +87,7 @@ namespace SpecsFor.ShouldExtensions
 				}
 				else if (IsSpecsForAnyExpression(bindingAsAnotherExpression))
 				{
-					var expectedExpression = (MethodCallExpression) bindingAsAnotherExpression.Expression;
+					var expectedExpression = TryUnwrapCallExpression(bindingAsAnotherExpression);
 
 					//Re-invoke the expression.  This is needed so that it will be the last matcher on the stack.
 					Matcher.LastMatcher = null;
@@ -97,7 +97,7 @@ namespace SpecsFor.ShouldExtensions
 					if (Matcher.LastMatcher == null ||
 					    !Matcher.LastMatcher.Equals(actualValue))
 					{
-						throw new EqualException(expectedExpression, actualValue);
+						throw new EqualException(Matcher.LastMatcher.ToString(), actualValue);
 					}
 				}
 				else
@@ -109,25 +109,42 @@ namespace SpecsFor.ShouldExtensions
 
 		private static bool IsMoqExpression(MemberAssignment bindingAsAnotherExpression)
 		{
-			if (bindingAsAnotherExpression == null || bindingAsAnotherExpression.Expression.NodeType != ExpressionType.Call) return false;
+			if (bindingAsAnotherExpression == null) return false;
 
-			var callExpression = (MethodCallExpression) bindingAsAnotherExpression.Expression;
+			var callExpression = TryUnwrapCallExpression(bindingAsAnotherExpression);
 
-			if (callExpression.Method.DeclaringType != typeof (It)) return false;
+			if (callExpression == null || callExpression.Method.DeclaringType != typeof(It)) return false;
 
 			return true;
 		}
 
 		private static bool IsSpecsForAnyExpression(MemberAssignment bindingAsAnotherExpression)
 		{
-			if (bindingAsAnotherExpression == null || bindingAsAnotherExpression.Expression.NodeType != ExpressionType.Call) return false;
+			if (bindingAsAnotherExpression == null) return false;
 
-			var callExpression = (MethodCallExpression)bindingAsAnotherExpression.Expression;
+			var callExpression = TryUnwrapCallExpression(bindingAsAnotherExpression);
+
+			if (callExpression == null) return false;
 
 			if (callExpression.Method.DeclaringType != typeof(Any) &&
 				callExpression.Method.DeclaringType != typeof(Some)) return false;
 
 			return true;
+		}
+
+		private static MethodCallExpression TryUnwrapCallExpression(MemberAssignment bindingAsAnotherExpression)
+		{
+			var targetExpression = bindingAsAnotherExpression.Expression;
+
+			if (targetExpression.NodeType == ExpressionType.Convert)
+			{
+				var convertExpression = (UnaryExpression)targetExpression;
+				targetExpression = convertExpression.Operand;
+			}
+
+			if (targetExpression.NodeType != ExpressionType.Call) return null;
+
+			return (MethodCallExpression)targetExpression;
 		}
 	}
 }

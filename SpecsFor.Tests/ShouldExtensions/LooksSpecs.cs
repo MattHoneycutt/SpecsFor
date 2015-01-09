@@ -1,5 +1,4 @@
-﻿using System;
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
 using SpecsFor.ShouldExtensions;
 
@@ -88,23 +87,23 @@ namespace SpecsFor.Tests.ShouldExtensions
 		}
 
 		[Test]
-		public void moq_will_match_on_a_strongly_typed_partial_object_with_a_mock_matcher()
+		public void then_it_will_match_on_a_strongly_typed_partial_object_with_a_matching_expression()
 		{
 			var mock = GetMockFor<ITestService>();
 
 			mock.Object.DoStuff(new TestObject { ID = 1, Name = "Test" });
 
-			Assert.DoesNotThrow(() => mock.Verify(s => s.DoStuff(Looks.Like(() => new TestObject { ID = It.Is<int>(x => x == 1) }))));
+			Assert.DoesNotThrow(() => mock.Verify(s => s.DoStuff(Looks.Like(() => new TestObject { ID = Some.ValueOf<int>(x => x == 1) }))));
 		}
 
 		[Test]
-		public void moq_will_not_match_on_a_strongly_typed_partial_object_with_a_mock_matcher_that_should_not_match()
+		public void then_it_will_not_match_on_a_strongly_typed_partial_object_with_a_partial_matcher_that_should_not_match()
 		{
 			var mock = GetMockFor<ITestService>();
 
 			mock.Object.DoStuff(new TestObject { ID = 1, Name = "Test" });
 
-			Assert.Throws<MockException>(() => mock.Verify(s => s.DoStuff(Looks.Like(() => new TestObject { ID = It.Is<int>(x => x == 2) }))));
+			Assert.Throws<MockException>(() => mock.Verify(s => s.DoStuff(Looks.Like(() => new TestObject { ID = Some.ValueOf<int>(x => x == 2) }))));
 		}
 	}
 }

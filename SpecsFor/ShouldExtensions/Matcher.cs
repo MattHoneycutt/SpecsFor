@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using StructureMap.TypeRules;
 
 namespace SpecsFor.ShouldExtensions
 {
@@ -8,7 +9,7 @@ namespace SpecsFor.ShouldExtensions
 		[ThreadStatic]
 		public static Matcher LastMatcher;
 
-		public static void Create<T>(Expression<Func<T, bool>> matcher = null, string message = null)
+		public static void Create<T>(Expression<Func<T, bool>> matcher, string message)
 		{
 			LastMatcher = new Matcher<T>(matcher, message);
 		}
@@ -22,12 +23,12 @@ namespace SpecsFor.ShouldExtensions
 		public Matcher(Expression<Func<T, bool>> matcher, string message)
 		{
 			_matcher = matcher ?? (x => true);
-			_message = message ?? "Object matching " + _matcher.Body;
+			_message = message;
 		}
 
 		public override bool Equals(object obj)
 		{
-			if (!(obj is T))
+			if (!ObjectIsCompatibleWithType(obj))
 			{
 				return false;
 			}
@@ -35,6 +36,16 @@ namespace SpecsFor.ShouldExtensions
 			var matcher = _matcher.Compile();
 
 			return matcher((T)obj);
+		}
+
+		private static bool ObjectIsCompatibleWithType(object obj)
+		{
+			if (obj is T) return true;
+
+			if (typeof (T).IsNullable() && (typeof (T).GetInnerTypeFromNullable()) == obj.GetType())
+				return true;
+
+			return false;
 		}
 
 		public override string ToString()

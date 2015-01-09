@@ -1,6 +1,6 @@
 ﻿using System;
-using Moq;
 using NUnit.Framework;
+using Should;
 using Should.Core.Exceptions;
 using SpecsFor.ShouldExtensions;
 
@@ -15,11 +15,18 @@ namespace SpecsFor.Tests.ShouldExtensions
 			public string Name { get; set; }
 			public TestObject Nested { get; set; }
 			public TestObject[] NestedArray { get; set; }
+			public DateTime? OptionalDate { get; set; }
 		}
 
 		protected override void InitializeClassUnderTest()
 		{
-			SUT = new TestObject { TestObjectId = Guid.NewGuid(), Name = "Test", Awesomeness = 11};
+			SUT = new TestObject
+			{
+				TestObjectId = Guid.NewGuid(), 
+				Name = "Test", 
+				Awesomeness = 11,
+				OptionalDate = DateTime.Today
+			};
 		}
 
 		[Test]
@@ -76,11 +83,37 @@ namespace SpecsFor.Tests.ShouldExtensions
 			Assert.Throws<EqualException>(() => SUT.ShouldLookLike(() => new TestObject
 			{
 				TestObjectId = Some.ValueOf<Guid>(x => x == Guid.Empty)
-			}));
-			SUT.ShouldLookLike(() => new TestObject
+			}))
+			.Message.ShouldContain("Expected: Object matching (x == Guid.Empty)");
+		}
+
+		[Test]
+		public void then_it_should_fail_when_used_with_a_not_default_matcher_that_does_not_match_a_specific_check()
+		{
+			Assert.Throws<EqualException>(() => new TestObject().ShouldLookLike(() => new TestObject
 			{
-				TestObjectId = Some.ValueOf<Guid>(x => x == Guid.Empty)
-			});
+				TestObjectId = Any.NonDefaultValueOf<Guid>()
+			}))
+			.Message.ShouldContain("Expected: Non-default value of System.Guid");
+		}
+
+		[Test]
+		public void then_it_should_fail_when_used_with_a_not_null_matcher_that_does_not_match_a_specific_check()
+		{
+			Assert.Throws<EqualException>(() => new TestObject().ShouldLookLike(() => new TestObject
+			{
+				Name = Any.NonNullValueOf<string>()
+			}))
+			.Message.ShouldContain("Expected: Non-null value of System.String");
+		}
+
+		[Test]
+		public void then_it_passes_when_a_value_for_a_nullable_type_matches_the_specified_check()
+		{
+			Assert.DoesNotThrow(() => SUT.ShouldLookLike(() => new TestObject
+			{
+				OptionalDate = Some.ValueOf<DateTime>(d => d != DateTime.MinValue)
+			}));
 		}
 
 		[Test]
