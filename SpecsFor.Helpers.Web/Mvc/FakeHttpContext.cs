@@ -73,26 +73,26 @@ namespace SpecsFor.Helpers.Web.Mvc
 		}
 
 		public FakeHttpContext(
-		FakePrincipal principal,
-		IFormParamsProvider formParams,
-		IQueryStringParamsProvider queryStringParams,
-		HttpCookieCollection cookies,
-		SessionStateItemCollection sessionItems,
-		HttpServerUtilityBase server,
-		FakeHttpRequest request,
-		IHttpContextBehavior contextBehavior)
+			FakePrincipal principal,
+			IFormParamsProvider formParams,
+			IQueryStringParamsProvider queryStringParams,
+			HttpCookieCollection cookies,
+			SessionStateItemCollection sessionItems,
+			HttpServerUtilityBase server,
+			FakeHttpRequest request,
+			IHttpContextBehavior contextBehavior)
 		{
-			this._principal = principal ?? new FakePrincipal((IIdentity)new FakeIdentity((string)null), (string[])null);
-			this._formParams = formParams ?? new EmptyFormsParamProvider();
-			this._queryStringParams = queryStringParams ?? new EmptyQueryStringParamProvider();
-			this._cookies = cookies ?? new HttpCookieCollection();
-			this._sessionItems = sessionItems ?? new SessionStateItemCollection();
-			this._request = request ?? new FakeHttpRequest();
-			this._request.SetIsAuthenticated(this._principal.Identity.IsAuthenticated);
-			this._server = server ?? new Mock<HttpServerUtilityBase>().Object;
-			Mock<HttpResponseBase> mock = new Mock<HttpResponseBase>();
-			mock.Setup<string>((Expression<Func<HttpResponseBase, string>>)(x => x.ApplyAppPathModifier(It.IsAny<string>()))).Returns<string>((Func<string, string>)(s => s));
-			this._response = mock.Object;
+			_principal = principal ?? new FakePrincipal((IIdentity)new FakeIdentity((string)null), (string[])null);
+			_formParams = formParams ?? new EmptyFormsParamProvider();
+			_queryStringParams = queryStringParams ?? new EmptyQueryStringParamProvider();
+			_cookies = cookies ?? new HttpCookieCollection();
+			_sessionItems = sessionItems ?? new SessionStateItemCollection();
+			_request = request ?? new FakeHttpRequest();
+			_request.SetIsAuthenticated(this._principal.Identity.IsAuthenticated);
+			_server = server ?? new Mock<HttpServerUtilityBase>().Object;
+			var httpResponse = new Mock<HttpResponseBase>();
+			httpResponse.Setup(x => x.ApplyAppPathModifier(It.IsAny<string>())).Returns<string>(s => s);
+			this._response = httpResponse.Object;
 			this._behavior = contextBehavior;
 		}
 
