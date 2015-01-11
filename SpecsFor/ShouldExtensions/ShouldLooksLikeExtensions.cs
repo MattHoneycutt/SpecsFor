@@ -6,7 +6,6 @@ using Moq;
 using NUnit.Framework;
 using Should;
 using Should.Core.Exceptions;
-using StructureMap.TypeRules;
 
 namespace SpecsFor.ShouldExtensions
 {
