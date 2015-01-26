@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="ComposingContext\CompositionalContextSpecs.cs" />
     <Compile Include="ComposingContext\ComposingContextConfig.cs" />
+    <Compile Include="ShouldExtensions\PartialMatchingWithListsSpecs.cs" />
     <Compile Include="ShouldExtensions\ShouldLookLikeExtensionsSpecs.cs" />
     <Compile Include="ShouldExtensions\SomeSpecs.cs" />
     <Compile Include="SpecsForEngineSpecs.cs" />

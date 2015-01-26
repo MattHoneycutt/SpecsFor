@@ -58,6 +58,27 @@ namespace SpecsFor.ShouldExtensions
 			}
 		}
 
+
+		private static void ShouldMatchIEnumerable(IEnumerable actual, ListInitExpression arrayExpression)
+		{
+			var array = actual.Cast<object>().ToArray();
+
+			if (arrayExpression.Initializers.Any(x => x.Arguments[0].NodeType != ExpressionType.MemberInit))
+			{
+				var expected = (IEnumerable)Expression.Lambda<Func<object>>(arrayExpression).Compile()();
+				var expectedArray = expected.Cast<object>().ToArray();
+
+				array.ShouldLookLike(expectedArray);
+
+				return;
+			}
+
+			for (int i = 0; i < arrayExpression.Initializers.Count; i++)
+			{
+				ShouldMatch(array[i], arrayExpression.Initializers[i].Arguments[0] as MemberInitExpression);
+			}
+		}
+		
 		private static void ShouldMatch(object actual, MemberInitExpression expression)
 		{
 			var expected = Expression.Lambda<Func<object>>(expression).Compile()();
@@ -79,6 +100,11 @@ namespace SpecsFor.ShouldExtensions
 				         bindingAsAnotherExpression.Expression.NodeType == ExpressionType.NewArrayInit)
 				{
 					ShouldMatchIEnumerable(actualValue as IEnumerable, bindingAsAnotherExpression.Expression as NewArrayExpression);
+				}
+				else if (bindingAsAnotherExpression != null &&
+						 bindingAsAnotherExpression.Expression.NodeType == ExpressionType.ListInit)
+				{
+					ShouldMatchIEnumerable(actualValue as IEnumerable, bindingAsAnotherExpression.Expression as ListInitExpression);
 				}
 				else if (IsMoqExpression(bindingAsAnotherExpression))
 				{
