@@ -7,6 +7,7 @@ namespace SpecsFor.Helpers.Web.Mvc
 		public FakeViewContext(FakeHttpContext context = null)
 		{
 			HttpContext = context ?? new FakeHttpContext();
+			ViewData = new ViewDataDictionary();
 		}
 	}
 }
