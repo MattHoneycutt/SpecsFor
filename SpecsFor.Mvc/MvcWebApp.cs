@@ -279,6 +279,15 @@ namespace SpecsFor.Mvc
                 string areaName = areaAttr.Area;
                 rvd.Add("Area", areaName);
             }
+            else
+            {
+                RouteAreaAttribute routeAreaAttr = typeof(TController).GetCustomAttributes(typeof(RouteAreaAttribute), true /* inherit */).FirstOrDefault() as RouteAreaAttribute;
+                if (routeAreaAttr != null)
+                {
+                    string areaName = routeAreaAttr.AreaName;
+                    rvd.Add("Area", areaName);
+                }
+            }
 
             AddParameterValuesFromExpressionToDictionary(rvd, call);
             return rvd;
