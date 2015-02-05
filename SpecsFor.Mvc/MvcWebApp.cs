@@ -273,7 +273,7 @@ namespace SpecsFor.Mvc
             rvd.Add("Controller", controllerName);
             rvd.Add("Action", actionName);
 
-            ActionLinkAreaAttribute areaAttr = typeof(TController).GetCustomAttributes(typeof(ActionLinkAreaAttribute), true /* inherit */).FirstOrDefault() as ActionLinkAreaAttribute;
+            var areaAttr = typeof(TController).GetCustomAttributes(typeof(ActionLinkAreaAttribute), true /* inherit */).FirstOrDefault() as ActionLinkAreaAttribute;
             if (areaAttr != null)
             {
                 string areaName = areaAttr.Area;
@@ -281,7 +281,7 @@ namespace SpecsFor.Mvc
             }
             else
             {
-                RouteAreaAttribute routeAreaAttr = typeof(TController).GetCustomAttributes(typeof(RouteAreaAttribute), true /* inherit */).FirstOrDefault() as RouteAreaAttribute;
+                var routeAreaAttr = typeof(TController).GetCustomAttributes(typeof(RouteAreaAttribute), true /* inherit */).FirstOrDefault() as RouteAreaAttribute;
                 if (routeAreaAttr != null)
                 {
                     string areaName = routeAreaAttr.AreaName;
