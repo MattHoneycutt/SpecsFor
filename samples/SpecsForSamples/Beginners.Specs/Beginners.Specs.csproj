@@ -42,9 +42,9 @@
     <Reference Include="Should">
       <HintPath>..\packages\Should.1.1.20\lib\Should.dll</HintPath>
     </Reference>
-    <Reference Include="SpecsFor, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SpecsFor, Version=4.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SpecsFor.4.3.0-RC10\lib\net40\SpecsFor.dll</HintPath>
+      <HintPath>..\packages\SpecsFor.4.3.1\lib\net40\SpecsFor.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.0.133\lib\net40\StructureMap.dll</HintPath>
@@ -67,6 +67,7 @@
     <Compile Include="PartialMatching\ITrainYard.cs" />
     <Compile Include="PartialMatching\LooksLikeSpecs.cs" />
     <Compile Include="PartialMatching\LuggageTicket.cs" />
+    <Compile Include="PartialMatching\PartialMatchingWithSome.cs" />
     <Compile Include="PartialMatching\ShouldLookLikeSpecs.cs" />
     <Compile Include="PartialMatching\TrainCar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
