@@ -62,7 +62,7 @@ namespace SpecsFor.Mvc
             return FluentForm;
         }
 
-        public FluentForm<TModel> SelecyByText(string text)
+        public FluentForm<TModel> SelectByText(string text)
         {
             //create select element object 
             var selectElement = new SelectElement(Field);
