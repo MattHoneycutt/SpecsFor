@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using OpenQA.Selenium;
@@ -59,7 +58,15 @@ namespace SpecsFor.Mvc
 
 			WebApp.Pause();
 		}
+        public FluentField<TModel, TProp> WaitForFieldToBeVisible<TProp>(Expression<Func<TModel, TProp>> property, TimeSpan? timeout = null, bool throwOnTimeout = false)
+        {
+            IWebElement element = WebApp.WaitForElementToBeVisible<TModel, TProp>(property, timeout, throwOnTimeout);
+            var field = new FluentField<TModel, TProp>(this, WebApp, property, element);
 
+            _lastField = field.Field;
+
+            return field;
+        }
 		private IWebElement FindSingleForm()
 		{
 			var forms = WebApp.Browser.FindElements(By.TagName("form"));
