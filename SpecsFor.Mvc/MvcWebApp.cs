@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading;
 using System.Web.Mvc;
 using System.Web.Routing;
-using OpenQA.Selenium;
 using Microsoft.Web.Mvc;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 using SpecsFor.Mvc.Authentication;
 using SpecsFor.Mvc.Helpers;
-using System.Linq;
-using System.Reflection;
-using System.Globalization;
 
 namespace SpecsFor.Mvc
 {
@@ -215,6 +215,11 @@ namespace SpecsFor.Mvc
 			return ElementConventions.IsFieldInvalid(field);
 		}
 
+        public IWebElement WaitForElementToBeVisible<TModel, TProp>(Expression<Func<TModel, TProp>> property, TimeSpan? timeout = null, bool throwOnTimeout = false) where TModel : class
+        {
+            return this.WaitForElementToBeVisible(ElementConventions.FindEditorElementByExpressionFor(property), timeout, throwOnTimeout);
+        }
+
 		public IWebElement WaitForElementToBeVisible(By selector, TimeSpan? timeout = null, bool throwOnTimeout = false)
 		{
 			timeout = timeout ?? TimeSpan.FromSeconds(10);
@@ -230,8 +235,7 @@ namespace SpecsFor.Mvc
 
 			return null;
 		}
-
-		
+        		
 		public string AllText()
         {
             return Browser.FindElement(By.TagName("body")).Text;
