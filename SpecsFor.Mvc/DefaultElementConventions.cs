@@ -32,5 +32,13 @@ namespace SpecsFor.Mvc
 		{
 			return field.GetAttribute("class").Contains("input-validation-error");
 		}
-	}
+
+
+        public virtual By FindEditorElementsByExpressionUsingNameFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class
+        {
+            var name = ExpressionHelper.GetExpressionText(property);
+
+            return By.Name(name);
+        }
+    }
 }

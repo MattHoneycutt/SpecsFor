@@ -1,0 +1,32 @@
+﻿@model SpecsFor.Mvc.Demo.Areas.Tasks.Models.Task
+
+@{
+    ViewBag.Title = "New Task";
+}
+@using (Html.BeginForm())
+{
+    <div>
+        <fieldset>
+            <legend>New Task</legend>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Title)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.Title)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Complete)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(m => m.Complete)
+            </div>
+
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+        </fieldset>
+    </div>
+}
+

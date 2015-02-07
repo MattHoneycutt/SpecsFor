@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Microsoft.Web.Mvc;
+using SpecsFor.Mvc.Demo.Areas.Tasks.Models;
 
 namespace SpecsFor.Mvc.Demo.Areas.Tasks.Controllers
 {
@@ -11,9 +12,25 @@ namespace SpecsFor.Mvc.Demo.Areas.Tasks.Controllers
             return View();
         }
 
-		public ActionResult Create(int newID, string name)
+        public ActionResult Edit(int newId, string name)
+        {
+            return null;
+        }
+
+		public ActionResult Create()
 		{
-			return null;
+			return View(new Task());
 		}
+
+        [HttpPost]
+        public ActionResult Create(Task model)
+        {
+            if (model.Complete)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Create");
+        }
     }
 }
