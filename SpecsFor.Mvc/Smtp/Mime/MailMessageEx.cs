@@ -1,7 +1,6 @@
 // Borrowed from the Papercut project: papercut.codeplex.com.  
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Net.Mail;
 using System.Net.Mime;
 
@@ -14,8 +13,6 @@ namespace SpecsFor.Mvc.Smtp.Mime
 	/// </summary>
 	public class MailMessageEx : MailMessage
 	{
-		public const string EmailRegexPattern = "(['\"]{1,}.+['\"]{1,}\\s+)?<?[\\w\\.\\-]+@[^\\.][\\w\\.\\-]+\\.[a-z]{2,}>?";
-
 		private long _octets;
 
 		public long Octets
@@ -36,8 +33,6 @@ namespace SpecsFor.Mvc.Smtp.Mime
 			internal set { _messageNumber = value; }
 		}
 
-
-		private static readonly char[] AddressDelimiters = new char[] { ',', ';' };
 
 		private List<MailMessageEx> _children;
 		/// <summary>
@@ -225,10 +220,10 @@ namespace SpecsFor.Mvc.Smtp.Mime
 				switch (key.ToLowerInvariant())
 				{
 					case MailHeaders.Bcc:
-						MailMessageEx.PopulateAddressList(value, message.Bcc);
+						message.Bcc.Add(value);
 						break;
 					case MailHeaders.Cc:
-						MailMessageEx.PopulateAddressList(value, message.CC);
+						message.CC.Add(value);
 						break;
 					case MailHeaders.From:
 						message.From = MailMessageEx.CreateMailAddress(value);
@@ -240,7 +235,7 @@ namespace SpecsFor.Mvc.Smtp.Mime
 						message.Subject = value;
 						break;
 					case MailHeaders.To:
-						MailMessageEx.PopulateAddressList(value, message.To);
+						message.To.Add(value);
 						break;
 				}
 			}
@@ -263,42 +258,6 @@ namespace SpecsFor.Mvc.Smtp.Mime
 			{
 				throw new Exception("Unable to create mail address from provided string: " + address, e);
 			}
-		}
-
-		/// <summary>
-		/// Populates the address list.
-		/// </summary>
-		/// <param name="addressList">The address list.</param>
-		/// <param name="recipients">The recipients.</param>
-		public static void PopulateAddressList(string addressList, MailAddressCollection recipients)
-		{
-			foreach (MailAddress address in GetMailAddresses(addressList))
-			{
-				recipients.Add(address);
-			}
-		}
-
-		/// <summary>
-		/// Gets the mail addresses.
-		/// </summary>
-		/// <param name="addressList">The address list.</param>
-		/// <returns></returns>
-		private static IEnumerable<MailAddress> GetMailAddresses(string addressList)
-		{
-			Regex email = new Regex(EmailRegexPattern);
-
-			foreach (Match match in email.Matches(addressList))
-			{
-				yield return CreateMailAddress(match.Value);
-			}
-
-
-			/*
-			string[] addresses = addressList.Split(AddressDelimiters);
-			foreach (string address in addresses)
-			{
-					yield return CreateMailAddress(address);
-			}*/
 		}
 	}
 }
