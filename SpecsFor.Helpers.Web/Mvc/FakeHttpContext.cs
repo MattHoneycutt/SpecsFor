@@ -11,7 +11,6 @@ namespace SpecsFor.Helpers.Web.Mvc
 {
 	public class FakeHttpContext : HttpContextBase
 	{
-		private FakePrincipal _principal;
 		private readonly IFormParamsProvider _formParams;
 		private readonly IQueryStringParamsProvider _queryStringParams;
 		private readonly HttpCookieCollection _cookies;
@@ -37,19 +36,7 @@ namespace SpecsFor.Helpers.Web.Mvc
 			}
 		}
 
-		public override IPrincipal User
-		{
-			get
-			{
-				return (IPrincipal)this._principal;
-			}
-			set
-			{
-				if (!(value is FakePrincipal))
-					throw new NotImplementedException();
-				this._principal = (FakePrincipal)value;
-			}
-		}
+		public override IPrincipal User { get; set; }
 
 		public override HttpServerUtilityBase Server
 		{
@@ -73,7 +60,7 @@ namespace SpecsFor.Helpers.Web.Mvc
 		}
 
 		public FakeHttpContext(
-			FakePrincipal principal,
+			IPrincipal principal,
 			IFormParamsProvider formParams,
 			IQueryStringParamsProvider queryStringParams,
 			HttpCookieCollection cookies,
@@ -82,13 +69,13 @@ namespace SpecsFor.Helpers.Web.Mvc
 			FakeHttpRequest request,
 			IHttpContextBehavior contextBehavior)
 		{
-			_principal = principal ?? new FakePrincipal((IIdentity)new FakeIdentity((string)null), (string[])null);
+			User = principal;
 			_formParams = formParams ?? new EmptyFormsParamProvider();
 			_queryStringParams = queryStringParams ?? new EmptyQueryStringParamProvider();
 			_cookies = cookies ?? new HttpCookieCollection();
 			_sessionItems = sessionItems ?? new SessionStateItemCollection();
 			_request = request ?? new FakeHttpRequest();
-			_request.SetIsAuthenticated(this._principal.Identity.IsAuthenticated);
+			_request.SetIsAuthenticated(User.Identity != null ? User.Identity.IsAuthenticated : false);
 			_server = server ?? new Mock<HttpServerUtilityBase>().Object;
 			var httpResponse = new Mock<HttpResponseBase>();
 			httpResponse.Setup(x => x.ApplyAppPathModifier(It.IsAny<string>())).Returns<string>(s => s);
@@ -110,7 +97,7 @@ namespace SpecsFor.Helpers.Web.Mvc
 
 		public FakeHttpContext()
 			: this(
-			(FakePrincipal)null,
+			(IPrincipal)null,
 			(IFormParamsProvider)null,
 			(IQueryStringParamsProvider)null,
 			(HttpCookieCollection)null,
