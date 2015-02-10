@@ -23,6 +23,14 @@ namespace SpecsFor.Mvc
 			Field = webApp.FindElementByExpressionUsingEditorConvention(property);
 		}
 
+        public FluentField(FluentForm<TModel> fluentForm, MvcWebApp webApp, Expression<Func<TModel, TProp>> property, IWebElement webElement)
+        {
+            _property = property;
+            FluentForm = fluentForm;
+            WebApp = webApp;
+            Field = webElement;
+        }
+        
 		public FluentForm<TModel> ShouldBeInvalid()
 		{
 			if (!WebApp.IsFieldInvalidByConvention(Field))
@@ -62,7 +70,7 @@ namespace SpecsFor.Mvc
             return FluentForm;
         }
 
-        public FluentForm<TModel> SelecyByText(string text)
+        public FluentForm<TModel> SelectByText(string text)
         {
             //create select element object 
             var selectElement = new SelectElement(Field);

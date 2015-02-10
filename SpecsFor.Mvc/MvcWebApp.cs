@@ -205,6 +205,11 @@ namespace SpecsFor.Mvc
 	        return Browser.FindElement(ElementConventions.FindEditorElementByExpressionFor(property));
         }
 
+        public IEnumerable<IWebElement> FindElementsByExpressionUsingEditorConvention<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class
+        {
+            return Browser.FindElements(ElementConventions.FindEditorElementsByExpressionUsingNameFor(property));
+        }
+        
 		public bool IsFieldInvalidByConvention(IWebElement field)
 		{
 			return ElementConventions.IsFieldInvalid(field);

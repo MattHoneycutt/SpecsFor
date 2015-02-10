@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="AboutSpecs.cs" />
     <Compile Include="AssemblyStartup.cs" />
+    <Compile Include="TaskCreateSpecs.cs" />
     <Compile Include="LoginSpecs.cs" />
     <Compile Include="LoginSpecsWithoutSpecsForMvc.cs" />
     <Compile Include="MvcWebAppSpecs.cs" />

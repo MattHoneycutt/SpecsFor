@@ -9,6 +9,8 @@ namespace SpecsFor.Mvc
 		By FindDisplayElementByExpressionFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class;
 		By FindEditorElementByExpressionFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class;
 
+        By FindEditorElementsByExpressionUsingNameFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class;
+
 		By FindValidationSummary();
 
 		bool IsFieldInvalid(IWebElement field);

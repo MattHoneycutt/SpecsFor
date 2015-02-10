@@ -10,19 +10,19 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 		{
 			protected override void When()
 			{
-				SUT.NavigateTo<ListController>(c => c.Create(5, "test"));
+				SUT.NavigateTo<ListController>(c => c.Edit(5, "test"));
 			}
 
 			[Test]
 			public void then_it_correctly_matches_the_same_route()
 			{
-				SUT.Route.ShouldMapTo<ListController>(c => c.Create(5, "test"));
+				SUT.Route.ShouldMapTo<ListController>(c => c.Edit(5, "test"));
 			}
 
 			[Test]
 			public void then_it_throws_an_exception_on_a_different_route()
 			{
-				Assert.Throws<RouteAssertionException>(() => SUT.Route.ShouldMapTo<ListController>(c => c.Create(4, "other")));
+				Assert.Throws<RouteAssertionException>(() => SUT.Route.ShouldMapTo<ListController>(c => c.Edit(4, "other")));
 			}
 		}
 	}

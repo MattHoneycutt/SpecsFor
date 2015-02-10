@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using OpenQA.Selenium;
-using System.Linq;
+using SpecsFor.Mvc.SeleniumExtensions;
 
 namespace SpecsFor.Mvc
 {
@@ -16,6 +18,12 @@ namespace SpecsFor.Mvc
 			WebApp = webApp;
 		}
 
+        /// <summary>
+        /// Returns the field described the specified property.
+        /// </summary>
+        /// <typeparam name="TProp">The type of the property.</typeparam>
+        /// <param name="property">The property.</param>
+        /// <returns>The field.</returns>
 		public FluentField<TModel,TProp> Field<TProp>(Expression<Func<TModel, TProp>> property)
 		{
 			var field = new FluentField<TModel, TProp>(this, WebApp, property);
@@ -25,6 +33,23 @@ namespace SpecsFor.Mvc
 			
 			return field;
 		}
+
+        /// <summary>
+        /// Selects the correct field based on the supplied value from the list of fields described by the specified property.
+        /// </summary>
+        /// <typeparam name="TProp">The type of the property.</typeparam>
+        /// <param name="property">The property.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>The field.</returns>
+        public FluentField<TModel, TProp> Field<TProp>(Expression<Func<TModel, TProp>> property, string value)
+        {
+            IWebElement element = WebApp.FindElementsByExpressionUsingEditorConvention(property).Where(e => e.Value() == value).Single();
+            FluentField<TModel, TProp> field = new FluentField<TModel, TProp>(this, WebApp, property, element);
+            _lastField = field.Field;
+
+            return field;
+
+        }
 
 		public void Submit()
 		{
