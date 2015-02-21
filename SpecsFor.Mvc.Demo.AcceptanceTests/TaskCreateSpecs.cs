@@ -22,7 +22,7 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 			{
 				SUT.FindFormFor<Task>()
 					.Field(m => m.Title).SetValueTo("use radio buttons")
-					.Field(m => m.Complete, "true").Click()
+					.Field(m => m.Complete, true).Click()
 					.Submit();
 			}
 
@@ -53,6 +53,30 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
             public void then_it_should_redirect_to_index()
             {
                 SUT.Route.ShouldMapTo<ListController>(c => c.Create());
+            }
+        }
+
+        public class when_creating_a_high_priority_task : SpecsFor<MvcWebApp>
+        {
+            protected override void Given()
+            {
+                SUT.NavigateTo<ListController>(c => c.Index());
+                SUT.FindLinkTo<ListController>(c => c.Create()).Click();
+            }
+
+            protected override void When()
+            {
+                SUT.FindFormFor<Task>()
+                    .Field(m => m.Title).SetValueTo("use radio buttons")
+					.Field(m => m.Complete, true).Click()
+                    .Field(m => m.Priority, Priority.High).Click()
+                    .Submit();
+            }
+
+            [Test]
+            public void then_it_should_redirect_to_index()
+            {
+                SUT.Route.ShouldMapTo<ListController>(c => c.Index());
             }
         }
 	}

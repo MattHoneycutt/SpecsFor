@@ -19,8 +19,15 @@
             <div class="editor-label">
                 @Html.LabelFor(m => m.Complete)
             </div>
-            <div class="editor-field">
-                @Html.EditorFor(m => m.Complete)
+	        <div class="editor-field">
+		        @Html.EditorFor(m => m.Complete)
+	        </div>
+
+			<div class="editor-label">
+				@Html.LabelFor(m => m.Priority)
+			</div>
+           <div class="editor-field">
+                @Html.EditorFor(m => m.Priority, "EnumRadioButtons")
             </div>
 
             <p>

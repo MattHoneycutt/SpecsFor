@@ -2,9 +2,9 @@
 using Should;
 using SpecsFor.Mvc.Demo.Controllers;
 using SpecsFor.Mvc.Demo.Models;
-using System.Linq;
 using SpecsFor.Mvc.Helpers;
 using SpecsFor.Mvc.Smtp;
+using System.Linq;
 
 namespace SpecsFor.Mvc.Demo.AcceptanceTests
 {
@@ -81,6 +81,48 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 			public void then_it_sends_to_the_right_address()
 			{
 				SUT.Mailbox().MailMessages[0].To[0].Address.ShouldEqual("test@user.com");
+			}
+
+			[Test]
+			public void then_it_comes_from_the_expected_address()
+			{
+				SUT.Mailbox().MailMessages[0].From.Address.ShouldEqual("registration@specsfor.com");
+			}
+		}
+
+		public class when_a_new_user_registers_with_plus_in_email : SpecsFor<MvcWebApp>
+		{
+			protected override void Given()
+			{
+				SUT.NavigateTo<AccountController>(c => c.Register());
+			}
+
+			protected override void When()
+			{
+				SUT.FindFormFor<RegisterModel>()
+					.Field(m => m.Email).SetValueTo("test+1@user.com")
+					.Field(m => m.UserName).SetValueTo("Test User")
+					.Field(m => m.Password).SetValueTo("P@ssword!")
+					.Field(m => m.ConfirmPassword).SetValueTo("P@ssword!")
+					.Submit();
+			}
+
+			[Test]
+			public void then_it_redirects_to_the_home_page()
+			{
+				SUT.Route.ShouldMapTo<HomeController>(c => c.Index());
+			}
+
+			[Test]
+			public void then_it_sends_the_user_an_email()
+			{
+				SUT.Mailbox().MailMessages.Count().ShouldEqual(1);
+			}
+
+			[Test]
+			public void then_it_sends_to_the_right_address()
+			{
+				SUT.Mailbox().MailMessages[0].To[0].Address.ShouldEqual("test+1@user.com");
 			}
 
 			[Test]

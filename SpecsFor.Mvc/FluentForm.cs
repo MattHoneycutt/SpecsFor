@@ -42,8 +42,27 @@ namespace SpecsFor.Mvc
         /// <returns>The field.</returns>
         public FluentField<TModel, TProp> Field<TProp>(Expression<Func<TModel, TProp>> property, string value)
         {
-            IWebElement element = WebApp.FindElementsByExpressionUsingEditorConvention(property).Where(e => e.Value() == value).Single();
-            FluentField<TModel, TProp> field = new FluentField<TModel, TProp>(this, WebApp, property, element);
+            var element = WebApp.FindElementsByExpressionUsingEditorConvention(property).Single(e => e.Value() == value);
+            var field = new FluentField<TModel, TProp>(this, WebApp, property, element);
+            _lastField = field.Field;
+
+            return field;
+
+        }
+
+        /// <summary>
+        /// Selects the correct field based on the supplied value from the list of fields described by the specified property.
+        /// </summary>
+        /// <typeparam name="TProp">The type of the property.</typeparam>
+        /// <param name="property">The property.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>The field.</returns>
+        public FluentField<TModel, TProp> Field<TProp>(Expression<Func<TModel, TProp>> property, TProp value)
+        {
+	        var valueAsString = value != null ? value.ToString() : null;
+
+            var element = WebApp.FindElementsByExpressionUsingEditorConvention(property).Single(e => e.Value().Equals(valueAsString, StringComparison.InvariantCultureIgnoreCase));
+            var field = new FluentField<TModel, TProp>(this, WebApp, property, element);
             _lastField = field.Field;
 
             return field;

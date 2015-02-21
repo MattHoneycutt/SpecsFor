@@ -100,12 +100,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mvc\FakeActionExecutingContext.cs" />
+    <Compile Include="Mvc\FakeControllerContext.cs" />
     <Compile Include="Mvc\FakeHtmlHelper.cs" />
     <Compile Include="Mvc\FakeHttpContext.cs" />
     <Compile Include="Mvc\FakeHttpRequest.cs" />
     <Compile Include="Mvc\FakeHttpSessionState.cs" />
-    <Compile Include="Mvc\FakeIdentity.cs" />
-    <Compile Include="Mvc\FakePrincipal.cs" />
     <Compile Include="Mvc\FakeRequestContext.cs" />
     <Compile Include="Mvc\FakeUrlHelper.cs" />
     <Compile Include="Mvc\FakeViewContext.cs" />
