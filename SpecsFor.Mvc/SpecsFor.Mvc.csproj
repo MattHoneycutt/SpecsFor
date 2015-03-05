@@ -129,6 +129,7 @@
     <Compile Include="Smtp\SmtpServer\SmtpClient.cs" />
     <Compile Include="Smtp\SmtpServer\SmtpSession.cs" />
     <Compile Include="Smtp\SmtpServer\Util.cs" />
+    <Compile Include="Solution.cs" />
     <Compile Include="SpecsForIntegrationHost.cs" />
     <Compile Include="SpecsForMvcConfig.cs" />
   </ItemGroup>
