@@ -34,7 +34,7 @@ namespace SpecsFor.Mvc.IIS
 			if (pathToSolution == null && (projectDirectory.Parent == null || projectDirectory.Parent.EnumerateFiles("*.sln").FirstOrDefault() == null))
 				throw new InvalidOperationException("Unable to find the project's solution file!  Call 'With()' and specify the path to the solution directly");
 
-			if (projectDirectory.Parent.EnumerateFiles("*.sln").Count() > 1)
+            if (pathToSolution == null && projectDirectory.Parent.EnumerateFiles("*.sln").Count() > 1)
 				throw new InvalidOperationException("Multiple solution files!  Call 'With()' and specify the path to the solution directly");
 
 			_action.SolutionPath = pathToSolution ?? projectDirectory.Parent.EnumerateFiles("*.sln").SingleOrDefault().FullName;
