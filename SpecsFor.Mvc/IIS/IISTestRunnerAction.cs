@@ -36,6 +36,8 @@ namespace SpecsFor.Mvc.IIS
 
 		public string TemporaryDirectoryName { get; set; }
 
+        public string OutputPath { get; set; }
+
 		private void StartIISExpress()
 		{
 			_iisExpressProcess = new IISExpressProcess(_publishDir, ApplicationHostConfigurationFile, ProjectName);
@@ -136,6 +138,11 @@ namespace SpecsFor.Mvc.IIS
 				properties.Add("Configuration", Configuration);
 			}
 
+			if (!string.IsNullOrEmpty(OutputPath))
+			{
+                properties.Add("OutputPath", "\"" + OutputPath + "\\\\\"");
+			}
+
 			PublishSite(properties);
 
 			StartIISExpress();
@@ -161,5 +168,6 @@ namespace SpecsFor.Mvc.IIS
 				}
 			}
 		}
-	}
+
+    }
 }
