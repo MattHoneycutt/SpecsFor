@@ -145,27 +145,26 @@ namespace SpecsFor.Mvc
             return element;
         }
 
-		public bool UrlMapsTo<TController>(Expression<Action<TController>> action) where TController : Controller
-		{
-			var helper = new HtmlHelper(new ViewContext { HttpContext = FakeHttpContext.Root() }, new FakeViewDataContainer());
-			//TODO: workaround to fixes MattHoneycutt/SpecsFor#25
-			var url = BuildUrlFromExpression(helper.ViewContext.RequestContext, helper.RouteCollection, action);
-			var expectedUrl = MvcWebApp.BaseUrl + helper.BuildUrlFromExpression(action);
+        public bool UrlMapsTo<TController>(Expression<Action<TController>> action, StringComparison comparison = StringComparison.CurrentCulture) where TController : Controller
+        {
+            var helper = new HtmlHelper(new ViewContext { HttpContext = FakeHttpContext.Root() }, new FakeViewDataContainer());
+            //TODO: workaround to fixes MattHoneycutt/SpecsFor#25
+            var url = MvcWebApp.BaseUrl + BuildUrlFromExpression(helper.ViewContext.RequestContext, helper.RouteCollection, action);
+            
+            return Browser.Url.Equals(url, comparison);
+        }
 
-			return (Browser.Url == expectedUrl);
-		}
+        public void UrlShouldMapTo<TController>(Expression<Action<TController>> action, StringComparison comparison = StringComparison.CurrentCulture) where TController : Controller
+        {
+            if (!UrlMapsTo(action, comparison))
+            {
+                var helper = new HtmlHelper(new ViewContext { HttpContext = FakeHttpContext.Root() }, new FakeViewDataContainer());
+                var url = MvcWebApp.BaseUrl + BuildUrlFromExpression(helper.ViewContext.RequestContext, helper.RouteCollection, action);
 
-		public void UrlShouldMapTo<TController>(Expression<Action<TController>> action) where TController : Controller
-		{
-			if (!UrlMapsTo(action))
-			{
-				var helper = new HtmlHelper(new ViewContext { HttpContext = FakeHttpContext.Root() }, new FakeViewDataContainer());
-				var expectedUrl = MvcWebApp.BaseUrl + helper.BuildUrlFromExpression(action);
-
-				throw new AssertionException(string.Format("URL does not match target action. \r\n\tExpected {0}\r\n\tActual:{1}",
-					expectedUrl, Browser.Url));
-			}
-		}
+                throw new AssertionException(string.Format("URL does not match target action. \r\n\tExpected {0}\r\n\tActual:{1}",
+                    url, Browser.Url));
+            }
+        }
 
         internal void Pause()
         {
