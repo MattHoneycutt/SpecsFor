@@ -149,8 +149,7 @@ namespace SpecsFor.Mvc
 		{
 			var helper = new HtmlHelper(new ViewContext { HttpContext = FakeHttpContext.Root() }, new FakeViewDataContainer());
 			//TODO: workaround to fixes MattHoneycutt/SpecsFor#25
-			var url = BuildUrlFromExpression(helper.ViewContext.RequestContext, helper.RouteCollection, action);
-			var expectedUrl = MvcWebApp.BaseUrl + helper.BuildUrlFromExpression(action);
+			var expectedUrl = MvcWebApp.BaseUrl + BuildUrlFromExpression(helper.ViewContext.RequestContext, helper.RouteCollection, action);
 
 			return (Browser.Url == expectedUrl);
 		}
@@ -160,7 +159,7 @@ namespace SpecsFor.Mvc
 			if (!UrlMapsTo(action))
 			{
 				var helper = new HtmlHelper(new ViewContext { HttpContext = FakeHttpContext.Root() }, new FakeViewDataContainer());
-				var expectedUrl = MvcWebApp.BaseUrl + helper.BuildUrlFromExpression(action);
+				var expectedUrl = MvcWebApp.BaseUrl + BuildUrlFromExpression(helper.ViewContext.RequestContext, helper.RouteCollection, action);
 
 				throw new AssertionException(string.Format("URL does not match target action. \r\n\tExpected {0}\r\n\tActual:{1}",
 					expectedUrl, Browser.Url));
