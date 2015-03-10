@@ -40,7 +40,7 @@ namespace SpecsFor.Mvc
 				});
 		}
 
-		private BrowserDriver(Func<RemoteWebDriver> browserFactory)
+		public BrowserDriver(Func<RemoteWebDriver> browserFactory)
 		{
 			_browserFactory = browserFactory;
 		}
