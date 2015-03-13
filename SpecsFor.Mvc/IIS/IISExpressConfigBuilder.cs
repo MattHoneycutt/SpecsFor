@@ -31,8 +31,11 @@ namespace SpecsFor.Mvc.IIS
 
 			_action.ProjectPath = projectFile.FullName;
 
-			if (pathToSolution == null && (projectDirectory.Parent == null || projectDirectory.Parent.EnumerateFiles("*.sln").SingleOrDefault() == null))
+			if (pathToSolution == null && (projectDirectory.Parent == null || projectDirectory.Parent.EnumerateFiles("*.sln").FirstOrDefault() == null))
 				throw new InvalidOperationException("Unable to find the project's solution file!  Call 'With()' and specify the path to the solution directly");
+
+			if (pathToSolution == null && projectDirectory.Parent.EnumerateFiles("*.sln").Count() > 1)
+				throw new InvalidOperationException("Multiple solution files!  Call 'With()' and specify the path to the solution directly");
 
 			_action.SolutionPath = pathToSolution ?? projectDirectory.Parent.EnumerateFiles("*.sln").SingleOrDefault().FullName;
 			return this;
@@ -100,5 +103,11 @@ namespace SpecsFor.Mvc.IIS
 			_action.TemporaryDirectoryName = name;
 			return this;
 		}
+
+	    public IISExpressConfigBuilder WithOutputPath(string path)
+	    {
+	        _action.OutputPath = path;
+	        return this;
+	    }
 	}
 }
