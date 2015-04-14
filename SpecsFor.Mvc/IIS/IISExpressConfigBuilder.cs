@@ -31,14 +31,24 @@ namespace SpecsFor.Mvc.IIS
 
 			_action.ProjectPath = projectFile.FullName;
 
-			if (pathToSolution == null && (projectDirectory.Parent == null || projectDirectory.Parent.EnumerateFiles("*.sln").FirstOrDefault() == null))
-				throw new InvalidOperationException("Unable to find the project's solution file!  Call 'With()' and specify the path to the solution directly");
+
+			_action.SolutionPath = pathToSolution ?? FindSolution(projectDirectory);
+
+			return this;
+		}
+
+		private static string FindSolution(DirectoryInfo projectDirectory)
+		{
+			if (projectDirectory.Parent == null || !projectDirectory.Parent.EnumerateFiles("*.sln").Any())
+				throw new InvalidOperationException(
+					"Unable to find the project's solution file!  Call 'With()' and specify the path to the solution directly.");
 
 			if (projectDirectory.Parent.EnumerateFiles("*.sln").Count() > 1)
-				throw new InvalidOperationException("Multiple solution files!  Call 'With()' and specify the path to the solution directly");
+				throw new InvalidOperationException(
+					"Multiple solution files!  Call 'With()' and specify the path to the solution directly.");
 
-			_action.SolutionPath = pathToSolution ?? projectDirectory.Parent.EnumerateFiles("*.sln").SingleOrDefault().FullName;
-			return this;
+			var solutionPath = projectDirectory.Parent.EnumerateFiles("*.sln").SingleOrDefault().FullName;
+			return solutionPath;
 		}
 
 		public IISExpressConfigBuilder Platform(string platform)
