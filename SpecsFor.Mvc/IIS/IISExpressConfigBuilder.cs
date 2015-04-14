@@ -47,7 +47,7 @@ namespace SpecsFor.Mvc.IIS
 				throw new InvalidOperationException(
 					"Multiple solution files!  Call 'With()' and specify the path to the solution directly.");
 
-			var solutionPath = projectDirectory.Parent.EnumerateFiles("*.sln").SingleOrDefault().FullName;
+			var solutionPath = projectDirectory.Parent.EnumerateFiles("*.sln").Single().FullName;
 			return solutionPath;
 		}
 
