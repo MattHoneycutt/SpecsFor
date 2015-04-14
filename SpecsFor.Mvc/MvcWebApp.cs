@@ -145,18 +145,17 @@ namespace SpecsFor.Mvc
             return element;
         }
 
-		public bool UrlMapsTo<TController>(Expression<Action<TController>> action) where TController : Controller
+		public bool UrlMapsTo<TController>(Expression<Action<TController>> action, StringComparison comparisonType = StringComparison.InvariantCultureIgnoreCase) where TController : Controller
 		{
 			var helper = new HtmlHelper(new ViewContext { HttpContext = FakeHttpContext.Root() }, new FakeViewDataContainer());
-			//TODO: workaround to fixes MattHoneycutt/SpecsFor#25
 			var expectedUrl = MvcWebApp.BaseUrl + BuildUrlFromExpression(helper.ViewContext.RequestContext, helper.RouteCollection, action);
 
-			return (Browser.Url == expectedUrl);
+			return (Browser.Url != null) && Browser.Url.Equals(expectedUrl, comparisonType);
 		}
 
-		public void UrlShouldMapTo<TController>(Expression<Action<TController>> action) where TController : Controller
+		public void UrlShouldMapTo<TController>(Expression<Action<TController>> action, StringComparison comparisonType = StringComparison.InvariantCultureIgnoreCase) where TController : Controller
 		{
-			if (!UrlMapsTo(action))
+			if (!UrlMapsTo(action, comparisonType))
 			{
 				var helper = new HtmlHelper(new ViewContext { HttpContext = FakeHttpContext.Root() }, new FakeViewDataContainer());
 				var expectedUrl = MvcWebApp.BaseUrl + BuildUrlFromExpression(helper.ViewContext.RequestContext, helper.RouteCollection, action);
