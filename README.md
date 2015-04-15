@@ -60,6 +60,8 @@ public class when_the_key_is_turned_alternate_style : SpecsFor<Car>
 
 #SpecsFor In Action
 
+Check out the docs at http://specsfor.readme.io
+
 Check out the current version in action: http://www.youtube.com/watch?v=MVwguBsR6eA
 
 See an earlier prototype of SpecsFor in action: http://www.youtube.com/view_play_list?p=982492E9FAE3F64A
