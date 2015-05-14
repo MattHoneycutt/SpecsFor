@@ -74,8 +74,16 @@ namespace SpecsFor.Mvc.IIS
 									UseShellExecute = false
 								};
 
-			if (PortNumber == null) CaptureAvailablePortNumber();
+            if (PortNumber == null)
+            {
+                if (UseHttps)
+                {
+                    throw new ArgumentException("In order to use https you must specify a port that has already been configured for https.");
+                }
 
+                CaptureAvailablePortNumber();
+            }
+            
 			// If a configuration file was not provided use the simple IIS Express command line configuration.
 			if (string.IsNullOrEmpty(_applicationHostConfigurationFile))
 			{
