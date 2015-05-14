@@ -108,6 +108,13 @@ namespace SpecsFor.Mvc.IIS
 			return this;
 		}
 
+        public IISExpressConfigBuilder UseHttps(bool useHttps)
+        {
+            _action.UseHttps = useHttps;
+
+            return this;
+        }
+
 		public IISExpressConfigBuilder WithTemporaryDirectoryName(string name)
 		{
 			_action.TemporaryDirectoryName = name;
