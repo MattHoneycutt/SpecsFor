@@ -5,6 +5,8 @@ namespace SpecsFor.ShouldExtensions
 {
 	public static class Some
 	{
+		public static TimeSpan DefaultDateTimeTolerance = TimeSpan.FromSeconds(1);
+
 		public static T ValueOf<T>(Expression<Func<T, bool>> matcher)
 		{
 			Matcher.Create(matcher, "Object matching " + matcher.Body);
@@ -31,6 +33,30 @@ namespace SpecsFor.ShouldExtensions
 			}
 
 			return default(T);
+		}
+
+		public static DateTime DateTimeNear(DateTime value)
+		{
+			return DateTimeNear(value, null);
+		}
+
+		public static DateTime DateTimeNear(DateTime value, TimeSpan? tolerance)
+		{
+			var actualTolerance = tolerance ?? DefaultDateTimeTolerance;
+
+			return ValueInRange(value.Subtract(actualTolerance), value.Add(actualTolerance));
+		}
+
+		public static DateTimeOffset DateTimeNear(DateTimeOffset value)
+		{
+			return DateTimeNear(value, null);
+		}
+
+		public static DateTimeOffset DateTimeNear(DateTimeOffset value, TimeSpan? tolerance)
+		{
+			var actualTolerance = tolerance ?? DefaultDateTimeTolerance;
+
+			return ValueInRange(value.Subtract(actualTolerance), value.Add(actualTolerance));
 		}
 	}
 }
