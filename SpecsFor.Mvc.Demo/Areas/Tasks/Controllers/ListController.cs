@@ -1,10 +1,9 @@
 ﻿using System.Web.Mvc;
-using Microsoft.Web.Mvc;
 using SpecsFor.Mvc.Demo.Areas.Tasks.Models;
 
 namespace SpecsFor.Mvc.Demo.Areas.Tasks.Controllers
 {
-	[ActionLinkArea("Tasks")]
+	[RouteArea("Tasks")]
     public class ListController : Controller
     {
         public ActionResult Index()

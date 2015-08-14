@@ -17,7 +17,7 @@ namespace SpecsFor.Mvc.Demo.Areas.Tasks
 			context.MapRoute(
 				"Tasks_default",
 				"Tasks/{controller}/{action}/{id}",
-				new { controller = "List", action = "Index", id = UrlParameter.Optional }
+				new { controller = "Home", action = "Index", id = UrlParameter.Optional }
 			);
 		}
 	}
