@@ -3,17 +3,18 @@
     <metadata>
         <id>SpecsFor.Templates.R90</id>
 				<title>SpecsFor File &amp; Live Templates for Resharper 9</title>
-        <version>1.0.3</version>
+        <version>1.0.5</version>
 				<authors>Matt Honeycutt</authors>
 				<owners>Matt Honeycutt</owners>
 				<licenseUrl>https://github.com/MattHoneycutt/SpecsFor/blob/master/LICENSE.md</licenseUrl>
 				<projectUrl>http://specsfor.com/</projectUrl>
-				<requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <iconUrl>http://specsfor.com/images/specsfor-icon-128x128.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
 				<description>File and live templates for use with the SpecsFor testing framework.</description>
-				<releaseNotes>• Updated for ReSharper 9!</releaseNotes>
+				<releaseNotes>• Updated for ReSharper 9.1!</releaseNotes>
         <tags>resharper specsfor testing</tags>
 				<dependencies>
-					<dependency id="Wave" version="[1.0, 3.0)" />
+					<dependency id="Wave" version="1.0" />
 				</dependencies>
 		</metadata>
 		<files>
