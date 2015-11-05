@@ -24,7 +24,7 @@ namespace SpecsFor.Helpers.Web.Mvc
 			}
 		}
 
-		public String this[String key]
+		public override String this[String key]
 		{
 			get
 			{
