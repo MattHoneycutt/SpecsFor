@@ -15,6 +15,8 @@ namespace SpecsFor.Helpers.Web.Mvc
 		private readonly IFormParamsProvider _formParams;
 		private readonly IQueryStringParamsProvider _queryStringParams;
 		private readonly ICookieProvider _cookies;
+		private readonly IServerVariablesParamsProvider _serverVariablesParams;
+		private readonly IHeadersParamsProvider _headersParams;
 
 		public override HttpBrowserCapabilitiesBase Browser
 		{
@@ -54,7 +56,7 @@ namespace SpecsFor.Helpers.Web.Mvc
 		{
 			get
 			{
-				return new NameValueCollection();
+				return _headersParams.Values ?? new NameValueCollection();
 			}
 		}
 
@@ -62,7 +64,7 @@ namespace SpecsFor.Helpers.Web.Mvc
 		{
 			get
 			{
-				return new NameValueCollection();
+				return _serverVariablesParams.Values ?? new NameValueCollection();
 			}
 		}
 
@@ -138,12 +140,14 @@ namespace SpecsFor.Helpers.Web.Mvc
 			}
 		}
 
-		public FakeHttpRequest(IFormParamsProvider formParams = null, IQueryStringParamsProvider queryStringParams = null, ICookieProvider cookies = null)
+		public FakeHttpRequest(IFormParamsProvider formParams = null, IQueryStringParamsProvider queryStringParams = null, ICookieProvider cookies = null, IServerVariablesParamsProvider serverVariablesParams = null, IHeadersParamsProvider headersParams = null)
 		{
 			_browser = new Mock<HttpBrowserCapabilitiesBase>();
 			_formParams = formParams ?? new EmptyFormsParamProvider();
 			_queryStringParams = queryStringParams ?? new EmptyQueryStringParamProvider();
 			_cookies = cookies ?? new EmptyCookieProvider();
+			_serverVariablesParams = serverVariablesParams ?? new EmptyServerVariablessParamProvider();
+			_headersParams = headersParams ?? new EmptyHeadersParamProvider();
 		}
 
 		public void SetBrowser(string name, string version)

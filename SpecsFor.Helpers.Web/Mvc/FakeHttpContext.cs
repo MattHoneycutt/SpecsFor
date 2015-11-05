@@ -53,6 +53,8 @@ namespace SpecsFor.Helpers.Web.Mvc
 			IFormParamsProvider formParams,
 			IQueryStringParamsProvider queryStringParams,
 			ICookieProvider cookies,
+			IServerVariablesParamsProvider serverVariablesParams,
+			IHeadersParamsProvider headersParams,
 			SessionStateItemCollection sessionItems,
 			HttpServerUtilityBase server,
 			FakeHttpRequest request,
@@ -60,7 +62,7 @@ namespace SpecsFor.Helpers.Web.Mvc
 		{
 			User = principal;
 			_sessionItems = sessionItems ?? new SessionStateItemCollection();
-			_request = request ?? new FakeHttpRequest(formParams, queryStringParams, cookies);
+			_request = request ?? new FakeHttpRequest(formParams, queryStringParams, cookies, serverVariablesParams, headersParams);
 			_request.SetIsAuthenticated(User.Identity != null ? User.Identity.IsAuthenticated : false);
 			_server = server ?? new Mock<HttpServerUtilityBase>().Object;
 			
@@ -91,6 +93,8 @@ namespace SpecsFor.Helpers.Web.Mvc
 			(IFormParamsProvider)null,
 			(IQueryStringParamsProvider)null,
 			(ICookieProvider)null,
+			(IServerVariablesParamsProvider)null,
+			(IHeadersParamsProvider)null,
 			(SessionStateItemCollection)null,
 			(HttpServerUtilityBase)null,
 			(FakeHttpRequest)null,
