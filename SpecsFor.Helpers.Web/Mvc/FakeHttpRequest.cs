@@ -23,10 +23,31 @@ namespace SpecsFor.Helpers.Web.Mvc
 				return this._browser.Object;
 			}
 		}
-		
-		public override String this[String key]
+
+		public String this[String key]
 		{
-			get { return null; }
+			get
+			{
+				String s;
+
+				s = QueryString[key];
+				if (s != null)
+					return s;
+
+				s = Form[key];
+				if (s != null)
+					return s;
+
+				HttpCookie c = Cookies[key];
+				if (c != null)
+					return c.Value;
+
+				s = ServerVariables[key];
+				if (s != null)
+					return s;
+
+				return null;
+			}
 		}
 
 		public override NameValueCollection Headers
@@ -37,6 +58,13 @@ namespace SpecsFor.Helpers.Web.Mvc
 			}
 		}
 
+		public override NameValueCollection ServerVariables
+		{
+			get
+			{
+				return new NameValueCollection();
+			}
+		}
 
 		public override NameValueCollection Form
 		{
