@@ -23,6 +23,20 @@ namespace SpecsFor.Helpers.Web.Mvc
 				return this._browser.Object;
 			}
 		}
+		
+		public override String this[String key]
+		{
+			get { return null; }
+		}
+
+		public override NameValueCollection Headers
+		{
+			get
+			{
+				return new NameValueCollection();
+			}
+		}
+
 
 		public override NameValueCollection Form
 		{
