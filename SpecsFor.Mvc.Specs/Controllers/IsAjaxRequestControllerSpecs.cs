@@ -14,35 +14,49 @@ using SpecsFor.Mvc.Demo.Controllers;
 
 namespace SpecsFor.Mvc.Specs.Controllers
 {
-	public class IsAjaxRequestControllerSpecs : SpecsFor<IsAjaxRequestController>
+	public class IsAjaxRequestControllerSpecs
 	{
-		protected override void When()
-		{	
-			base.When();
-			this.UseFakeContextForController();
-		}
-		
-		[Test]
-		public void when_posting_to_index_normally_result_is_viewresult()
+		public class when_posting_to_index_normally : SpecsFor<IsAjaxRequestController>
 		{
-			//Act
-			var result = SUT.Index(It.IsAny<string>());
+			private ActionResult _result;
 
-			//Assert
-			result.ShouldBeType(typeof (ViewResult));
+			protected override void Given()
+			{
+				this.UseFakeContextForController();
+			}
+
+			protected override void When()
+			{
+				_result = SUT.Index(It.IsAny<string>());
+			}
+			
+			[Test]
+			public void then_result_is_ViewResult()
+			{
+				_result.ShouldBeType(typeof (ViewResult));
+			}
 		}
 
-		[Test]
-		public void when_posting_to_index_through_ajax_result_is_jsonresult()
+		public class when_posting_to_index_through_ajax : SpecsFor<IsAjaxRequestController>
 		{
-			//Arrange
-			this.FakeAjaxRequest();
+			private ActionResult _result;
 
-			//Act
-			var result = SUT.Index(It.IsAny<string>());
+			protected override void Given()
+			{
+				this.UseFakeContextForController();
+				this.FakeAjaxRequest();
+			}
 
-			//Assert
-			result.ShouldBeType(typeof(JsonResult));
+			protected override void When()
+			{
+				_result = SUT.Index(It.IsAny<string>());
+			}
+
+			[Test]
+			public void then_result_is_JsonResult()
+			{
+				_result.ShouldBeType(typeof(JsonResult));
+			}
 		}
 	}
 }
