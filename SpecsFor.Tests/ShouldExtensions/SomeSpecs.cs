@@ -75,7 +75,7 @@ namespace SpecsFor.Tests.ShouldExtensions
 				Assert.DoesNotThrow(() =>
 					obj.ShouldLookLike(() => new TestObject
 					{
-						DateTimeValue = Some.DateTimeNear(DateTime.Now)
+						DateTimeValue = Some.DateTimeNear(DateTime.Today)
 					})
 					);
 				Assert.DoesNotThrow(() =>

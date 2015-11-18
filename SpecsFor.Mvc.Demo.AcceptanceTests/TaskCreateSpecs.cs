@@ -1,9 +1,6 @@
 ﻿using NUnit.Framework;
-using Should;
 using SpecsFor.Mvc.Demo.Areas.Tasks.Controllers;
 using SpecsFor.Mvc.Demo.Areas.Tasks.Models;
-using SpecsFor.Mvc.Demo.Controllers;
-using SpecsFor.Mvc.Demo.Models;
 using SpecsFor.Mvc.Helpers;
 
 namespace SpecsFor.Mvc.Demo.AcceptanceTests
