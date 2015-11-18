@@ -34,6 +34,8 @@ namespace SpecsFor.Mvc.IIS
 
 		public int? PortNumber { get; set; }
 
+        public bool UseHttps { get; set; }
+
 		public string TemporaryDirectoryName { get; set; }
 
         public string OutputPath { get; set; }
@@ -42,9 +44,17 @@ namespace SpecsFor.Mvc.IIS
 		{
 			_iisExpressProcess = new IISExpressProcess(_publishDir, ApplicationHostConfigurationFile, ProjectName);
 			_iisExpressProcess.PortNumber = PortNumber;
+            _iisExpressProcess.UseHttps = UseHttps;
 			_iisExpressProcess.Start();
 
-			MvcWebApp.BaseUrl = "http://localhost:" + _iisExpressProcess.PortNumber;
+            string protocol = "http";
+
+            if (_iisExpressProcess.UseHttps)
+            {
+                protocol = "https";
+            }
+
+			MvcWebApp.BaseUrl = protocol + "://localhost:" + _iisExpressProcess.PortNumber;
 		}
 
 		private void PublishSite(Dictionary<string, string> properties)

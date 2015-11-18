@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -21,6 +22,14 @@ namespace SpecsFor.Mvc.IIS
 		/// Gets the port number in use by this instance of IIS Express.
 		/// </summary>
 		public int? PortNumber { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [use HTTPS].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [use HTTPS]; otherwise, <c>false</c>.
+        /// </value>
+        public bool UseHttps { get; set; }
 
 		#region Constructors
 
@@ -65,12 +74,67 @@ namespace SpecsFor.Mvc.IIS
 									UseShellExecute = false
 								};
 
-			if (PortNumber == null) CaptureAvailablePortNumber();
+            if (PortNumber == null)
+            {
+                if (UseHttps)
+                {
+                    throw new ArgumentException("In order to use https you must specify a port that has already been configured for https.");
+                }
 
+                CaptureAvailablePortNumber();
+            }
+            
 			// If a configuration file was not provided use the simple IIS Express command line configuration.
 			if (string.IsNullOrEmpty(_applicationHostConfigurationFile))
 			{
-				startInfo.Arguments = string.Format("/path:\"{0}\" /port:{1}", _pathToSite, PortNumber);
+                var xDoc = new XmlDocument();
+                string iisConfigPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\iisexpress\config\applicationhost.config";
+
+				// Read the application host configuration file into an XML document.
+				using (var hostConfigReader = new StreamReader(iisConfigPath))
+				{
+					xDoc.Load(hostConfigReader);
+				}
+
+                XmlNode sites = xDoc.SelectSingleNode("/configuration/system.applicationHost/sites");
+                sites.RemoveAll();
+
+                XmlElement site = xDoc.CreateElement("site");
+                site.SetAttribute("name", _webSiteName);
+                site.SetAttribute("id", "1");
+
+                XmlElement application = xDoc.CreateElement("application");
+                application.SetAttribute("path", "/");
+                application.SetAttribute("applicationPool", "Clr4IntegratedAppPool");
+
+                XmlElement virtualDirectory = xDoc.CreateElement("virtualDirectory");
+                virtualDirectory.SetAttribute("physicalPath", _pathToSite);
+                virtualDirectory.SetAttribute("path", "/");
+                application.AppendChild(virtualDirectory);
+                site.AppendChild(application);
+
+
+                XmlElement bindings = xDoc.CreateElement("bindings");
+                XmlElement binding = xDoc.CreateElement("binding");
+                                
+                if (UseHttps){
+                    binding.SetAttribute("protocol", "https");
+                    binding.SetAttribute("bindingInformation", string.Format("*:{0}:localhost", PortNumber));
+                }
+                else
+                {
+                    binding.SetAttribute("protocol", "http");
+                    binding.SetAttribute("bindingInformation", string.Format(":{0}:localhost", PortNumber));
+                }
+
+                bindings.AppendChild(binding);
+                site.AppendChild(bindings);
+
+                sites.AppendChild(site);
+
+                xDoc.Save("specsFor.config");
+
+                startInfo.Arguments = string.Format(" /config:\"specsFor.config\"", _applicationHostConfigurationFile);
 			}
 			else  // When an IIS Express configuration file is used, configure the sites node with information about the current site being tested.
 			{
