@@ -111,8 +111,10 @@
     <Compile Include="Mvc\FakeViewDataContainer.cs" />
     <Compile Include="Mvc\ICookieProvider.cs" />
     <Compile Include="Mvc\IFormParamsProvider.cs" />
+    <Compile Include="Mvc\IHeadersParamsProvider.cs" />
     <Compile Include="Mvc\IHttpContextBehavior.cs" />
     <Compile Include="Mvc\IQueryStringParamsProvider.cs" />
+    <Compile Include="Mvc\IServerVariablesParamsProvider.cs" />
     <Compile Include="Mvc\RouteTableTestingExtensions.cs" />
     <Compile Include="Mvc\RouteTestingHelpers.cs" />
     <Compile Include="Mvc\ShouldActionResultExtensions.cs" />
