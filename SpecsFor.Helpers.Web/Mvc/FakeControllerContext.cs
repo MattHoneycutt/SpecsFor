@@ -18,7 +18,10 @@ namespace SpecsFor.Helpers.Web.Mvc
 		{
 			if (!(specs.SUT.ControllerContext is FakeControllerContext))
 			{
-				throw new NotSupportedException("The FakeAjaxRequest extension method can only be used if the current ControllerContext is of type FakeControllerContext.");	
+				if (specs.SUT.ControllerContext != null)
+					throw new NotSupportedException("The FakeAjaxRequest extension method can only be used if the current ControllerContext is of type FakeControllerContext.");	
+
+				specs.UseFakeContextForController();
 			}
 
 			specs.GetMockFor<IHeadersParamsProvider>().Setup(x => x.Values).Returns(

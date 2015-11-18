@@ -26,13 +26,11 @@ namespace SpecsFor.Helpers.Web.Mvc
 			}
 		}
 
-		public override String this[String key]
+		public override string this[String key]
 		{
 			get
 			{
-				String s;
-
-				s = QueryString[key];
+				var s = QueryString[key];
 				if (s != null)
 					return s;
 
@@ -40,15 +38,13 @@ namespace SpecsFor.Helpers.Web.Mvc
 				if (s != null)
 					return s;
 
-				HttpCookie c = Cookies[key];
+				var c = Cookies[key];
 				if (c != null)
 					return c.Value;
 
 				s = ServerVariables[key];
-				if (s != null)
-					return s;
 
-				return null;
+				return s;
 			}
 		}
 

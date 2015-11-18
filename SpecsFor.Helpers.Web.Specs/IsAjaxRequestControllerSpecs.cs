@@ -1,21 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Hosting;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Moq;
 using NUnit.Framework;
 using Should;
 using SpecsFor.Helpers.Web.Mvc;
-using SpecsFor.Mvc.Demo.Controllers;
 
-namespace SpecsFor.Mvc.Specs.Controllers
+namespace SpecsFor.Helpers.Web.Specs
 {
 	public class IsAjaxRequestControllerSpecs
 	{
+		public class IsAjaxRequestController : Controller
+		{
+			[HttpPost]
+			public ActionResult Index(string name)
+			{
+				string message = string.Format("Hi {0}!", name);
+
+				if (Request.IsAjaxRequest())
+				{
+					return Json(message);
+				}
+
+				ViewBag.Message = message;
+				// ReSharper disable once Mvc.ViewNotResolved
+				return View();
+			}
+		}
+
 		public class when_posting_to_index_normally : SpecsFor<IsAjaxRequestController>
 		{
 			private ActionResult _result;
@@ -43,7 +53,6 @@ namespace SpecsFor.Mvc.Specs.Controllers
 
 			protected override void Given()
 			{
-				this.UseFakeContextForController();
 				this.FakeAjaxRequest();
 			}
 
