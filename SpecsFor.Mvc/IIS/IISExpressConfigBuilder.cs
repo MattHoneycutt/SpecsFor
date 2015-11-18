@@ -108,9 +108,9 @@ namespace SpecsFor.Mvc.IIS
 			return this;
 		}
 
-        public IISExpressConfigBuilder UseHttps(bool useHttps)
+        public IISExpressConfigBuilder UseHttps()
         {
-            _action.UseHttps = useHttps;
+            _action.UseHttps = true;
 
             return this;
         }

@@ -13,6 +13,8 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 		{
 			var config = new SpecsForMvcConfig();
 			config.UseIISExpress()
+				.UsePort(44300)
+				.UseHttps()
 				.With(Project.Named("SpecsFor.Mvc.Demo"))
 				.CleanupPublishedFiles()
 				.ApplyWebConfigTransformForConfig("Test");

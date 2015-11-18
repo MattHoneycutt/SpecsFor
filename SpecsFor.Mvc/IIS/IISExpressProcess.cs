@@ -76,55 +76,53 @@ namespace SpecsFor.Mvc.IIS
 
             if (PortNumber == null)
             {
-                if (UseHttps)
-                {
-                    throw new ArgumentException("In order to use https you must specify a port that has already been configured for https.");
-                }
+	            if (UseHttps) throw new ArgumentException("In order to use https you must specify a port that has already been configured for https.");
 
-                CaptureAvailablePortNumber();
+	            CaptureAvailablePortNumber();
             }
             
 			// If a configuration file was not provided use the simple IIS Express command line configuration.
 			if (string.IsNullOrEmpty(_applicationHostConfigurationFile))
 			{
                 var xDoc = new XmlDocument();
-                string iisConfigPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\iisexpress\config\applicationhost.config";
+                var iisConfigPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\iisexpress\config\applicationhost.config";
 
 				// Read the application host configuration file into an XML document.
-				using (var hostConfigReader = new StreamReader(iisConfigPath))
-				{
-					xDoc.Load(hostConfigReader);
-				}
+				using (var hostConfigReader = new StreamReader(iisConfigPath)) xDoc.Load(hostConfigReader);
 
-                XmlNode sites = xDoc.SelectSingleNode("/configuration/system.applicationHost/sites");
+				var sites = xDoc.SelectSingleNode("/configuration/system.applicationHost/sites");
+
+				if (sites == null)
+					throw new InvalidOperationException("Unable to locate sites element in your applicationhost.config file.");
+
                 sites.RemoveAll();
 
-                XmlElement site = xDoc.CreateElement("site");
+                var site = xDoc.CreateElement("site");
                 site.SetAttribute("name", _webSiteName);
                 site.SetAttribute("id", "1");
 
-                XmlElement application = xDoc.CreateElement("application");
+                var application = xDoc.CreateElement("application");
                 application.SetAttribute("path", "/");
                 application.SetAttribute("applicationPool", "Clr4IntegratedAppPool");
 
-                XmlElement virtualDirectory = xDoc.CreateElement("virtualDirectory");
+                var virtualDirectory = xDoc.CreateElement("virtualDirectory");
                 virtualDirectory.SetAttribute("physicalPath", _pathToSite);
                 virtualDirectory.SetAttribute("path", "/");
                 application.AppendChild(virtualDirectory);
                 site.AppendChild(application);
 
 
-                XmlElement bindings = xDoc.CreateElement("bindings");
-                XmlElement binding = xDoc.CreateElement("binding");
+                var bindings = xDoc.CreateElement("bindings");
+                var binding = xDoc.CreateElement("binding");
                                 
                 if (UseHttps){
                     binding.SetAttribute("protocol", "https");
-                    binding.SetAttribute("bindingInformation", string.Format("*:{0}:localhost", PortNumber));
+                    binding.SetAttribute("bindingInformation", $"*:{PortNumber}:localhost");
                 }
                 else
                 {
                     binding.SetAttribute("protocol", "http");
-                    binding.SetAttribute("bindingInformation", string.Format(":{0}:localhost", PortNumber));
+                    binding.SetAttribute("bindingInformation", $":{PortNumber}:localhost");
                 }
 
                 bindings.AppendChild(binding);
@@ -134,7 +132,7 @@ namespace SpecsFor.Mvc.IIS
 
                 xDoc.Save("specsFor.config");
 
-                startInfo.Arguments = string.Format(" /config:\"specsFor.config\"", _applicationHostConfigurationFile);
+                startInfo.Arguments = " /config:\"specsFor.config\"";
 			}
 			else  // When an IIS Express configuration file is used, configure the sites node with information about the current site being tested.
 			{
@@ -147,22 +145,22 @@ namespace SpecsFor.Mvc.IIS
 				}
 
 				// Determine if a site node with the given site name in the config.
-				XmlNode site = xDoc.SelectSingleNode("/configuration/system.applicationHost/sites/site[@name=\"" + _webSiteName + "\"]");
+				var site = xDoc.SelectSingleNode("/configuration/system.applicationHost/sites/site[@name=\"" + _webSiteName + "\"]");
 				
 				if (site != null)
 				{
-					XmlNode virtualDirectory = site.SelectSingleNode("application/virtualDirectory");
+					var virtualDirectory = site.SelectSingleNode("application/virtualDirectory");
 
 					if (virtualDirectory != null)
 					{
 						virtualDirectory.Attributes["physicalPath"].Value = _pathToSite;
 					}
 
-					XmlNode binding = site.SelectSingleNode("bindings/binding");
+					var binding = site.SelectSingleNode("bindings/binding");
 
 					if (binding != null)
 					{
-						binding.Attributes["bindingInformation"].Value = string.Format(":{0}:localhost", PortNumber);
+						binding.Attributes["bindingInformation"].Value = $":{PortNumber}:localhost";
 					}
 				}
 
@@ -170,7 +168,7 @@ namespace SpecsFor.Mvc.IIS
 
 				xDoc.Save(_applicationHostConfigurationFile);
 
-				startInfo.Arguments += string.Format(" /config:\"{0}\"", _applicationHostConfigurationFile);
+				startInfo.Arguments += $" /config:\"{_applicationHostConfigurationFile}\"";
 			}
 
 			var programfiles = !string.IsNullOrEmpty(startInfo.EnvironmentVariables["programfiles(x86)"])
@@ -181,7 +179,8 @@ namespace SpecsFor.Mvc.IIS
 
 			if (!File.Exists(iisExpress))
 			{
-				throw new FileNotFoundException(string.Format("Did not find iisexpress.exe at {0}. Ensure that IIS Express is installed to the default location.", iisExpress));
+				throw new FileNotFoundException(
+					$"Did not find iisexpress.exe at {iisExpress}. Ensure that IIS Express is installed to the default location.");
 			}
 
 			startInfo.FileName = iisExpress;
