@@ -115,9 +115,22 @@ namespace SpecsFor.Mvc.IIS
             return this;
         }
 
+        [Obsolete("Use WithPublishDirectory instead.")]
 		public IISExpressConfigBuilder WithTemporaryDirectoryName(string name)
 		{
-			_action.TemporaryDirectoryName = name;
+			_action.PublishDirectory = name;
+			return this;
+		}
+
+		public IISExpressConfigBuilder WithPublishDirectory(string name)
+		{
+			_action.PublishDirectory = name;
+			return this;
+		}
+
+		public IISExpressConfigBuilder WithIntermediateDirectory(string name)
+		{
+			_action.IntermediateDirectory = name;
 			return this;
 		}
 

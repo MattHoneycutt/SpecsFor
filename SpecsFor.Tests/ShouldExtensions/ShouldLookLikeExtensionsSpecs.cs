@@ -127,6 +127,16 @@ namespace SpecsFor.Tests.ShouldExtensions
 		}
 
         [Test]
+		public void then_it_passes_a_check_that_includes_more_complicated_logic()
+		{
+			SUT.OptionalDate = DateTime.Today.AddDays(-7);
+			Assert.DoesNotThrow(() => SUT.ShouldLookLike(() => new TestObject
+			{
+				OptionalDate = DateTime.Today.AddDays(-7)
+            }));
+		}
+
+        [Test]
 		public void then_it_should_fail_if_specified_properties_dont_match()
 		{
 			Assert.Throws<EqualException>(() => SUT.ShouldLookLike(() => new TestObject

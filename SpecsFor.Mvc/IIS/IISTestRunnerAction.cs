@@ -36,11 +36,13 @@ namespace SpecsFor.Mvc.IIS
 
         public bool UseHttps { get; set; }
 
-		public string TemporaryDirectoryName { get; set; }
+		public string PublishDirectory { get; set; }
 
-        public string OutputPath { get; set; }
+	    public string IntermediateDirectory { get; set; }
 
-		private void StartIISExpress()
+	    public string OutputPath { get; set; }
+
+	    private void StartIISExpress()
 		{
 			_iisExpressProcess = new IISExpressProcess(_publishDir, ApplicationHostConfigurationFile, ProjectName);
 			_iisExpressProcess.PortNumber = PortNumber;
@@ -124,8 +126,8 @@ namespace SpecsFor.Mvc.IIS
 
 			ProjectName = ProjectName.Replace(".csproj", string.Empty).Replace(".vbproj", string.Empty);
 
-			_publishDir = Path.Combine(Directory.GetCurrentDirectory(), TemporaryDirectoryName ?? "SpecsForMvc.TestSite");
-			_intermediateDir = Path.Combine(Directory.GetCurrentDirectory(), "SpecsForMvc.TempIntermediateDir");
+			_publishDir = Path.Combine(Directory.GetCurrentDirectory(), PublishDirectory ?? "SpecsForMvc.TestSite");
+			_intermediateDir = Path.Combine(Directory.GetCurrentDirectory(), IntermediateDirectory ?? "SpecsForMvc.TempIntermediateDir");
 
 			var properties = new Dictionary<string, string>
 								{
@@ -134,8 +136,8 @@ namespace SpecsFor.Mvc.IIS
 									{"_PackageTempDir", "\"" + _publishDir + "\""},
 									//If you think this looks bad, that's because it does.  What this
 									//actually outputs looks like: "path\to\whatever\\"
-									//The backslash on the end has to be esaped, otherwise msbuild.exe
-									//will interpet it as escaping the final quote, which is incorrect.
+									//The backslash on the end has to be escaped, otherwise msbuild.exe
+									//will interpret it as escaping the final quote, which is incorrect.
 									{"BaseIntermediateOutputPath", "\"" + _intermediateDir + "\\\\\""},
 									{"AutoParameterizationWebConfigConnectionStrings", "false"},
 									{"Platform", Platform ?? "AnyCPU" },
