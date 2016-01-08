@@ -116,7 +116,17 @@ namespace SpecsFor.Tests.ShouldExtensions
 			}));
 		}
 
-		[Test]
+        [Test]
+		public void then_it_throws_when_a_null_value_for_a_nullable_type_is_not_allowed()
+		{
+			SUT.OptionalDate = null;
+			Assert.Throws<EqualException>(() => SUT.ShouldLookLike(() => new TestObject
+			{
+				OptionalDate = Any.NonNullValueOf<DateTime?>()
+			}));
+		}
+
+        [Test]
 		public void then_it_should_fail_if_specified_properties_dont_match()
 		{
 			Assert.Throws<EqualException>(() => SUT.ShouldLookLike(() => new TestObject

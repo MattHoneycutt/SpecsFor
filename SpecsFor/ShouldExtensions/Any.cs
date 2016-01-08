@@ -1,4 +1,6 @@
-﻿namespace SpecsFor.ShouldExtensions
+﻿using System;
+
+namespace SpecsFor.ShouldExtensions
 {
 	public static class Any
 	{
@@ -16,8 +18,11 @@
 			return default(T);
 		}
 
-		public static T NonNullValueOf<T>() where T : class 
+		public static T NonNullValueOf<T>()
 		{
+		    if (default(T) != null)
+		        throw new InvalidOperationException("You cannot use this method with a non-nullable type.");
+
 			Matcher.Create<T>(x => x != null, "Non-null value of " + typeof(T).FullName);
 
 			return default(T);

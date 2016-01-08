@@ -40,7 +40,7 @@ namespace SpecsFor.ShouldExtensions
 
 		private static bool ObjectIsCompatibleWithType(object obj)
 		{
-			if (obj is T) return true;
+			if (obj is T || obj == null) return true;
 
 			if (typeof (T).IsNullable() && (typeof (T).GetInnerTypeFromNullable()) == obj.GetType())
 				return true;
