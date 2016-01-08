@@ -39,6 +39,42 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 			}
 		}
 
+		public class when_logging_in_without_entering_anything : SpecsFor<MvcWebApp>
+		{
+			protected override void Given()
+			{
+				//Make sure we're already logged out
+				SUT.NavigateTo<AccountController>(c => c.LogOff());
+
+				SUT.NavigateTo<AccountController>(c => c.LogOn());
+			}
+
+			protected override void When()
+			{
+				SUT.FindFormFor<LogOnModel>()
+					.Field(m => m.UserName).SetValueTo("")
+					.Field(m => m.Password).SetValueTo("")
+					.Submit();
+			}
+
+		    [Test]
+		    public void then_it_should_mark_the_username_as_invalid()
+		    {
+		        SUT.FindFormFor<LogOnModel>()
+		            .Field(x => x.UserName)
+		            .ShouldBeInvalid();
+		    }
+
+		    [Test]
+		    public void then_it_displays_a_validation_message_for_username()
+		    {
+		        SUT.FindFormFor<LogOnModel>()
+		            .Field(x => x.UserName)
+		            .HasValidationMessage()
+		            .Text.ShouldEqual("The User name field is required.");
+		    }
+		}
+
 		public class when_logging_in_with_valid_credentials : SpecsFor<MvcWebApp>
 		{
 			protected override void Given()

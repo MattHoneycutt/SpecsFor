@@ -209,8 +209,13 @@ namespace SpecsFor.Mvc
 		{
 			return Browser.FindElements(ElementConventions.FindEditorElementsByExpressionUsingNameFor(property));
 		}
-		
-		public bool IsFieldInvalidByConvention(IWebElement field)
+
+        public IWebElement FindValidationMessageForFieldByConvention<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class
+        {
+            return Browser.FindElement(ElementConventions.FindValidationMessageUsingNameFor(property));
+        }
+
+        public bool IsFieldInvalidByConvention(IWebElement field)
 		{
 			return ElementConventions.IsFieldInvalid(field);
 		}

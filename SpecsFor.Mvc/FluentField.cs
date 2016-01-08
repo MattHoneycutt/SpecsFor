@@ -38,6 +38,19 @@ namespace SpecsFor.Mvc
 
 			return FluentForm;
 		}
+        
+		public IWebElement HasValidationMessage()
+		{
+		    var element = WebApp.FindValidationMessageForFieldByConvention(_property);
+
+            if (element == null)
+				throw new AssertionException("Validation message was not found for field!");
+
+		    if (!element.Displayed)
+		        throw new AssertionException("Validation message for field is not visible!");
+
+			return element;
+		}
 
 		public FluentForm<TModel> ValueShouldEqual(string value)
 		{

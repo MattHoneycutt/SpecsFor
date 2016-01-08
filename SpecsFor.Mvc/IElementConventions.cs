@@ -7,12 +7,15 @@ namespace SpecsFor.Mvc
 	public interface IElementConventions
 	{
 		By FindDisplayElementByExpressionFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class;
-		By FindEditorElementByExpressionFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class;
+
+        By FindEditorElementByExpressionFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class;
 
         By FindEditorElementsByExpressionUsingNameFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class;
 
-		By FindValidationSummary();
+	    By FindValidationMessageUsingNameFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class;
 
-		bool IsFieldInvalid(IWebElement field);
+	    By FindValidationSummary();
+
+	    bool IsFieldInvalid(IWebElement field);
 	}
 }

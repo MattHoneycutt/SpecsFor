@@ -23,7 +23,14 @@ namespace SpecsFor.Mvc
 			return By.Id(id);
 		}
 
-		public virtual By FindValidationSummary()
+	    public virtual By FindValidationMessageUsingNameFor<TModel, TProp>(Expression<Func<TModel, TProp>> property) where TModel : class
+	    {
+	        var name = ExpressionHelper.GetExpressionText(property);
+
+	        return By.CssSelector($"[data-valmsg-for='{name}']");
+	    }
+
+	    public virtual By FindValidationSummary()
 		{
 			return By.ClassName("validation-summary-errors");
 		}
