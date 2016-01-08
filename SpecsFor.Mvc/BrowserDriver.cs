@@ -13,9 +13,9 @@ namespace SpecsFor.Mvc
 	{
 		private readonly Func<RemoteWebDriver> _browserFactory;
 
-		public static readonly BrowserDriver InternetExplorer;
-		public static readonly BrowserDriver Firefox;
-		public static readonly BrowserDriver Chrome;
+		public static BrowserDriver InternetExplorer;
+		public static BrowserDriver Firefox;
+		public static BrowserDriver Chrome;
 		private RemoteWebDriver _driver;
 
 		static BrowserDriver()
