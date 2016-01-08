@@ -87,6 +87,7 @@
     <Compile Include="ISpecs.cs" />
     <Compile Include="MoqExtensions.cs" />
     <Compile Include="ShouldExtensions\Any.cs" />
+    <Compile Include="ShouldExtensions\EnumerableExtensions.cs" />
     <Compile Include="ShouldExtensions\Matcher.cs" />
     <Compile Include="ShouldExtensions\ShouldLooksLikeExtensions.cs" />
     <Compile Include="ShouldExtensions\Some.cs" />
