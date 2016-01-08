@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
@@ -25,7 +26,8 @@ namespace SpecsFor.Mvc
 
 		public static readonly IList<Action<MvcWebApp>> PreTestCallbacks = new List<Action<MvcWebApp>>();
 		public static string BaseUrl { get; set; }
-		public static BrowserDriver Driver { get; set; }
+        public static Size? WindowSize { get; set; }
+        public static BrowserDriver Driver { get; set; }
 		public static IHandleAuthentication Authentication { get; set; }
 		public static TimeSpan Delay { get; set; }
 
@@ -45,15 +47,15 @@ namespace SpecsFor.Mvc
 
 			try
 			{
+			    if (WindowSize != null)
+			        Browser.Manage().Window.Size = WindowSize.Value;
+
 				foreach (var callback in PreTestCallbacks)
 				{
 					callback(this);
 				}
 
-				if (Authentication != null)
-				{
-					Authentication.Authenticate(this);
-				}
+			    Authentication?.Authenticate(this);
 			}
 			//If something happens and the class can't be created, we still need to destroy the browser.
 			catch (Exception)
@@ -126,7 +128,7 @@ namespace SpecsFor.Mvc
 			}
 		}
 
-		public void NavigateTo<TController>(Expression<Action<TController>> action) where TController : Controller
+	    public void NavigateTo<TController>(Expression<Action<TController>> action) where TController : Controller
 		{
 			var helper = new HtmlHelper(new ViewContext { HttpContext = FakeHttpContext.Root() }, new FakeViewDataContainer());
 			//TODO: workaround to fixes MattHoneycutt/SpecsFor#25

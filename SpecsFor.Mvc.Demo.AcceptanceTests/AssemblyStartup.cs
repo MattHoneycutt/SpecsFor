@@ -34,6 +34,8 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 
 			config.AuthenticateBeforeEachTestUsing<StandardAuthenticator>();
 
+		    config.SetBrowserWindowSize(width: 1024, height: 768);
+
 			_host = new SpecsForIntegrationHost(config);
 			_host.Start();
 		}

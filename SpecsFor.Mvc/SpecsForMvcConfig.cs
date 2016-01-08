@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -13,7 +14,7 @@ namespace SpecsFor.Mvc
 {
 	public class SpecsForMvcConfig
 	{
-		public List<ITestRunnerAction> TestRunnerActions { get; private set; }
+		public List<ITestRunnerAction> TestRunnerActions { get; }
 
 		public SpecsForMvcConfig()
 		{
@@ -139,5 +140,11 @@ namespace SpecsFor.Mvc
 			if (!TestRunnerActions.Any(x => x is BrowserDriverAction)) 
 				throw new InvalidOperationException("You must configure the browser driver to use by calling SpecsForMvcConfig.UseBrowser.");
 		}
-	}
+
+	    public void SetBrowserWindowSize(int width, int height)
+	    {
+            
+	        AddNewAction(() => MvcWebApp.WindowSize = new Size(width, height));
+	    }
+    }
 }
