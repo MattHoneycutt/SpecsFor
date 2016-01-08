@@ -6,7 +6,7 @@ using SpecsFor.ShouldExtensions;
 
 namespace SpecsFor.Helpers.Web.Specs
 {
-	public class HtmlHelperSpecs
+	public class FakeHtmlHelperSpecs
 	{
 		public class when_testing_a_standard_html_helper : SpecsFor<FakeHtmlHelper>
 		{
@@ -26,5 +26,19 @@ namespace SpecsFor.Helpers.Web.Specs
 				_result.ToString().ShouldContainAll("col-md-2", "control-label");
 			}
 		}
+
+	    public class when_creating_a_new_fake_helper_with_no_object : SpecsFor<FakeHtmlHelper>
+	    {
+	        protected override void InitializeClassUnderTest()
+	        {
+	            //Don't create anything.
+	        }
+
+	        [Test]
+	        public void then_it_does_not_throw_an_exception()
+	        {
+	            Assert.DoesNotThrow(() => new FakeHtmlHelper(null));
+	        }
+	    }
 	}
 }

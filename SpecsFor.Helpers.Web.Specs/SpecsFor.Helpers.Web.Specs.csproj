@@ -79,7 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FakeControllerContextSpecs.cs" />
-    <Compile Include="HtmlHelperSpecs.cs" />
+    <Compile Include="FakeHtmlHelperSpecs.cs" />
     <Compile Include="IsAjaxRequestControllerSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
