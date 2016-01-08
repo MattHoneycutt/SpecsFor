@@ -1,9 +1,9 @@
-﻿using Moq;
+﻿using JetBrains.Annotations;
+using Moq;
 using NUnit.Framework;
 using SpecsFor.Configuration.Model;
 using SpecsFor.Validation;
 using StructureMap;
-using StructureMap.AutoMocking;
 using StructureMap.AutoMocking.Moq;
 
 namespace SpecsFor
@@ -25,17 +25,7 @@ namespace SpecsFor
 			_engine = new SpecsForEngine<T>(this, BehaviorStack.Current, new NUnitSpecValidator());
 		}
 
-		[TestFixtureSetUp]
-		public virtual void SetupEachSpec()
-		{
-			_engine.Init();
-
-			_engine.Given();
-
-			_engine.When();
-		}
-
-		/// <summary>
+	    /// <summary>
 		/// Gets the mock for the specified type from the underlying container. 
 		/// </summary>
 		/// <typeparam name="TMock"></typeparam>
@@ -45,7 +35,7 @@ namespace SpecsFor
 			return _engine.Mocker.GetMockFor<T, TMock>();
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Creates an IEnumerable of mock objects of T, and returns the mock objects
 		/// for configuration.  Calling this method twice with the same 'enumerableSize'
 		/// will return the same set of mocks. 
@@ -58,31 +48,41 @@ namespace SpecsFor
 			return _engine.Mocker.GetMockForEnumerableOf<T, TMock>(enumerableSize);	
 		}
 
-		public MoqAutoMocker<T> Mocker
-		{
-			get { return _engine.Mocker;}
-		}
+	    [UsedImplicitly]
+        public MoqAutoMocker<T> Mocker => _engine.Mocker;
 
-		protected void Given<TContext>() where TContext : IContext<T>, new()
+	    [TestFixtureSetUp]
+	    public virtual void SetupEachSpec()
+	    {
+	        _engine.Init();
+
+	        _engine.Given();
+
+	        _engine.When();
+	    }
+
+	    protected virtual void ConfigureContainer(IContainer container)
+	    {
+	    }
+
+	    [UsedImplicitly]
+	    protected void Given<TContext>() where TContext : IContext<T>, new()
 		{
 			_engine.ApplyContext(new TContext());
 		}
 
-		protected void Given(IContext<T> context)
-		{
-			_engine.ApplyContext(context);
-		}
-	
-		protected void Given(SpecsFor.IContext context)
+	    protected void Given(IContext<T> context)
 		{
 			_engine.ApplyContext(context);
 		}
 
-		protected virtual void ConfigureContainer(IContainer container)
+	    [UsedImplicitly]
+        protected void Given(IContext context)
 		{
+			_engine.ApplyContext(context);
 		}
 
-		protected virtual void InitializeClassUnderTest()
+	    protected virtual void InitializeClassUnderTest()
 		{
 			_engine.InitializeClassUnderTest();
 		}
@@ -95,17 +95,38 @@ namespace SpecsFor
 		{
 		}
 
-		[TearDown]
+        /// <summary>
+        /// Runs before each individual test case.  Use carefully!
+        /// </summary>
+        [SetUp]
+	    protected virtual void BeforeEachTest()
+	    {
+	        
+	    }
+
+        /// <summary>
+        /// Runs after each individual test case.  Use carefully!
+        /// </summary>
+        [TearDown]
 		protected virtual void AfterEachTest()
 		{
 		}
 
+        /// <summary>
+        /// Runs when the entire suite of specs is complete.  If you override this,
+        /// be sure to call the base implementation, otherwise your specs will not 
+        /// be cleaned up correctly!
+        /// </summary>
 		[TestFixtureTearDown]
 		public virtual void TearDown()
 		{
 			_engine.TearDown();
 		}
 
+        /// <summary>
+        /// Runs after the entire suite of specs is complete.  You can safely hook
+        /// in here to do any last-minute cleanup. 
+        /// </summary>
 		protected virtual void AfterSpec()
 		{
 		}

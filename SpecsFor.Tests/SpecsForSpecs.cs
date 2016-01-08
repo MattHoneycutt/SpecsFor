@@ -186,5 +186,44 @@ namespace SpecsFor.Tests
 					.Verify(w => w.Write("Test2"));
 			}
 		}
+
+	    public class when_using_the_before_and_after_each_test_method : SpecsFor<object>
+	    {
+	        private int _beforeEachCallCount = 0;
+	        private int _nextExpectedBeforeEachCallCount = 1;
+
+            private int _afterEachCallCount = 0;
+	        private int _nextExpectedAfterEachCallCount = 0;
+
+	        protected override void BeforeEachTest()
+	        {
+	            _beforeEachCallCount++;
+	        }
+
+	        [Test]
+	        public void then_the_values_increase_each_time_1()
+	        {
+	            _beforeEachCallCount.ShouldEqual(_nextExpectedBeforeEachCallCount);
+	            _nextExpectedBeforeEachCallCount++;
+
+                _afterEachCallCount.ShouldEqual(_nextExpectedAfterEachCallCount);
+                _nextExpectedAfterEachCallCount++;
+	        }
+
+	        [Test]
+	        public void then_the_values_increase_each_time_2()
+	        {
+                _beforeEachCallCount.ShouldEqual(_nextExpectedBeforeEachCallCount);
+                _nextExpectedBeforeEachCallCount++;
+
+                _afterEachCallCount.ShouldEqual(_nextExpectedAfterEachCallCount);
+                _nextExpectedAfterEachCallCount++;
+            }
+
+            protected override void AfterEachTest()
+            {
+                _afterEachCallCount++;
+            }
+	    }
 	}
 }
