@@ -66,6 +66,9 @@ namespace SpecsFor.Mvc.IIS
 			var msBuildPath = MSBuildOverride ??
 			                  ToolLocationHelper.GetPathToBuildToolsFile("msbuild.exe", ToolLocationHelper.CurrentToolsVersion);
 
+            if (!File.Exists(msBuildPath))
+                throw new InvalidOperationException($"Unable to find MSBuild at {msBuildPath}.  You can override the location using 'config.UseIISExpress().UseMSBuildExecutableAt(\"some-path\").");
+
 			var msBuildProc = new Process();
 			msBuildProc.StartInfo = new ProcessStartInfo
 				{
