@@ -23,5 +23,18 @@ namespace SpecsFor.ShouldExtensions
 				Assert.Fail("Expected list not containing item matching {0}, but found a matching item.", filter);
 			}
 		}
+
+	    public static bool ContainsMatch<T>(this IEnumerable<T> list, Expression<Func<T>> initializer) where T : class
+	    {
+	        if (list == null) return false;
+
+	        foreach (var item in list)
+	        {
+	            if (item.LooksLike(initializer))
+	                return true;
+	        }
+
+	        return false;
+	    }
 	}
 }

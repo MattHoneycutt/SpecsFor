@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace SpecsFor.ShouldExtensions
@@ -58,5 +60,19 @@ namespace SpecsFor.ShouldExtensions
 
 			return ValueInRange(value.Subtract(actualTolerance), value.Add(actualTolerance));
 		}
-	}
+
+	    public static T[] ListContaining<T>(Expression<Func<T>> initializer) where T : class
+	    {
+	        Matcher.Create<IEnumerable<T>>(x => x.ContainsMatch(initializer), $"Expected list containing item matching [{initializer.Body}], but match was not found.");
+
+	        return default(T[]);
+	    }
+
+	    public static T[] ListContaining<T>(T obj)
+	    {
+	        Matcher.Create<IEnumerable<T>>(x => x.Contains(obj), $"Expected list containing [{obj}], but item was not found.");
+
+	        return default(T[]);
+	    }
+    }
 }

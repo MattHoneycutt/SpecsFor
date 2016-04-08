@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using Should.Core.Exceptions;
-using SpecsFor;
 using SpecsFor.ShouldExtensions;
 
 namespace SpecsFor.Tests.ShouldExtensions
@@ -13,6 +13,10 @@ namespace SpecsFor.Tests.ShouldExtensions
 			public int IntValue { get; set; }
 			public DateTime DateTimeValue { get; set; }
 			public DateTimeOffset DateTimeOffsetValue { get; set; }
+
+            public IList<TestObject> Children { get; set; }
+
+            public IList<int> Numbers { get; set; }
 		}
 
 		public class when_checking_that_a_value_is_in_range : SpecsFor<TestObject>
@@ -104,5 +108,75 @@ namespace SpecsFor.Tests.ShouldExtensions
 					);
 			}
 		}
+
+	    public class when_checking_that_a_list_contains_a_partial_value : SpecsFor<TestObject>
+	    {
+	        protected override void Given()
+	        {
+	            SUT = new TestObject
+	            {
+	                Children = new List<TestObject>
+	                {
+	                    new TestObject {IntValue = 1, DateTimeValue = DateTime.Today},
+	                    new TestObject {IntValue = 2, DateTimeValue = DateTime.Today},
+	                }
+	            };
+	        }
+
+	        [Test]
+	        public void then_it_does_not_throw_if_the_list_contains_a_match()
+	        {
+                Assert.DoesNotThrow(() =>
+                    SUT.ShouldLookLike(() => new TestObject
+                    {
+                        Children = Some.ListContaining(() => new TestObject { IntValue = 1 })
+                    })
+                    );
+            }
+
+	        [Test]
+	        public void then_it_throws_if_the_list_does_not_contain_a_match()
+	        {
+                Assert.Throws<EqualException>(() =>
+                    SUT.ShouldLookLike(() => new TestObject
+                    {
+                        Children = Some.ListContaining(() => new TestObject { IntValue = 3 })
+                    })
+                    );
+            }
+        }
+
+	    public class when_checking_that_a_list_contains_a_struct_value : SpecsFor<TestObject>
+	    {
+	        protected override void Given()
+	        {
+	            SUT = new TestObject
+	            {
+	                Numbers = new List<int> { 1, 2, 3 }
+	            };
+	        }
+
+	        [Test]
+	        public void then_it_does_not_throw_if_the_list_contains_a_match()
+	        {
+                Assert.DoesNotThrow(() =>
+                    SUT.ShouldLookLike(() => new TestObject
+                    {
+                        Numbers = Some.ListContaining(1)
+                    })
+                    );
+            }
+
+	        [Test]
+	        public void then_it_throws_if_the_list_does_not_contain_a_match()
+	        {
+                Assert.Throws<EqualException>(() =>
+                    SUT.ShouldLookLike(() => new TestObject
+                    {
+                        Numbers = Some.ListContaining(4)
+                    })
+                    );
+            }
+        }
 	}
 }

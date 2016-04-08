@@ -11,7 +11,20 @@ namespace SpecsFor.ShouldExtensions
 {
 	public static class ShouldLooksLikeExtensions
 	{
-		public static void ShouldLookLike<T>(this T actual, Expression<Func<T>> matchFunc) where T : class
+	    public static bool LooksLike<T>(this T actual, Expression<Func<T>> matchFunc) where T : class
+	    {
+	        try
+	        {
+	            actual.ShouldLookLike(matchFunc);
+	            return true;
+	        }
+	        catch (EqualException)
+	        {
+	            return false;
+	        }
+	    }
+
+        public static void ShouldLookLike<T>(this T actual, Expression<Func<T>> matchFunc) where T : class
 		{
 			var memberInitExpression = matchFunc.Body as MemberInitExpression;
 			var newArrayExpression = matchFunc.Body as NewArrayExpression;
