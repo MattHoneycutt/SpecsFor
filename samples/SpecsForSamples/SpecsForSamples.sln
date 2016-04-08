@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Conventions", "Conventions"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conventions.Basics", "Conventions.Basics\Conventions.Basics.csproj", "{1D912BC7-E1CD-44E4-97F5-10AD9EDFA4ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartialMatching", "PartialMatching\PartialMatching.csproj", "{2DDF7827-B4C7-4191-B592-6B0EF73213F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{1D912BC7-E1CD-44E4-97F5-10AD9EDFA4ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D912BC7-E1CD-44E4-97F5-10AD9EDFA4ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D912BC7-E1CD-44E4-97F5-10AD9EDFA4ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DDF7827-B4C7-4191-B592-6B0EF73213F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DDF7827-B4C7-4191-B592-6B0EF73213F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DDF7827-B4C7-4191-B592-6B0EF73213F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DDF7827-B4C7-4191-B592-6B0EF73213F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,5 +77,6 @@ Global
 		{42C326D7-6EBF-4CDA-AA9D-4E373BB644E1} = {F2D97431-FDC6-4383-91A9-AB0336FF6B5E}
 		{A0E48142-6481-4CE2-BA89-322423491A8B} = {F2D97431-FDC6-4383-91A9-AB0336FF6B5E}
 		{1D912BC7-E1CD-44E4-97F5-10AD9EDFA4ED} = {E783EA69-F579-4518-A4E9-455999BB9EA1}
+		{2DDF7827-B4C7-4191-B592-6B0EF73213F1} = {E6355F89-65EB-4853-8FE2-6E9BCC64B3EB}
 	EndGlobalSection
 EndGlobal

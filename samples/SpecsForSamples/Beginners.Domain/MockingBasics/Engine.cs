@@ -2,11 +2,12 @@
 {
 	public class Engine
 	{
-		public string Maker { get; set; }
-		public string Type { get; set; }
-		public bool IsStopped { get; set; }
+	    public int YearBuilt { get; set; }
+	    public string Maker { get; set; }
+	    public string Type { get; set; }
+	    public bool IsStopped { get; set; }
 
-		public Engine()
+	    public Engine()
 		{
 			IsStopped = true;
 		}
