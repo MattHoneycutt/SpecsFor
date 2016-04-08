@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using SpecsFor.AutoMocking;
 using SpecsFor.Configuration.Model;
 using SpecsFor.Validation;
-using StructureMap.AutoMocking.Moq;
 
 namespace SpecsFor
 {

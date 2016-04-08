@@ -1,10 +1,10 @@
 ﻿using JetBrains.Annotations;
 using Moq;
 using NUnit.Framework;
+using SpecsFor.AutoMocking;
 using SpecsFor.Configuration.Model;
 using SpecsFor.Validation;
 using StructureMap;
-using StructureMap.AutoMocking.Moq;
 
 namespace SpecsFor
 {
