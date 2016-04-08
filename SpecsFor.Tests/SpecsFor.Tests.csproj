@@ -36,9 +36,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Moq, Version=4.2.1402.2112, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
+    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="nunit.core">
       <HintPath>..\packages\NUnitTestAdapter.1.1\lib\nunit.core.dll</HintPath>
@@ -64,17 +64,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Should.1.1.20\lib\Should.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\structuremap.3.1.0.133\lib\net40\StructureMap.dll</HintPath>
+    <Reference Include="StructureMap, Version=4.1.3.394, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.4.1.3.394\lib\net40\StructureMap.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="StructureMap.AutoMocking.Moq, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\structuremap.automocking.moq.3.1.0.133\lib\net40\StructureMap.AutoMocking.Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap.Net4, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\structuremap.3.1.0.133\lib\net40\StructureMap.Net4.dll</HintPath>
+    <Reference Include="StructureMap.Net4, Version=4.1.3.394, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.4.1.3.394\lib\net40\StructureMap.Net4.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
