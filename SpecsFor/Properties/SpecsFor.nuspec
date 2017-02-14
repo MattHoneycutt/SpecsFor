@@ -11,6 +11,9 @@
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>SpecsFor is another Behavior-Driven Development framework that focuses on ease of use for *developers* by minimizing testing friction.</description>
 		<tags>testing tdd bdd specs</tags>
+        <dependencies>
+            <dependency id="NUnit" version="[2.6.3,3.0)" />
+        </dependencies>
 	</metadata>
 	<files>
 		<file src="Tools\**\*.*" target="tools" />
