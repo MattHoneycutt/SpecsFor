@@ -16,7 +16,7 @@
         </dependencies>
 	</metadata>
 	<files>
-		<file src="Tools\**\*.*" target="tools" />
-		<file src="Templates\**\*.*" exclude="**\.gitignore" target="Templates" />
+		<file src="..\Tools\**\*.*" target="tools" />
+		<file src="..\Templates\**\*.*" exclude="**\.gitignore" target="Templates" />
 	</files>
 </package>

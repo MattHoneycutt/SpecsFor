@@ -17,6 +17,6 @@
 		</frameworkAssemblies>
 	</metadata>
 	<files>
-		<file src="Tools\**\*.*" target="tools" />
+		<file src="..\Tools\**\*.*" target="tools" />
 	</files>
 </package>
