@@ -51,7 +51,7 @@ namespace SpecsFor
 	    [UsedImplicitly]
         public MoqAutoMocker<T> Mocker => _engine.Mocker;
 
-	    [TestFixtureSetUp]
+	    [OneTimeSetUp]
 	    public virtual void SetupEachSpec()
 	    {
 	        _engine.Init();
@@ -117,7 +117,7 @@ namespace SpecsFor
         /// be sure to call the base implementation, otherwise your specs will not 
         /// be cleaned up correctly!
         /// </summary>
-		[TestFixtureTearDown]
+		[OneTimeTearDown]
 		public virtual void TearDown()
 		{
 			_engine.TearDown();
