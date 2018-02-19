@@ -1,6 +1,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
+using NUnit.Framework;
 
 namespace SpecsFor.Mvc
 {
@@ -13,7 +15,7 @@ namespace SpecsFor.Mvc
 
 	    private static string DiscoverProject(string projectName, string currentFolder = null)
         {
-            currentFolder = currentFolder ?? Environment.CurrentDirectory;
+            currentFolder = currentFolder ?? TestContext.CurrentContext.TestDirectory;
 
             Debug.WriteLine($"Discovering path to project {projectName} for Specs4MVC tests. Starting in {currentFolder}");
 

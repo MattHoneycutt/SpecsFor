@@ -5,11 +5,21 @@ namespace SpecsFor.Mvc.Specs
 {
 	public class SpecsForMvcConfigSpecs
 	{
-		public class when_pointing_to_a_static_URL : SpecsForMvcConfig
-		{
+		public class when_pointing_to_a_static_URL : SpecsFor<Mvc.SpecsForMvcConfig>
+        {
 			private const string AppUrl = "http://some.server.com/somePath";
 
-			protected override void When()
+            public override void SetupEachSpec()
+            {
+                base.SetupEachSpec();
+
+                foreach (var action in SUT.TestRunnerActions)
+                {
+                    action.Startup();
+                }
+            }
+
+            protected override void When()
 			{
 				SUT.UseApplicationAtUrl(AppUrl);
 			}
@@ -18,19 +28,6 @@ namespace SpecsFor.Mvc.Specs
 			public void then_it_configures_MVC_web_app()
 			{
 				MvcWebApp.BaseUrl.ShouldEqual(AppUrl);
-			}
-		}
-		
-		public abstract class SpecsForMvcConfig : SpecsFor<Mvc.SpecsForMvcConfig>
-		{
-			public override void SetupEachSpec()
-			{
-				base.SetupEachSpec();
-
-				foreach (var action in SUT.TestRunnerActions)
-				{
-					action.Startup();
-				}
 			}
 		}
 	}

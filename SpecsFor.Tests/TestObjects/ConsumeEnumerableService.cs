@@ -4,7 +4,7 @@ namespace SpecsFor.Tests.TestObjects
 {
 	public class ConsumeEnumerableService
 	{
-		public ConsumeEnumerableService(IEnumerable<IWidget> widgets)
+		public ConsumeEnumerableService(IWidget[] widgets)
 		{
 			Widgets = widgets;
 		}

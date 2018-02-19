@@ -8,7 +8,7 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 	{
 		private SpecsForIntegrationHost _host;
 
-		[SetUp]
+		[OneTimeSetUp]
 		public void SetupTestRun()
 		{
 			var config = new SpecsForMvcConfig();
@@ -40,7 +40,7 @@ namespace SpecsFor.Mvc.Demo.AcceptanceTests
 			_host.Start();
 		}
 
-		[TearDown]
+		[OneTimeTearDown]
 		public void TearDownTestRun() 
 		{
 			_host.Shutdown();
