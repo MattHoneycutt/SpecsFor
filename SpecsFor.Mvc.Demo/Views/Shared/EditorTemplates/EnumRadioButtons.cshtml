@@ -1,6 +1,0 @@
-﻿@model dynamic
-@foreach (var value in Enum.GetValues(ViewData.ModelMetadata.ModelType))
-{
-	@Html.RadioButtonFor(m => m, value)
-	@Html.Label(value.ToString())
-}
