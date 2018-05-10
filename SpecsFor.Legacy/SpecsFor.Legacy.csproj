@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D123B65A-4C1C-49A5-AF9D-380AAAF7F006}</ProjectGuid>
+    <ProjectGuid>{72F23E90-DA8D-40DE-B04E-112B93613D04}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SpecsFor.Tests</RootNamespace>
-    <AssemblyName>SpecsFor.Tests</AssemblyName>
+    <RootNamespace>SpecsFor</RootNamespace>
+    <AssemblyName>SpecsFor</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -42,6 +42,10 @@
     <Reference Include="ExpectedObjects, Version=2.3.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ExpectedObjects.2.3.4\lib\net40\ExpectedObjects.dll</HintPath>
     </Reference>
+    <Reference Include="JetBrains.Annotations, Version=10.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.10.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Moq, Version=4.8.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.8.1\lib\net45\Moq.dll</HintPath>
@@ -66,47 +70,52 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ComposingContext\CompositionalContextSpecs.cs" />
-    <Compile Include="ComposingContext\ComposingContextConfig.cs" />
-    <Compile Include="ShouldExtensions\EnumerableExtensionsSpecs.cs" />
-    <Compile Include="ShouldExtensions\PartialMatchingWithListsSpecs.cs" />
-    <Compile Include="ShouldExtensions\ShouldLookLikeExtensionsSpecs.cs" />
-    <Compile Include="ShouldExtensions\SomeSpecs.cs" />
-    <Compile Include="SpecsForEngineSpecs.cs" />
-    <Compile Include="ComposingContext\StackingContext\StackingContextConfig.cs" />
-    <Compile Include="ComposingContext\StackingContext\StackingContextSpecs.cs" />
-    <Compile Include="ComposingContext\TestDomain\DoNotProvideMagic.cs" />
-    <Compile Include="ComposingContext\TestDomain\ILikeMagic.cs" />
-    <Compile Include="ComposingContext\TestDomain\MyTestLogger.cs" />
-    <Compile Include="ComposingContext\TestDomain\ProvideMagicByConcreteType.cs" />
-    <Compile Include="ComposingContext\TestDomain\ProvideMagicByInterface.cs" />
-    <Compile Include="ComposingContext\TestDomain\ProvideMagicByTypeName.cs" />
-    <Compile Include="ComposingContext\TestDomain\ProvideMagicForEveryone.cs" />
-    <Compile Include="ComposingContext\TestDomain\Widget.cs" />
+    <Compile Include="AutoMockerExtensions.cs" />
+    <Compile Include="AutoMocking\MoqAutoMocker.cs" />
+    <Compile Include="AutoMocking\MoqFactory.cs" />
+    <Compile Include="AutoMocking\MoqServiceLocator.cs" />
+    <Compile Include="Configuration\Behavior.cs" />
+    <Compile Include="Configuration\ConditionalInitializer.cs" />
+    <Compile Include="Configuration\ISpecsForConfigurationExpression.cs" />
+    <Compile Include="Configuration\Model\BehaviorStack.cs" />
+    <Compile Include="Configuration\Model\ConditionalBehavior.cs" />
+    <Compile Include="Configuration\Model\IBehaviorStack.cs" />
+    <Compile Include="Configuration\Model\IConditionalBehavior.cs" />
+    <Compile Include="Configuration\SpecsForConfiguration.cs" />
+    <Compile Include="Configuration\SpecsForConfigurationExpression.cs" />
+    <Compile Include="GivenSpecificationException.cs" />
+    <Compile Include="IContext.cs" />
+    <Compile Include="ISpecs.cs" />
+    <Compile Include="MoqExtensions.cs" />
+    <Compile Include="ShouldExtensions\Any.cs" />
+    <Compile Include="ShouldExtensions\EnumerableExtensions.cs" />
+    <Compile Include="ShouldExtensions\Matcher.cs" />
+    <Compile Include="ShouldExtensions\ShouldLooksLikeExtensions.cs" />
+    <Compile Include="ShouldExtensions\Some.cs" />
+    <Compile Include="Validation\NUnitSpecValidator.cs" />
+    <Compile Include="Validation\ISpecValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShouldExtensions\ContainsExtensionsSpecs.cs" />
-    <Compile Include="ShouldExtensions\ExpectedObjectExtensionsSpecs.cs" />
-    <Compile Include="ShouldExtensions\LooksSpecs.cs" />
-    <Compile Include="ShouldExtensions\StringExtensionsSpecs.cs" />
-    <Compile Include="SpecsForSpecs.cs" />
-    <Compile Include="TestObjects\ConsumeEnumerableService.cs" />
-    <Compile Include="TestObjects\IWidget.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SpecsFor.Legacy\SpecsFor.Legacy.csproj">
-      <Project>{72F23E90-DA8D-40DE-B04E-112B93613D04}</Project>
-      <Name>SpecsFor</Name>
-    </ProjectReference>
+    <Compile Include="ShouldExtensions\ContainsExtensions.cs" />
+    <Compile Include="ShouldExtensions\ExpectedObjectExtensions.cs" />
+    <Compile Include="ShouldExtensions\Looks.cs" />
+    <Compile Include="ShouldExtensions\StringExtensions.cs" />
+    <Compile Include="SpecificationException.cs" />
+    <Compile Include="SpecInitException.cs" />
+    <Compile Include="SpecsFor.cs" />
+    <Compile Include="SpecsForEngine.cs" />
+    <Compile Include="WhenSpecificationException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\SpecsFor.nuspec" />
+    <None Include="targets\Microsoft.Application.targets" />
+    <None Include="tools\Install.ps1" />
   </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project=".\targets\Microsoft.Application.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

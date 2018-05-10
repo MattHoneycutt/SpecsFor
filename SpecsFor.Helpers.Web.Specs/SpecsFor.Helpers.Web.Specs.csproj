@@ -97,7 +97,7 @@
       <Project>{3acaec93-008f-48da-a0a7-16d28f2b266e}</Project>
       <Name>SpecsFor.Helpers.Web</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SpecsFor\SpecsFor.csproj">
+    <ProjectReference Include="..\SpecsFor.Legacy\SpecsFor.Legacy.csproj">
       <Project>{72f23e90-da8d-40de-b04e-112b93613d04}</Project>
       <Name>SpecsFor</Name>
     </ProjectReference>

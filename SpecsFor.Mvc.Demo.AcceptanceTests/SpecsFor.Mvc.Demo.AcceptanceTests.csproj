@@ -116,7 +116,7 @@
       <Project>{0B88D196-CA69-44CC-8F4E-E66FC6874C78}</Project>
       <Name>SpecsFor.Mvc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SpecsFor\SpecsFor.csproj">
+    <ProjectReference Include="..\SpecsFor.Legacy\SpecsFor.Legacy.csproj">
       <Project>{72F23E90-DA8D-40DE-B04E-112B93613D04}</Project>
       <Name>SpecsFor</Name>
     </ProjectReference>
