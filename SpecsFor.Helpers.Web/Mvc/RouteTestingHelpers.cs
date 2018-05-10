@@ -16,7 +16,7 @@ namespace SpecsFor.Helpers.Web.Mvc
 						 where string.Equals(routeValueKey, key, StringComparison.InvariantCultureIgnoreCase)
 						 select routeValues[routeValueKey]).FirstOrDefault();
 
-			value = value == null ? null : value.ToString();
+			value = value?.ToString();
 
 			return value;
 		}
@@ -53,7 +53,7 @@ namespace SpecsFor.Helpers.Web.Mvc
 
 				}
 
-				value = (value == null ? null : value.ToString());
+				value = value?.ToString();
 
 				var routeValue = routeData.Values.GetValue(name);
 
