@@ -98,7 +98,7 @@ namespace SpecsFor.Mvc.IIS
 				Console.WriteLine(stdout);
 				Console.WriteLine(stderr);
 				Console.WriteLine("---------------------------------------");
-				throw new ApplicationException("Build failed.");
+				throw new ApplicationException("Build failed. Error: " + stderr + ", StdOut: " + stdout);
 			}
 		}
 		
