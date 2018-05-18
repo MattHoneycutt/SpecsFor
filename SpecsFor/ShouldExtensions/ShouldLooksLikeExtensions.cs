@@ -4,7 +4,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using Moq;
 using NUnit.Framework;
-using Shouldly;
+using Should;
+using Should.Core.Exceptions;
 
 namespace SpecsFor.ShouldExtensions
 {
@@ -17,7 +18,7 @@ namespace SpecsFor.ShouldExtensions
 	            actual.ShouldLookLike(matchFunc);
 	            return true;
 	        }
-	        catch (ShouldAssertException)
+	        catch (EqualException)
 	        {
 	            return false;
 	        }
@@ -134,12 +135,12 @@ namespace SpecsFor.ShouldExtensions
 					if (Matcher.LastMatcher == null ||
 					    !Matcher.LastMatcher.Equals(actualValue))
 					{
-                        Matcher.LastMatcher.ShouldBe(actual);
+						throw new EqualException(Matcher.LastMatcher?.ToString(), actualValue);
 					}
 				}
 				else
 				{
-					actualValue.ShouldBe(expectedValue);
+					actualValue.ShouldEqual(expectedValue);
 				}
 			}
 		}

@@ -25,7 +25,7 @@
     <PackageReference Include="ExpectedObjects" Version="2.3.4" />
     <PackageReference Include="Moq" Version="4.8.2" />
     <PackageReference Include="NUnit" Version="3.10.1" />
-    <PackageReference Include="Shouldly" Version="3.0.0" />
+    <PackageReference Include="Should-DotNetStandard" Version="1.0.0-alpha05" />
     <PackageReference Include="structuremap" Version="4.6.1" />
 
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0">

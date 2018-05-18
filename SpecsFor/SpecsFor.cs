@@ -1,10 +1,13 @@
-﻿using JetBrains.Annotations;
+﻿using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 using Moq;
 using NUnit.Framework;
 using SpecsFor.AutoMocking;
 using SpecsFor.Configuration.Model;
 using SpecsFor.Validation;
 using StructureMap;
+
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 
 namespace SpecsFor
 {
