@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Moq;
 using NUnit.Framework;
@@ -115,12 +116,7 @@ namespace SpecsFor
 		{
 		}
 
-        /// <summary>
-        /// Runs when the entire suite of specs is complete.  If you override this,
-        /// be sure to call the base implementation, otherwise your specs will not 
-        /// be cleaned up correctly!
-        /// </summary>
-		[OneTimeTearDownAttribute]
+        [OneTimeTearDownAttribute, Obsolete("This method will no longer be exposed for overriding.  Override AfterSpec instead.")]
         public virtual void TearDown()
 		{
 			_engine.TearDown();

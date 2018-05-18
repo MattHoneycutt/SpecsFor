@@ -56,10 +56,10 @@
       <HintPath>..\packages\NUnit.3.10.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Should, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Should-DotNetStandard.1.0.0-alpha05\lib\net45\Should.dll</HintPath>
+      <HintPath>..\packages\Should-DotNetStandard.1.0.0-beta01\lib\net45\Should.dll</HintPath>
     </Reference>
     <Reference Include="Should.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Should-DotNetStandard.1.0.0-alpha05\lib\net45\Should.Core.dll</HintPath>
+      <HintPath>..\packages\Should-DotNetStandard.1.0.0-beta01\lib\net45\Should.Core.dll</HintPath>
     </Reference>
     <Reference Include="SpecsFor, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SpecsFor.6.0.0-alpha02\lib\net45\SpecsFor.dll</HintPath>

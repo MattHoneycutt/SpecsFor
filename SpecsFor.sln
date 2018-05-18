@@ -15,13 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1657B4
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ResharperTemplates", "ResharperTemplates", "{6C81B294-838B-4F77-BDA2-306BCF9F57C6}"
-	ProjectSection(SolutionItems) = preProject
-		ResharperTemplates\fileTemplates.DotSettings = ResharperTemplates\fileTemplates.DotSettings
-		ResharperTemplates\liveTemplates.DotSettings = ResharperTemplates\liveTemplates.DotSettings
-		ResharperTemplates\SpecsFor.Templates.nuspec = ResharperTemplates\SpecsFor.Templates.nuspec
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SpecsFor-Helpers", "SpecsFor-Helpers", "{AD5D8C39-5748-4DA9-A92A-3F31CD1F2CB1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsFor.Helpers.Web", "SpecsFor.Helpers.Web\SpecsFor.Helpers.Web.csproj", "{3ACAEC93-008F-48DA-A0A7-16D28F2B266E}"
