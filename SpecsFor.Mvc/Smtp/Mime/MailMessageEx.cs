@@ -13,15 +13,9 @@ namespace SpecsFor.Mvc.Smtp.Mime
 	/// </summary>
 	public class MailMessageEx : MailMessage
 	{
-		private long _octets;
+	    public long Octets { get; set; }
 
-		public long Octets
-		{
-			get { return _octets; }
-			set { _octets = value; }
-		}
-
-		private int _messageNumber;
+	    private int _messageNumber;
 
 		/// <summary>
 		/// Gets or sets the message number of the MailMessage on the POP3 server.
@@ -29,8 +23,8 @@ namespace SpecsFor.Mvc.Smtp.Mime
 		/// <value>The message number.</value>
 		public int MessageNumber
 		{
-			get { return _messageNumber; }
-			internal set { _messageNumber = value; }
+			get => _messageNumber;
+		    internal set { _messageNumber = value; }
 		}
 
 
@@ -39,15 +33,9 @@ namespace SpecsFor.Mvc.Smtp.Mime
 		/// Gets the children MailMessage attachments.
 		/// </summary>
 		/// <value>The children MailMessage attachments.</value>
-		public List<MailMessageEx> Children
-		{
-			get
-			{
-				return _children;
-			}
-		}
+		public List<MailMessageEx> Children => _children;
 
-		/// <summary>
+	    /// <summary>
 		/// Gets the delivery date.
 		/// </summary>
 		/// <value>The delivery date.</value>
@@ -87,53 +75,35 @@ namespace SpecsFor.Mvc.Smtp.Mime
 		/// Gets the routing.
 		/// </summary>
 		/// <value>The routing.</value>
-		public string Routing
-		{
-			get { return GetHeader(MailHeaders.Received); }
-		}
+		public string Routing => GetHeader(MailHeaders.Received);
 
-		/// <summary>
+	    /// <summary>
 		/// Gets the message id.
 		/// </summary>
 		/// <value>The message id.</value>
-		public string MessageId
-		{
-			get { return GetHeader(MailHeaders.MessageId); }
-		}
+		public string MessageId => GetHeader(MailHeaders.MessageId);
 
-		public string ReplyToMessageId
-		{
-			get { return GetHeader(MailHeaders.InReplyTo, true); }
-		}
+	    public string ReplyToMessageId => GetHeader(MailHeaders.InReplyTo, true);
 
-		/// <summary>
+	    /// <summary>
 		/// Gets the MIME version.
 		/// </summary>
 		/// <value>The MIME version.</value>
-		public string MimeVersion
-		{
-			get { return GetHeader(MimeHeaders.MimeVersion); }
-		}
+		public string MimeVersion => GetHeader(MimeHeaders.MimeVersion);
 
-		/// <summary>
+	    /// <summary>
 		/// Gets the content id.
 		/// </summary>
 		/// <value>The content id.</value>
-		public string ContentId
-		{
-			get { return GetHeader(MimeHeaders.ContentId); }
-		}
+		public string ContentId => GetHeader(MimeHeaders.ContentId);
 
-		/// <summary>
+	    /// <summary>
 		/// Gets the content description.
 		/// </summary>
 		/// <value>The content description.</value>
-		public string ContentDescription
-		{
-			get { return GetHeader(MimeHeaders.ContentDescription); }
-		}
+		public string ContentDescription => GetHeader(MimeHeaders.ContentDescription);
 
-		/// <summary>
+	    /// <summary>
 		/// Gets the content disposition.
 		/// </summary>
 		/// <value>The content disposition.</value>
@@ -173,22 +143,11 @@ namespace SpecsFor.Mvc.Smtp.Mime
 		/// Initializes a new instance of the <see cref="MailMessageEx"/> class.
 		/// </summary>
 		public MailMessageEx()
-			: base()
 		{
 			_children = new List<MailMessageEx>();
 		}
 
-		/// <summary>
-		/// Gets the header.
-		/// </summary>
-		/// <param name="header">The header.</param>
-		/// <returns></returns>
-		private string GetHeader(string header)
-		{
-			return GetHeader(header, false);
-		}
-
-		private string GetHeader(string header, bool stripBrackets)
+	    private string GetHeader(string header, bool stripBrackets = false)
 		{
 			if (stripBrackets)
 			{
@@ -206,10 +165,9 @@ namespace SpecsFor.Mvc.Smtp.Mime
 		public static MailMessageEx CreateMailMessageFromEntity(MimeEntity entity)
 		{
 			MailMessageEx message = new MailMessageEx();
-			string value;
-			foreach (string key in entity.Headers.AllKeys)
+		    foreach (string key in entity.Headers.AllKeys)
 			{
-				value = entity.Headers[key];
+				var value = entity.Headers[key];
 				if (value.Equals(string.Empty))
 				{
 					value = " ";
@@ -226,10 +184,10 @@ namespace SpecsFor.Mvc.Smtp.Mime
 						message.CC.Add(value);
 						break;
 					case MailHeaders.From:
-						message.From = MailMessageEx.CreateMailAddress(value);
+						message.From = CreateMailAddress(value);
 						break;
 					case MailHeaders.ReplyTo:
-						message.ReplyTo = MailMessageEx.CreateMailAddress(value);
+						message.ReplyToList.Add(CreateMailAddress(value));
 						break;
 					case MailHeaders.Subject:
 						message.Subject = value;

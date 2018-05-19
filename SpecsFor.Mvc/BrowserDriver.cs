@@ -13,31 +13,18 @@ namespace SpecsFor.Mvc
 	{
 		private readonly Func<RemoteWebDriver> _browserFactory;
 
-		public static BrowserDriver InternetExplorer;
-		public static BrowserDriver Firefox;
-		public static BrowserDriver Chrome;
+		public static BrowserDriver InternetExplorer { get; }
+		public static BrowserDriver Firefox { get; }
+		public static BrowserDriver Chrome { get; }
 		private RemoteWebDriver _driver;
 
 		static BrowserDriver()
 		{
-			InternetExplorer = new BrowserDriver(() =>
-				{
-					var options = new InternetExplorerOptions { IntroduceInstabilityByIgnoringProtectedModeSettings = true };
+			InternetExplorer = new BrowserDriver(() => new InternetExplorerDriver(new InternetExplorerOptions { IntroduceInstabilityByIgnoringProtectedModeSettings = true }));
 
-					return new InternetExplorerDriver(options);
-				});
+			Firefox = new BrowserDriver(() => new FirefoxDriver(new FirefoxOptions()));
 
-			Firefox = new BrowserDriver(() =>
-				{
-					var capabilities = new DesiredCapabilities();
-
-					return new FirefoxDriver(capabilities);
-				});
-
-			Chrome = new BrowserDriver(() =>
-				{
-					return new ChromeDriver();
-				});
+			Chrome = new BrowserDriver(() => new ChromeDriver());
 		}
 
 		public BrowserDriver(Func<RemoteWebDriver> browserFactory)

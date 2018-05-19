@@ -294,12 +294,9 @@ namespace SpecsFor.Mvc.Smtp.Mime
             {
                 return new ContentType(contentType);
             }
-            catch (FormatException f)
+            catch (FormatException)
             {
-                return new ContentType(
-                    contentType
-                        .Replace("\"", "")
-                        .Replace(" = ", "="));
+                return new ContentType(contentType.Replace("\"", "").Replace(" = ", "="));
             }
 
 		}
