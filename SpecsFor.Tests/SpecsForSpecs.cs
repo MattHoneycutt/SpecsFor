@@ -5,8 +5,8 @@ using Moq;
 using NUnit.Framework;
 using Should;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using SpecsFor.Tests.TestObjects;
-using StructureMap;
 
 namespace SpecsFor.Tests
 {
@@ -87,28 +87,39 @@ namespace SpecsFor.Tests
 		{
 			private IEnumerable<IWidget> _testWidgets;
 
-			protected override void ConfigureContainer(StructureMap.IContainer container)
-			{
-				base.ConfigureContainer(container);
+		    protected override void ConfigureServiceProvider(IServiceProvider serviceProvider)
+		    {
+		        base.ConfigureServiceProvider(serviceProvider);
+		    }
 
-				container.Inject(typeof (string), "blah");
 
-				var mocks = GetMockForEnumerableOf<IWidget>(10);
+            protected override void ConfigureServices(IServiceCollection services)
+		    {
+		        base.ConfigureServices(services);
+		    }
 
-				var widgets = new IWidget[10];
+            //   protected override void ConfigureContainer(StructureMap.IContainer container)
+            //{
+            //	base.ConfigureContainer(container);
 
-				for (var i = 0; i < mocks.Length; i++)
-				{
-					var widget = mocks[i];
-					widget.Setup(w => w.Name).Returns("Widget " + i);
+            //	container.Inject(typeof (string), "blah");
 
-					widgets[i] = widget.Object;
-				}
+            //	var mocks = GetMockForEnumerableOf<IWidget>(10);
 
-				_testWidgets = widgets;
-			}
+            //	var widgets = new IWidget[10];
 
-			[Test]
+            //	for (var i = 0; i < mocks.Length; i++)
+            //	{
+            //		var widget = mocks[i];
+            //		widget.Setup(w => w.Name).Returns("Widget " + i);
+
+            //		widgets[i] = widget.Object;
+            //	}
+
+            //	_testWidgets = widgets;
+            //}
+
+            [Test]
 			public void then_it_provides_the_enumerable()
 			{
 				SUT.Widgets.Count().ShouldEqual(_testWidgets.Count());

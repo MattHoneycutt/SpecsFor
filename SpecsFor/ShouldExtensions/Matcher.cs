@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using StructureMap.TypeRules;
 
 namespace SpecsFor.ShouldExtensions
 {
@@ -55,8 +54,8 @@ namespace SpecsFor.ShouldExtensions
 		{
 			if (obj is T || obj == null) return true;
 
-			if (typeof (T).IsNullable() && (typeof (T).GetInnerTypeFromNullable()) == obj.GetType())
-				return true;
+			//if (typeof (T).IsNullable() && (typeof (T).GetInnerTypeFromNullable()) == obj.GetType())
+			//	return true;
 
 			return false;
 		}
