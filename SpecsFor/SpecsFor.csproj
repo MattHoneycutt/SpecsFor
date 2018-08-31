@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <PackageId>SpecsFor</PackageId>
-    <Version>6.0.0-alpha02</Version>
+    <PackageId>SpecsFor.Core</PackageId>
+    <Version>7.0.0-alpha1</Version>
     <Authors>Matt Honeycutt</Authors>
     <Company>Heroic Applications</Company>
 
@@ -11,7 +11,7 @@
     <PackageIconUrl>http://specsfor.com/images/specsfor-icon-128x128.png</PackageIconUrl>
     <Description>SpecsFor is another Behavior-Driven Development framework that focuses on ease of use for *developers* by minimizing testing friction.</Description>
     <PackageReleaseNotes>
-      First version that targets .NET Standard!
+      First version with new architecture that allows the choice of IoC.
     </PackageReleaseNotes>
     <Copyright>Copyright 2018</Copyright>
     <PackageTags>TDD;Testing;BDD;Test Driven Development;NET Core;NUnit</PackageTags>
@@ -23,10 +23,9 @@
 
   <ItemGroup>
     <PackageReference Include="ExpectedObjects" Version="2.3.4" />
-    <PackageReference Include="Moq" Version="4.8.2" />
+    <PackageReference Include="Moq" Version="4.9.0" />
     <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="Should-DotNetStandard" Version="1.0.0-beta01" />
-    <PackageReference Include="structuremap" Version="4.6.1" />
 
     <PackageReference Include="JetBrains.Annotations" Version="11.1.0">
       <PrivateAssets>all</PrivateAssets>

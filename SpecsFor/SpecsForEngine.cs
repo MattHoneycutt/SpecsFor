@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SpecsFor.AutoMocking;
 using SpecsFor.Configuration.Model;
 using SpecsFor.Validation;
 
@@ -13,7 +12,7 @@ namespace SpecsFor
 		private readonly ISpecValidator _validator;
 		private readonly List<Exception> _exceptions = new List<Exception>();
 
-		public MoqAutoMocker<T> Mocker { get; private set; }
+        public IAutoMocker Mocker { get; set; }
 
 		public T SUT { get; set; }
 
@@ -40,11 +39,11 @@ namespace SpecsFor
 
 			try
 			{
-				Mocker = new MoqAutoMocker<T>();
-
 				_currentBehaviors.ApplySpecInitTo(_specs);
 
-				_specs.ConfigureContainer(Mocker.Container);
+			    Mocker = _specs.CreateAutoMocker();
+
+			    Mocker.ConfigureContainer(_specs);
 
 				_specs.InitializeClassUnderTest();
 
@@ -68,7 +67,7 @@ namespace SpecsFor
 			}
 			else
 			{
-				SUT = Mocker.ClassUnderTest;
+			   SUT = Mocker.CreateSUT<T>();
 			}
 		}
 
@@ -120,8 +119,7 @@ namespace SpecsFor
 
 		private void TryDisposeSUT()
 		{
-			var sut = SUT as IDisposable;
-			if (sut == null) return;
+		    if (!(SUT is IDisposable sut)) return;
 
 			try
 			{

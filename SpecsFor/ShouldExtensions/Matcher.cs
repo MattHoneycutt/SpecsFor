@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-using StructureMap.TypeRules;
+using System.Reflection;
 
 namespace SpecsFor.ShouldExtensions
 {
@@ -55,15 +55,26 @@ namespace SpecsFor.ShouldExtensions
 		{
 			if (obj is T || obj == null) return true;
 
-			if (typeof (T).IsNullable() && (typeof (T).GetInnerTypeFromNullable()) == obj.GetType())
-				return true;
+            if (IsNullable(typeof(T)) && GetInnerTypeFromNullable(typeof(T)) == obj.GetType())
+                return true;
 
-			return false;
+            return false;
 		}
 
 		public override string ToString()
 		{
 			return _message;
 		}
-	}
+
+        // From https://github.com/structuremap/structuremap/blob/master/src/StructureMap/TypeExtensions.cs
+	    private static bool IsNullable(Type type)
+	    {
+	        return type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+	    }
+
+	    private static Type GetInnerTypeFromNullable(Type nullableType)
+	    {
+	        return nullableType.GetGenericArguments()[0];
+	    }
+    }
 }
