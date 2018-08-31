@@ -26,32 +26,6 @@ namespace SpecsFor
 			_engine = new SpecsForEngine<T>(this, BehaviorStack.Current, new NUnitSpecValidator());
 		}
 
-        //   /// <summary>
-        ///// Gets the mock for the specified type from the underlying container. 
-        ///// </summary>
-        ///// <typeparam name="TMock"></typeparam>
-        ///// <returns></returns>
-        //public Mock<TMock> GetMockFor<TMock>() where TMock : class
-        //{
-        //	return _engine.Mocker.GetMockFor<T, TMock>();
-        //}
-
-        //   /// <summary>
-        ///// Creates an IEnumerable of mock objects of T, and returns the mock objects
-        ///// for configuration.  Calling this method twice with the same 'enumerableSize'
-        ///// will return the same set of mocks. 
-        ///// </summary>
-        ///// <typeparam name="TMock"></typeparam>
-        ///// <param name="enumerableSize"></param>
-        ///// <returns></returns>
-        //public Mock<TMock>[] GetMockForEnumerableOf<TMock>(int enumerableSize) where TMock : class
-        //{
-        //	return _engine.Mocker.GetMockForEnumerableOf<T, TMock>(enumerableSize);	
-        //}
-
-        //[UsedImplicitly]
-        //public MoqAutoMocker<T> Mocker => _engine.Mocker;
-
         /// <summary>
         /// Gets the mock for the specified type from the underlying container. 
         /// </summary>
