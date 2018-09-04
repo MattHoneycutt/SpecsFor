@@ -16,7 +16,7 @@ namespace SpecsFor.Configuration
 			return;
 		}
 
-		[SetUp]
+		[OneTimeSetUp]
 		public virtual void ApplyConfiguration()
 		{
 			BeforeConfigurationApplied();
@@ -34,7 +34,7 @@ namespace SpecsFor.Configuration
 			return;
 		}
 
-		[TearDown]
+		[OneTimeTearDown]
 		public virtual void RemoveConfiguration()
 		{
 			BeforeConfigurationRemoved();

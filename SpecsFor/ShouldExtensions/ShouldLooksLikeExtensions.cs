@@ -135,7 +135,7 @@ namespace SpecsFor.ShouldExtensions
 					if (Matcher.LastMatcher == null ||
 					    !Matcher.LastMatcher.Equals(actualValue))
 					{
-						throw new EqualException(Matcher.LastMatcher.ToString(), actualValue);
+						throw new EqualException(Matcher.LastMatcher?.ToString(), actualValue);
 					}
 				}
 				else

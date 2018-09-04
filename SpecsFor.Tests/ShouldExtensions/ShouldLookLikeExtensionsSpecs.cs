@@ -80,11 +80,11 @@ namespace SpecsFor.Tests.ShouldExtensions
 		[Test]
 		public void then_it_should_fail_when_used_with_a_matcher_that_does_not_match_a_specific_check()
 		{
-			Assert.Throws<EqualException>(() => SUT.ShouldLookLike(() => new TestObject
-			{
-				TestObjectId = Some.ValueOf<Guid>(x => x == Guid.Empty)
-			}))
-			.Message.ShouldContain("Expected: Object matching (x == Guid.Empty)");
+		    var equalException = Assert.Throws<EqualException>(() => SUT.ShouldLookLike(() => new TestObject
+		    {
+		        TestObjectId = Some.ValueOf<Guid>(x => x == Guid.Empty)
+		    }));
+		    equalException.Message.ShouldContain("Expected: Object matching (x == Guid.Empty)");
 		}
 
 		[Test]

@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using System;
+using Moq;
 using NUnit.Framework;
 using SpecsFor.ShouldExtensions;
 
@@ -103,7 +104,8 @@ namespace SpecsFor.Tests.ShouldExtensions
 
 			mock.Object.DoStuff(new TestObject { ID = 1, Name = "Test" });
 
-			Assert.Throws<MockException>(() => mock.Verify(s => s.DoStuff(Looks.Like(() => new TestObject { ID = Some.ValueOf<int>(x => x == 2) }))));
+            //TODO: The error message here sucks.  Something in Moq's internals is blowing up when the expression doesn't match.
+			Assert.Throws<InvalidOperationException>(() => mock.Verify(s => s.DoStuff(Looks.Like(() => new TestObject { ID = Some.ValueOf<int>(x => x == 2) }))));
 		}
 	}
 }

@@ -38,7 +38,20 @@ namespace SpecsFor.ShouldExtensions
 			return matcher((T)obj);
 		}
 
-		private static bool ObjectIsCompatibleWithType(object obj)
+	    protected bool Equals(Matcher<T> other)
+	    {
+	        return Equals(_matcher, other._matcher) && string.Equals(_message, other._message);
+	    }
+
+	    public override int GetHashCode()
+	    {
+	        unchecked
+	        {
+	            return ((_matcher != null ? _matcher.GetHashCode() : 0) * 397) ^ (_message != null ? _message.GetHashCode() : 0);
+	        }
+	    }
+
+	    private static bool ObjectIsCompatibleWithType(object obj)
 		{
 			if (obj is T || obj == null) return true;
 

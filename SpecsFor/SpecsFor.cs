@@ -1,10 +1,14 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 using Moq;
 using NUnit.Framework;
 using SpecsFor.AutoMocking;
 using SpecsFor.Configuration.Model;
 using SpecsFor.Validation;
 using StructureMap;
+
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 
 namespace SpecsFor
 {
@@ -51,7 +55,7 @@ namespace SpecsFor
 	    [UsedImplicitly]
         public MoqAutoMocker<T> Mocker => _engine.Mocker;
 
-	    [TestFixtureSetUp]
+	    [OneTimeSetUpAttribute]
 	    public virtual void SetupEachSpec()
 	    {
 	        _engine.Init();
@@ -112,13 +116,8 @@ namespace SpecsFor
 		{
 		}
 
-        /// <summary>
-        /// Runs when the entire suite of specs is complete.  If you override this,
-        /// be sure to call the base implementation, otherwise your specs will not 
-        /// be cleaned up correctly!
-        /// </summary>
-		[TestFixtureTearDown]
-		public virtual void TearDown()
+        [OneTimeTearDownAttribute, Obsolete("This method will no longer be exposed for overriding.  Override AfterSpec instead.")]
+        public virtual void TearDown()
 		{
 			_engine.TearDown();
 		}
