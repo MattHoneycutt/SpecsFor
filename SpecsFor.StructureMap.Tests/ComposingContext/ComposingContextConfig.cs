@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SpecsFor.Core.Configuration;
 using SpecsFor.StructureMap.Tests.ComposingContext.TestDomain;
 
 namespace SpecsFor.StructureMap.Tests.ComposingContext

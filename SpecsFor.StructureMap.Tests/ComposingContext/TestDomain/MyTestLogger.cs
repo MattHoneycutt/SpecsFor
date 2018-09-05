@@ -1,5 +1,7 @@
 using System;
 using System.Diagnostics;
+using SpecsFor.Core;
+using SpecsFor.Core.Configuration;
 
 namespace SpecsFor.StructureMap.Tests.ComposingContext.TestDomain
 {

@@ -7,6 +7,7 @@ using Moq;
 using NUnit.Framework;
 using Should;
 using SpecsFor.Autofac.Tests.TestObjects;
+using SpecsFor.Core;
 
 namespace SpecsFor.Autofac.Tests
 {

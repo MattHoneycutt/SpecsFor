@@ -1,3 +1,5 @@
+using SpecsFor.Core.Configuration;
+
 namespace SpecsFor.Autofac.Tests.ComposingContext.TestDomain
 {
 	public class ProvideMagicByConcreteType : Behavior<SpecsFor<Widget>>

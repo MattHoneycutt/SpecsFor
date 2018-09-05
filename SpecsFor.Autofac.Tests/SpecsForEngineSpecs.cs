@@ -2,6 +2,9 @@
 using Moq;
 using NUnit.Framework;
 using Should;
+using SpecsFor.Core;
+using SpecsFor.Core.Configuration.Model;
+using SpecsFor.Core.Validation;
 
 namespace SpecsFor.Autofac.Tests
 {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
 using Should.Core.Exceptions;
+using SpecsFor.Core.ShouldExtensions;
 
 namespace SpecsFor.Autofac.Tests.ShouldExtensions
 {

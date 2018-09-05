@@ -3,6 +3,7 @@ using System.IO;
 using Moq;
 using NUnit.Framework;
 using Should;
+using SpecsFor.Core;
 using SpecsFor.StructureMap.Tests.TestObjects;
 using StructureMap;
 

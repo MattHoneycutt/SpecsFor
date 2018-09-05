@@ -1,3 +1,5 @@
+using SpecsFor.Core.Configuration;
+
 namespace SpecsFor.StructureMap.Tests.ComposingContext.TestDomain
 {
 	public class ProvideMagicByConcreteType : Behavior<SpecsFor<Widget>>

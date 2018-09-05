@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using SpecsFor.Autofac.Tests.ComposingContext.TestDomain;
+using SpecsFor.Core.Configuration;
 
 namespace SpecsFor.Autofac.Tests.ComposingContext.StackingContext
 {

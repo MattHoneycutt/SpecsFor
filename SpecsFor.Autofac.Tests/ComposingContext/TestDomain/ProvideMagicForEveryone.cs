@@ -1,3 +1,6 @@
+using SpecsFor.Core;
+using SpecsFor.Core.Configuration;
+
 namespace SpecsFor.Autofac.Tests.ComposingContext.TestDomain
 {
 	public class ProvideMagicForEveryone : Behavior<ISpecs>
