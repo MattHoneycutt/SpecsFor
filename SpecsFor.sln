@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1657B4
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecsFor", "SpecsFor\SpecsFor.csproj", "{E8E10A08-A2D1-4AB8-93DF-58B90DDC1B2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecsFor.Core", "SpecsFor.Core\SpecsFor.Core.csproj", "{E8E10A08-A2D1-4AB8-93DF-58B90DDC1B2A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecsFor.StructureMap.Tests", "SpecsFor.StructureMap.Tests\SpecsFor.StructureMap.Tests.csproj", "{FFD13A5E-3979-4A60-B05F-65C2C54B833D}"
 EndProject

@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SpecsFor.StructureMap\SpecsFor.StructureMap.csproj" />
-    <ProjectReference Include="..\SpecsFor\SpecsFor.csproj" />
+    <ProjectReference Include="..\SpecsFor.Core\SpecsFor.Core.csproj" />
   </ItemGroup>
 
 </Project>

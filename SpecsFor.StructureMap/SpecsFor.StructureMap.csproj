@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SpecsFor\SpecsFor.csproj" />
+    <ProjectReference Include="..\SpecsFor.Core\SpecsFor.Core.csproj" />
   </ItemGroup>
 
 </Project>
