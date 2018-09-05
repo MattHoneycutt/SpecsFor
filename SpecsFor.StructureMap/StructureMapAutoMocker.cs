@@ -24,7 +24,7 @@ namespace SpecsFor.StructureMap
 
         public void ConfigureContainer<T>(ISpecs<T> specsFor) where T : class
         {
-            var specs = specsFor as SpecsFor<TSut>;
+            var specs = (SpecsFor<TSut>) specsFor;
 
             specs.ConfigureContainer(_internalAutoMocker.Container);
         }

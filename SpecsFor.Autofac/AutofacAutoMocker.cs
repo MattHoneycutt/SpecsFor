@@ -20,7 +20,7 @@ namespace SpecsFor.Autofac
 
         public void ConfigureContainer<TSut>(ISpecs<TSut> specsFor) where TSut : class
         {
-            var specs = specsFor as SpecsFor<TSut>;
+            var specs = (SpecsFor<TSut>) specsFor;
 
             _mocker = specs.CreateMocker();
 
