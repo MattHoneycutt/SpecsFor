@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SpecsFor.ShouldExtensions
+namespace SpecsFor.Core.ShouldExtensions
 {
 	public static class Any
 	{

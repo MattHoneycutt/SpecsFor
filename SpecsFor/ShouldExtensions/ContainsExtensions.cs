@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using NUnit.Framework;
 
-namespace SpecsFor.ShouldExtensions
+namespace SpecsFor.Core.ShouldExtensions
 {
 	public static class ContainsExtensions
 	{

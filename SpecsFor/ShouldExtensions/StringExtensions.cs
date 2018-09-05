@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using NUnit.Framework;
 
-namespace SpecsFor.ShouldExtensions
+namespace SpecsFor.Core.ShouldExtensions
 {
 	public static class StringExtensions
 	{

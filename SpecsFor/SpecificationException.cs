@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace SpecsFor
+namespace SpecsFor.Core
 {
 	public class SpecificationException : ApplicationException
 	{

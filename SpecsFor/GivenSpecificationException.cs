@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SpecsFor
+namespace SpecsFor.Core
 {
 	public class GivenSpecificationException : SpecificationException
 	{

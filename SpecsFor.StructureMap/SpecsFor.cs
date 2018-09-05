@@ -1,4 +1,5 @@
-﻿using StructureMap;
+﻿using SpecsFor.Core;
+using StructureMap;
 
 namespace SpecsFor.StructureMap
 {

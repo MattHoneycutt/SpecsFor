@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
 using Should.Core.Exceptions;
-using SpecsFor.ShouldExtensions;
 
 namespace SpecsFor.StructureMap.Tests.ShouldExtensions
 {

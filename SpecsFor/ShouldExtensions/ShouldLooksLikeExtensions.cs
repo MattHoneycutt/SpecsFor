@@ -7,7 +7,7 @@ using NUnit.Framework;
 using Should;
 using Should.Core.Exceptions;
 
-namespace SpecsFor.ShouldExtensions
+namespace SpecsFor.Core.ShouldExtensions
 {
 	public static class ShouldLooksLikeExtensions
 	{

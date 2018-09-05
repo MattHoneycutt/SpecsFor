@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using SpecsFor.ShouldExtensions;
 
 namespace SpecsFor.Autofac.Tests.ShouldExtensions
 {

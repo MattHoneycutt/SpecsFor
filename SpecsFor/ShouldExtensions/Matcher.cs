@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace SpecsFor.ShouldExtensions
+namespace SpecsFor.Core.ShouldExtensions
 {
 	public class Matcher
 	{

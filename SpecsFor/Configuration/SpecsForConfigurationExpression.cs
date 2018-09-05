@@ -1,6 +1,6 @@
 using System;
 
-namespace SpecsFor.Configuration
+namespace SpecsFor.Core.Configuration
 {
 	public class SpecsForConfigurationExpression<TSpec> : ISpecsForConfigurationExpression<TSpec> where TSpec : class
 	{

@@ -1,6 +1,6 @@
 using System;
 
-namespace SpecsFor.Configuration.Model
+namespace SpecsFor.Core.Configuration.Model
 {
 	internal class ConditionalBehavior<TSpec> : IConditionalBehavior where TSpec : class
 	{

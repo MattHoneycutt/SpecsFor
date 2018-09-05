@@ -3,7 +3,7 @@
 [assembly: InternalsVisibleTo("SpecsFor.Tests")]
 [assembly: InternalsVisibleTo("SpecsFor.Autofac.Tests")]
 [assembly: InternalsVisibleTo("SpecsFor.StructureMap.Tests")]
-namespace SpecsFor.Validation
+namespace SpecsFor.Core.Validation
 {
 	internal interface ISpecValidator
 	{

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SpecsFor.Configuration.Model
+namespace SpecsFor.Core.Configuration.Model
 {
 	internal class BehaviorStack : IBehaviorStack
 	{

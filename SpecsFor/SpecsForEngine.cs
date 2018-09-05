@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using SpecsFor.Configuration.Model;
-using SpecsFor.Validation;
+using SpecsFor.Core.Configuration.Model;
+using SpecsFor.Core.Validation;
 
-namespace SpecsFor
+namespace SpecsFor.Core
 {
 	internal class SpecsForEngine<T> where T : class
 	{

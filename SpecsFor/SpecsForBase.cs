@@ -3,12 +3,12 @@ using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using Moq;
 using NUnit.Framework;
-using SpecsFor.Configuration.Model;
-using SpecsFor.Validation;
+using SpecsFor.Core.Configuration.Model;
+using SpecsFor.Core.Validation;
 
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 
-namespace SpecsFor
+namespace SpecsFor.Core
 {
 	[TestFixture]
 	public abstract class SpecsForBase<T> : ISpecs<T> where T : class

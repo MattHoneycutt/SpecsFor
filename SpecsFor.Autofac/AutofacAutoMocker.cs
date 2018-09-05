@@ -1,5 +1,6 @@
 ﻿using Moq;
 using Autofac.Extras.Moq;
+using SpecsFor.Core;
 
 namespace SpecsFor.Autofac
 {

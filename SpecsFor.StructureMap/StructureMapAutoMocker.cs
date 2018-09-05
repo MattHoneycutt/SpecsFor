@@ -1,4 +1,5 @@
 ﻿using Moq;
+using SpecsFor.Core;
 
 namespace SpecsFor.StructureMap
 {

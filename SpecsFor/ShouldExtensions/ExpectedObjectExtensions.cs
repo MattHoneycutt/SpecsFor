@@ -1,6 +1,6 @@
 ﻿using ExpectedObjects;
 
-namespace SpecsFor.ShouldExtensions
+namespace SpecsFor.Core.ShouldExtensions
 {
 	public static class ExpectedObjectExtensions
 	{

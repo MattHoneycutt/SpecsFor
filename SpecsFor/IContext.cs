@@ -1,4 +1,4 @@
-﻿namespace SpecsFor
+﻿namespace SpecsFor.Core
 {
 	public interface IContext
 	{

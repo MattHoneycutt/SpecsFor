@@ -1,5 +1,3 @@
-using SpecsFor.Configuration;
-
 namespace SpecsFor.Autofac.Tests.ComposingContext.TestDomain
 {
 	public class ProvideMagicByTypeName : Behavior<ISpecs>

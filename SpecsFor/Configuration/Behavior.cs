@@ -1,4 +1,4 @@
-namespace SpecsFor.Configuration
+namespace SpecsFor.Core.Configuration
 {
 	public abstract class Behavior<T> where T : class
 	{

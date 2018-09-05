@@ -3,7 +3,7 @@ using System.Linq;
 using Moq.Language;
 using Moq.Language.Flow;
 
-namespace SpecsFor
+namespace SpecsFor.Core
 {
 	public static class MoqExtensions
 	{

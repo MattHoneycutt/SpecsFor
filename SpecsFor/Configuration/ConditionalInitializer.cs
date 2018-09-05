@@ -1,6 +1,6 @@
 using System;
 
-namespace SpecsFor.Configuration
+namespace SpecsFor.Core.Configuration
 {
 	internal class ConditionalInitializer
 	{

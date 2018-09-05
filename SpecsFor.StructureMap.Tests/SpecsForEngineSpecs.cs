@@ -2,8 +2,6 @@
 using Moq;
 using NUnit.Framework;
 using Should;
-using SpecsFor.Configuration.Model;
-using SpecsFor.Validation;
 using StructureMap;
 
 namespace SpecsFor.StructureMap.Tests

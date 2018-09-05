@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using SpecsFor.Configuration.Model;
+using SpecsFor.Core.Configuration.Model;
 
-namespace SpecsFor.Configuration
+namespace SpecsFor.Core.Configuration
 {
 	public abstract class SpecsForConfiguration
 	{

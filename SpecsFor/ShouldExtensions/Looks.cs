@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using ExpectedObjects;
 using Moq;
 
-namespace SpecsFor.ShouldExtensions
+namespace SpecsFor.Core.ShouldExtensions
 {
 	public static class Looks
 	{

@@ -3,9 +3,9 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
-using SpecsFor.Configuration;
+using SpecsFor.Core.Configuration;
 
-namespace SpecsFor.Validation
+namespace SpecsFor.Core.Validation
 {
 	public class NUnitSpecValidator : ISpecValidator
 	{

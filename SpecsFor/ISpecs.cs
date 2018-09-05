@@ -1,6 +1,6 @@
 ﻿using Moq;
 
-namespace SpecsFor
+namespace SpecsFor.Core
 {
 	public interface ISpecs
 	{

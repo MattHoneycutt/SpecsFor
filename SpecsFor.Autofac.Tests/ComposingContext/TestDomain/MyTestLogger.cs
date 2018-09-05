@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using SpecsFor.Configuration;
 
 namespace SpecsFor.Autofac.Tests.ComposingContext.TestDomain
 {
