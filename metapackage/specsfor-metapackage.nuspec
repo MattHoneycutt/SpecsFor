@@ -3,8 +3,7 @@
     <id>SpecsFor</id>
     <version>7.0.0-beta1</version>
     <authors>Matt Honeycutt</authors>
-	<company>Heroic Applications</company>
-    <owners>>Matt Honeycutt</owners>
+    <owners>Matt Honeycutt</owners>
     <licenseUrl>https://github.com/MattHoneycutt/SpecsFor/blob/master/LICENSE.md</licenseUrl>
     <projectUrl>http://specsfor.com/</projectUrl>
     <iconUrl>http://specsfor.com/images/specsfor-icon-128x128.png</iconUrl>

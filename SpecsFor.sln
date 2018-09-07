@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Misc", "_Misc", "{F5C189C8
 	ProjectSection(SolutionItems) = preProject
 		LICENSE.md = LICENSE.md
 		README.md = README.md
-		specsfor.nuspec = specsfor.nuspec
+		metapackage\specsfor-metapackage.nuspec = metapackage\specsfor-metapackage.nuspec
 	EndProjectSection
 EndProject
 Global
