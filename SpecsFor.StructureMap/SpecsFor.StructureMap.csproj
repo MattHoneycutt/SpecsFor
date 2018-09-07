@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <PackageId>SpecsFor.StructureMap</PackageId>
-    <Version>7.0.0-alpha1</Version>
+    <Version>7.0.0-beta1</Version>
     <Authors>Matt Honeycutt</Authors>
     <Company>Heroic Applications</Company>
 

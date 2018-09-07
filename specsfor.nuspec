@@ -1,0 +1,21 @@
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>SpecsFor</id>
+    <version>7.0.0-beta1</version>
+    <authors>Matt Honeycutt</authors>
+	<company>Heroic Applications</company>
+    <owners>>Matt Honeycutt</owners>
+    <licenseUrl>https://github.com/MattHoneycutt/SpecsFor/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>http://specsfor.com/</projectUrl>
+    <iconUrl>http://specsfor.com/images/specsfor-icon-128x128.png</iconUrl>
+    <description>
+		SpecsFor is another Behavior-Driven Development framework that focuses on ease of use for *developers* by minimizing testing friction.
+		This is package simply forwards to SpecsFor.StructureMap for backwards compatibility. 
+	</description>
+    <copyright>Copyright 2018</copyright>
+    <tags>TDD;Testing;BDD;Test Driven Development;NET Core;NUnit</tags>
+    <dependencies>
+	   <dependency id="SpecsFor.StructureMap" version="7.0.0-beta1" />
+    </dependencies>
+  </metadata>
+</package>
