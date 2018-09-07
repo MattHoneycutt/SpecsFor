@@ -67,17 +67,15 @@ namespace SpecsFor.Autofac.Tests.ComposingContext
 				CalledBySpecInit.ShouldContain(typeof(ProvideMagicForEveryone).Name);
 			}
 
-			public override void TearDown()
-			{
-				base.TearDown();
-
-				//At this point, all the AfterSpec contexts should be applied.
-				CalledByAfterTest.ShouldContain(typeof(ProvideMagicByInterface).Name);
-				CalledByAfterTest.ShouldContain(typeof(ProvideMagicByConcreteType).Name);
-				CalledByAfterTest.ShouldContain(typeof(ProvideMagicByTypeName).Name);
-				CalledByAfterTest.ShouldContain(typeof(ProvideMagicForEveryone).Name);
-				CalledByAfterTest.ShouldNotContain(typeof(DoNotProvideMagic).Name);
-			}
+		    protected override void AfterSpec()
+		    {
+		        //At this point, all the AfterSpec contexts should be applied.
+		        CalledByAfterTest.ShouldContain(typeof(ProvideMagicByInterface).Name);
+		        CalledByAfterTest.ShouldContain(typeof(ProvideMagicByConcreteType).Name);
+		        CalledByAfterTest.ShouldContain(typeof(ProvideMagicByTypeName).Name);
+		        CalledByAfterTest.ShouldContain(typeof(ProvideMagicForEveryone).Name);
+		        CalledByAfterTest.ShouldNotContain(typeof(DoNotProvideMagic).Name);
+		    }
 		}
 	}
 }

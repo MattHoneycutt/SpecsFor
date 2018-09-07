@@ -97,8 +97,8 @@ namespace SpecsFor.Core
 		{
 		}
 
-        [OneTimeTearDown, Obsolete("This method will no longer be exposed for overriding.  Override AfterSpec instead.")]
-        public virtual void TearDown()
+        [OneTimeTearDown]
+        public void TearDown()
 		{
 			_engine.TearDown();
 		}
