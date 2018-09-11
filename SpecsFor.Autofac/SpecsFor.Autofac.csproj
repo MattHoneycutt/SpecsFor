@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>SpecsFor.Autofac</PackageId>
-    <Version>7.0.0-beta1</Version>
+    <Version>7.0.0-beta2</Version>
     <Authors>Matt Honeycutt</Authors>
     <Company>Heroic Applications</Company>
 
@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0;net45</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
