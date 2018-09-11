@@ -15,6 +15,7 @@
     </PackageReleaseNotes>
     <Copyright>Copyright 2018</Copyright>
     <PackageTags>TDD;Testing;BDD;Test Driven Development;NET Core;NUnit</PackageTags>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup>
