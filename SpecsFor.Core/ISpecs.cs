@@ -8,6 +8,8 @@ namespace SpecsFor.Core
 
 	    IAutoMocker CreateAutoMocker();
 
+	    IAutoMocker Mocker { get; }
+
         void InitializeClassUnderTest();
 
 		void Given();
