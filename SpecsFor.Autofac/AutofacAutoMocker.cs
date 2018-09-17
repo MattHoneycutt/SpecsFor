@@ -6,25 +6,25 @@ namespace SpecsFor.Autofac
 {
     public class AutofacAutoMocker : IAutoMocker
     {
-        private AutoMock _mocker;
+        public AutoMock Mocker { get; private set; }
 
         public TSut CreateSUT<TSut>() where TSut : class
         {
-            return _mocker.Create<TSut>();
+            return Mocker.Create<TSut>();
         }
 
         public Mock<T> GetMockFor<T>() where T : class
         {
-            return _mocker.Mock<T>();
+            return Mocker.Mock<T>();
         }
 
         public void ConfigureContainer<TSut>(ISpecs<TSut> specsFor) where TSut : class
         {
             var specs = (SpecsFor<TSut>) specsFor;
 
-            _mocker = specs.CreateMocker();
+            Mocker = specs.CreateMocker();
 
-            specs.ConfigureMocker(_mocker);
+            specs.ConfigureMocker(Mocker);
         }
     }
 }

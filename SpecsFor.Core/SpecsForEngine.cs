@@ -39,9 +39,9 @@ namespace SpecsFor.Core
 
 			try
 			{
-				_currentBehaviors.ApplySpecInitTo(_specs);
-
 			    Mocker = _specs.CreateAutoMocker();
+				
+				_currentBehaviors.ApplySpecInitTo(_specs);
 
 			    Mocker.ConfigureContainer(_specs);
 
