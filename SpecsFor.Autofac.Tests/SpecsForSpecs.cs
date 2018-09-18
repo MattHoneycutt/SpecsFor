@@ -157,7 +157,7 @@ namespace SpecsFor.Autofac.Tests
             private int _result;
             private readonly MockRepository _repo = new MockRepository(MockBehavior.Loose);
 
-            public override AutoMock CreateMocker()
+            public override AutoMock CreateInternalMocker()
             {
                 return AutoMock.GetFromRepository(_repo);
             }

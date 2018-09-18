@@ -8,6 +8,6 @@ namespace SpecsFor.Core
 
         Mock<T> GetMockFor<T>() where T : class;
 
-        void ConfigureContainer<TSut>(ISpecs<TSut> specsFor) where TSut : class;
+        void ConfigureContainer();
     }
 }

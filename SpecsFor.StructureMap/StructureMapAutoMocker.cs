@@ -7,8 +7,12 @@ namespace SpecsFor.StructureMap
     {
         public MoqAutoMocker<TSut> MoqAutoMocker { get; }
 
-        public StructureMapAutoMocker()
+        private readonly SpecsFor<TSut> _specsFor;
+
+        public StructureMapAutoMocker(ISpecs<TSut> specsFor)
         {
+            _specsFor = (SpecsFor<TSut>)specsFor;
+
             MoqAutoMocker = new MoqAutoMocker<TSut>();
         }
 
@@ -22,11 +26,9 @@ namespace SpecsFor.StructureMap
             return Mock.Get(MoqAutoMocker.Get<T>());
         }
 
-        public void ConfigureContainer<T>(ISpecs<T> specsFor) where T : class
+        public void ConfigureContainer()
         {
-            var specs = (SpecsFor<TSut>) specsFor;
-
-            specs.ConfigureContainer(MoqAutoMocker.Container);
+            _specsFor.ConfigureContainer(MoqAutoMocker.Container);
         }
     }
 }
