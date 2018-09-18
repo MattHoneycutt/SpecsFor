@@ -22,7 +22,7 @@ namespace SpecsFor.Autofac
         /// AutoMock.GetFromRepository(myRepository);
         /// </summary>
         /// <returns></returns>
-        public virtual AutoMock CreateMocker()
+        public virtual AutoMock CreateInternalMocker()
         {
             return AutoMock.GetLoose();
         }
@@ -34,7 +34,7 @@ namespace SpecsFor.Autofac
         /// <returns></returns>
         protected override IAutoMocker CreateAutoMocker()
         {
-            return new AutofacAutoMocker();
+            return new AutofacAutoMocker<T>(this);
         }
     }
 }

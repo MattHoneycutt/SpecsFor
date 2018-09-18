@@ -11,7 +11,7 @@ namespace SpecsFor.StructureMap
 
         protected override IAutoMocker CreateAutoMocker()
         {
-            return new StructureMapAutoMocker<T>();
+            return new StructureMapAutoMocker<T>(this);
         }
     }
 }

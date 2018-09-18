@@ -4,27 +4,32 @@ using SpecsFor.Core;
 
 namespace SpecsFor.Autofac
 {
-    public class AutofacAutoMocker : IAutoMocker
+    public class AutofacAutoMocker<TSut> : IAutoMocker where TSut : class
     {
-        public AutoMock Mocker { get; private set; }
+        public AutoMock InternalMocker { get; private set; }
+
+        private readonly SpecsFor<TSut> _specsFor;
+
+        public AutofacAutoMocker(ISpecs<TSut> specsFor)
+        {
+            _specsFor = (SpecsFor<TSut>)specsFor;
+
+            InternalMocker = _specsFor.CreateInternalMocker();
+        }
 
         public TSut CreateSUT<TSut>() where TSut : class
         {
-            return Mocker.Create<TSut>();
+            return InternalMocker.Create<TSut>();
         }
 
         public Mock<T> GetMockFor<T>() where T : class
         {
-            return Mocker.Mock<T>();
+            return InternalMocker.Mock<T>();
         }
 
-        public void ConfigureContainer<TSut>(ISpecs<TSut> specsFor) where TSut : class
+        public void ConfigureContainer()
         {
-            var specs = (SpecsFor<TSut>) specsFor;
-
-            Mocker = specs.CreateMocker();
-
-            specs.ConfigureMocker(Mocker);
+            _specsFor.ConfigureMocker(InternalMocker);
         }
     }
 }
