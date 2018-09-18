@@ -43,7 +43,7 @@ namespace SpecsFor.Core
 				
 				_currentBehaviors.ApplySpecInitTo(_specs);
 
-			    Mocker.ConfigureContainer(_specs);
+			    Mocker.ConfigureContainer();
 
 				_specs.InitializeClassUnderTest();
 
