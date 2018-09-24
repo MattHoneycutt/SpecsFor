@@ -1,7 +1,7 @@
-#Project Description
+# Project Description
 SpecsFor is another Behavior-Driven Development framework that focuses on ease of use for *developers* by minimizing testing friction.
 
-#Main Features
+# Main Features
 
 SpecsFor is a Behavior-Driven Development style framework that puts developer productivity ahead of all other goals.  The current release features:
 
@@ -13,7 +13,7 @@ Run The Same Specs Multiple Times With Different Contexts - SpecsFor allows you 
 * Declarative Context - Context can be established in many ways, including by simply marking your spec class with a special attribute.
 * Works With Any NUnit Test Runner - No add-ins are needed, SpecsFor is fully compatible with all popular test runners including TestDriven.NET, Resharper, and TeamCity. 
 
-#Examples
+# Examples
 
 ```csharp
 [Given(typeof(TheCarIsNotRunning), typeof(TheCarIsParked))]
@@ -58,7 +58,7 @@ public class when_the_key_is_turned_alternate_style : SpecsFor<Car>
 }
 ```
 
-#SpecsFor In Action
+# SpecsFor In Action
 
 Check out the docs at http://specsfor.readme.io
 
