@@ -106,13 +106,7 @@ namespace SpecsFor.Core.ShouldExtensions
 					throw new InvalidOperationException($"Unable to find property '{memberBinding.Member.Name}' on actual object of type {actualType.FullName}");
 				}
 				var actualValue = actualProperty.GetValue(actual, null);
-
-				var expectedProperty = expectedType.GetProperty(memberBinding.Member.Name);
-				if (expectedProperty == null)
-				{
-					throw new InvalidOperationException($"Unable to find property '{memberBinding.Member.Name}' on expected object of type {expectedType.FullName}");
-				}
-				var expectedValue = expectedProperty.GetValue(expected, null);
+				var expectedValue = expectedType.GetProperty(memberBinding.Member.Name).GetValue(expected, null);
 
 				var bindingAsAnotherExpression = memberBinding as MemberAssignment;
 
