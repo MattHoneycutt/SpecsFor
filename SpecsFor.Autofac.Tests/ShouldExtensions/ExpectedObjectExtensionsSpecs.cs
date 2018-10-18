@@ -48,5 +48,11 @@ namespace SpecsFor.Autofac.Tests.ShouldExtensions
 		{
 			Assert.Throws<ExpectedObjects.ComparisonException>(() => SUT.ShouldLookLikePartial(new { ID = 5, Name = "blah" }));
 		}
+
+		[Test]
+		public void then_partial_matching_with_a_nonexistant_property_throws_exception()
+		{
+			Assert.Throws<ExpectedObjects.ComparisonException>(() => SUT.ShouldLookLikePartial(new { NotAProperty = 5 }));
+		}
 	}
 }
