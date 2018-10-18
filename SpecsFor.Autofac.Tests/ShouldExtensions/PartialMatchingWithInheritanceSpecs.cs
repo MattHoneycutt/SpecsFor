@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
+using Should;
 using Should.Core.Exceptions;
 using SpecsFor.Core.ShouldExtensions;
 
@@ -91,12 +93,13 @@ namespace SpecsFor.Autofac.Tests.ShouldExtensions
 		}
 
 		[Test]
-		public void then_it_should_throw_when_property_to_check_does_not_exist_on_object()
+		public void then_it_should_throw_when_property_to_check_does_not_exist_on_actual_object()
 		{
-			Assert.Throws<AssertionException>(() => SUT.ShouldLookLike(() => new ChildTestObject
+			var exception = Assert.Throws<InvalidOperationException>(() => SUT.ShouldLookLike(() => new ChildTestObject
 			{
 				ChildOnly = 12
 			}));
+			exception.Message.ShouldContain("Unable to find property 'ChildOnly' on actual object");
 		}
 	}
 }
