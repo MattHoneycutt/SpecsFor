@@ -95,12 +95,24 @@ namespace SpecsFor.Core.ShouldExtensions
 		private static void ShouldMatch(object actual, MemberInitExpression expression)
 		{
 			var expected = Expression.Lambda<Func<object>>(expression).Compile()();
-			var type = actual.GetType();
+			var expectedType = expected.GetType();
+			var actualType = actual.GetType();
 
 			foreach (var memberBinding in expression.Bindings)
 			{
-				var actualValue = type.GetProperty(memberBinding.Member.Name).GetValue(actual, null);
-				var expectedValue = type.GetProperty(memberBinding.Member.Name).GetValue(expected, null);
+				var actualProperty = actualType.GetProperty(memberBinding.Member.Name);
+				if (actualProperty == null)
+				{
+					Assert.Fail($"Unable to find property '{memberBinding.Member.Name}' on actual object of type {actualType.FullName}");
+				}
+				var actualValue = actualProperty.GetValue(actual, null);
+
+				var expectedProperty = expectedType.GetProperty(memberBinding.Member.Name);
+				if (expectedProperty == null)
+				{
+					Assert.Fail($"Unable to find property '{memberBinding.Member.Name}' on expected object of type {expectedType.FullName}");
+				}
+				var expectedValue = expectedProperty.GetValue(expected, null);
 
 				var bindingAsAnotherExpression = memberBinding as MemberAssignment;
 
