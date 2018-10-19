@@ -65,6 +65,7 @@ namespace SpecsFor.Core.ShouldExtensions
 				return;
 			}
 
+			array.Length.ShouldEqual(arrayExpression.Expressions.Count, "Actual collection size differs from expected");
 			for (int i = 0; i < arrayExpression.Expressions.Count; i++)
 			{
 				ShouldMatch(array[i], arrayExpression.Expressions[i] as MemberInitExpression);
@@ -86,6 +87,7 @@ namespace SpecsFor.Core.ShouldExtensions
 				return;
 			}
 
+			array.Length.ShouldEqual(arrayExpression.Initializers.Count, "Actual collection size differs from expected");
 			for (int i = 0; i < arrayExpression.Initializers.Count; i++)
 			{
 				ShouldMatch(array[i], arrayExpression.Initializers[i].Arguments[0] as MemberInitExpression);
