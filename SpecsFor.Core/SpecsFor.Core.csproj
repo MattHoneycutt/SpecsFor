@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>SpecsFor.Core</PackageId>
-    <Version>7.0.0-rc2</Version>
+    <Version>7.0.0</Version>
     <Authors>Matt Honeycutt</Authors>
     <Company>Heroic Applications</Company>
 
