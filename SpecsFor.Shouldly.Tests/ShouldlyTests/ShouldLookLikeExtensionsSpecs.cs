@@ -453,6 +453,81 @@ namespace SpecsFor.Shouldly.Tests.ShouldlyTests
 			}));
 		}
 
+        [Test]	
+        public void then_it_fails_if_actual_nested_collection_is_empty()	
+        {	
+            SUT.NestedArray = new TestObject[0];	
+            Assert.Throws<ShouldAssertException>(() =>	
+            {	
+                SUT.ShouldLookLike(() => new TestObject	
+                {	
+                    NestedArray = new[] {new TestObject {  Awesomeness = 10 } }	
+                });	
+            });	
+        }	
+
+        [Test]	
+        public void then_it_fails_if_actual_nested_collection_contains_more_than_expected_element()	
+        {	
+            SUT.NestedArray = new[]	
+            {	
+                new TestObject {Awesomeness = 10},	
+                new TestObject {Awesomeness = 11}	
+            };	
+            Assert.Throws<ShouldAssertException>(() =>	
+            {	
+                SUT.ShouldLookLike(() => new TestObject	
+                {	
+                    NestedArray = new[]	
+                    {	
+                        new TestObject {Awesomeness = 10},	
+                    }	
+                });	
+            });	
+        }	
+
+        [Test]	
+        public void then_it_fails_if_actual_array_is_empty()	
+        {	
+            var actual = new TestObject[0];	
+            Assert.Throws<ShouldAssertException>(() =>	
+            {	
+                actual.ShouldLookLike(() => new[] {new TestObject {Awesomeness = 10}});	
+            });	
+        }	
+
+        [Test]	
+        public void then_it_fails_if_actual_array_contains_more_than_expected_element()	
+        {	
+            var actual = new[]	
+            {	
+                new TestObject { Awesomeness = 10 },	
+                new TestObject { Awesomeness = 11 }	
+            };	
+            Assert.Throws<ShouldAssertException>(() =>	
+            {	
+                actual.ShouldLookLike(() => new[] {new TestObject {Awesomeness = 10}});	
+            });	
+        }	
+
+        [Test]	
+        public void then_it_passes_if_arrays_are_identical()	
+        {	
+            var actual = new[]	
+            {	
+                new TestObject { Awesomeness = 10 },	
+                new TestObject { Awesomeness = 11 }	
+            };	
+            Assert.DoesNotThrow(() =>	
+            {	
+                actual.ShouldLookLike(() => new[]	
+                {	
+                    new TestObject { Awesomeness = 10 },	
+                    new TestObject { Awesomeness = 11 }	
+                });	
+            });	
+        }
+
 		[Test]
 		public void then_it_throws_a_good_error_if_you_pass_in_anything_but_a_member_init_expression()
 		{
