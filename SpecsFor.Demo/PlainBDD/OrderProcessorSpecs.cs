@@ -1,4 +1,4 @@
-﻿using Moq;
+using Moq;
 using NUnit.Framework;
 using Should;
 using SpecsFor.Demo.Domain;
@@ -7,7 +7,8 @@ namespace SpecsFor.Demo.PlainBDD
 {
 	public class OrderProcessorSpecs
 	{
-		public class given_the_item_is_available_when_processing_an_order : SpecsFor<OrderProcessor>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "BDD naming style")]
+        public class given_the_item_is_available_when_processing_an_order : SpecsFor<OrderProcessor>
 		{
 			private OrderResult _result;
 

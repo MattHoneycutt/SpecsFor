@@ -17,12 +17,12 @@ namespace SpecsFor.Autofac.Tests.ComposingContext.StackingContext
 	{
 		public override void Given(ILikeMagic instance)
 		{
-			instance.CalledByDuringGiven.Add(this.GetType().Name);
+			instance.CalledByDuringGiven.Add(GetType().Name);
 		}
 
 		public override void AfterSpec(ILikeMagic instance)
 		{
-			instance.CalledByAfterTest.Add(this.GetType().Name);
+			instance.CalledByAfterTest.Add(GetType().Name);
 		}
 	}
 }
