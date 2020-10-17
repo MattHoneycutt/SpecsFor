@@ -1,3 +1,3 @@
-﻿# SpecsFor.Should
+# SpecsFor.Shouldly
 
-Provides extensions to the Should library to work better with SpecsFor
+Provides extensions to the Shouldly library to work better with SpecsFor
