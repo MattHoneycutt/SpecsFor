@@ -11,6 +11,7 @@ namespace SpecsFor.StructureMap.Tests.ComposingContext.StackingContext
 		public class when_running_tests_decorated_with_a_behavior : SpecsFor<Widget>, ILikeMagic
 		{
 			public List<string> CalledByDuringGiven { get; set; }
+			public List<string> CalledByAfterGiven { get; set; }
 			public List<string> CalledByAfterTest { get; set; }
 			public List<string> CalledByApplyAfterClassUnderTestInitialized { get; set; }
 			public List<string> CalledBySpecInit { get; set; }
@@ -20,6 +21,7 @@ namespace SpecsFor.StructureMap.Tests.ComposingContext.StackingContext
 				CalledBySpecInit = new List<string>();
 				CalledByApplyAfterClassUnderTestInitialized = new List<string>();
 				CalledByDuringGiven = new List<string>();
+				CalledByAfterGiven = new List<string>();
 				CalledByAfterTest = new List<string>();
 			}
 
@@ -29,20 +31,33 @@ namespace SpecsFor.StructureMap.Tests.ComposingContext.StackingContext
 				CalledByDuringGiven.ShouldContain(typeof(ProvideMagicByInterface).Name);
 				CalledByDuringGiven.ShouldContain(typeof(ProvideMagicByConcreteType).Name);
 				CalledByDuringGiven.ShouldContain(typeof(ProvideMagicByTypeName).Name);
-				CalledByDuringGiven.ShouldNotContain(typeof(DoNotProvideMagic).Name);
 				CalledByDuringGiven.ShouldContain(typeof(ProvideMagicForEveryone).Name);
+				
+				CalledByAfterGiven.ShouldContain(typeof(ProvideMagicByInterface).Name);
+				CalledByAfterGiven.ShouldContain(typeof(ProvideMagicByConcreteType).Name);
+				CalledByAfterGiven.ShouldContain(typeof(ProvideMagicByTypeName).Name);
+				CalledByAfterGiven.ShouldContain(typeof(ProvideMagicForEveryone).Name);
+			}
+
+			[Test]
+			public void then_doesnt_call_handlers_it_shouldnt()
+			{
+				CalledByDuringGiven.ShouldNotContain(typeof(DoNotProvideMagic).Name);
+				CalledByAfterGiven.ShouldNotContain(typeof(DoNotProvideMagic).Name);
 			}
 
 			[Test]
 			public void then_handlers_for_this_levels_config_should_be_called()
 			{
 				CalledByDuringGiven.ShouldContain(typeof(NestedMagicProvider).Name);
+				CalledByAfterGiven.ShouldContain(typeof(NestedMagicProvider).Name);
 			}
 
 			[Test]
 			public void then_the_parent_contexts_are_applied_before_the_child_context()
 			{
 				CalledByDuringGiven.AsEnumerable().Reverse().First().ShouldEqual(typeof(NestedMagicProvider).Name);
+				CalledByAfterGiven.AsEnumerable().Reverse().First().ShouldEqual(typeof(NestedMagicProvider).Name);
 			}
 		}
 	}

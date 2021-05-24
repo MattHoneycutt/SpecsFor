@@ -78,6 +78,8 @@ namespace SpecsFor.Core
 				_currentBehaviors.ApplyGivenTo(_specs);
 
 				_specs.Given();
+				
+				_currentBehaviors.ApplyAfterGivenTo(_specs);
 			}
 			catch (Exception ex)
 			{

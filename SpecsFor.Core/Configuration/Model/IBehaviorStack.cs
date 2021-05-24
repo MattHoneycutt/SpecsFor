@@ -7,6 +7,7 @@ namespace SpecsFor.Core.Configuration.Model
 		void ApplySpecInitTo(ISpecs specs);
 		void ApplyAfterClassUnderTestInitializedTo(ISpecs specs);
 		void ApplyGivenTo(ISpecs specs);
+		void ApplyAfterGivenTo(ISpecs specs);
 		void ApplyAfterSpecTo(ISpecs specs);
 		Func<object> GetInitializationMethodFor(ISpecs specs);
 	}

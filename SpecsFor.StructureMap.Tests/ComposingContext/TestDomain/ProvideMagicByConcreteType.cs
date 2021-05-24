@@ -8,6 +8,11 @@ namespace SpecsFor.StructureMap.Tests.ComposingContext.TestDomain
 		{
 			((ILikeMagic)instance).CalledByDuringGiven.Add(GetType().Name);
 		}
+		
+		public override void AfterGiven(SpecsFor<Widget> instance)
+		{
+			((ILikeMagic)instance).CalledByAfterGiven.Add(GetType().Name);
+		}
 
 		public override void AfterSpec(SpecsFor<Widget> instance)
 		{
