@@ -1,7 +1,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>SpecsFor</id>
-    <version>7.0.0</version>
+    <version>7.1.0</version>
     <authors>Matt Honeycutt</authors>
     <owners>Matt Honeycutt</owners>
     <licenseUrl>https://github.com/MattHoneycutt/SpecsFor/blob/master/LICENSE.md</licenseUrl>
