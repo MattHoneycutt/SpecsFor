@@ -19,6 +19,11 @@ namespace SpecsFor.StructureMap.Tests.ComposingContext.StackingContext
 		{
 			instance.CalledByDuringGiven.Add(this.GetType().Name);
 		}
+		
+		public override void AfterGiven(ILikeMagic instance)
+		{
+			instance.CalledByAfterGiven.Add(this.GetType().Name);
+		}
 
 		public override void AfterSpec(ILikeMagic instance)
 		{

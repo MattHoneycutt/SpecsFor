@@ -58,6 +58,16 @@ namespace SpecsFor.Core.Configuration.Model
 				behavior.ApplyGivenTo(specs);
 			}
 		}
+		
+		public void ApplyAfterGivenTo(ISpecs specs)
+		{
+			var behaviors = FindBehaviorsFor(specs);
+
+			foreach (var behavior in behaviors)
+			{
+				behavior.ApplyAfterGivenTo(specs);
+			}
+		}
 
 		public void ApplyAfterSpecTo(ISpecs specs)
 		{

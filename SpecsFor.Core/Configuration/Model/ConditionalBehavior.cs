@@ -22,6 +22,11 @@ namespace SpecsFor.Core.Configuration.Model
 		{
 			_behavior.Given((TSpec) specs);
 		}
+		
+		public void ApplyAfterGivenTo(object specs)
+		{
+			_behavior.AfterGiven((TSpec) specs);
+		}
 
 		public void ApplyAfterSpecTo(object specs)
 		{

@@ -14,6 +14,10 @@ namespace SpecsFor.Core.Configuration
 		{
 		}
 
+		public virtual void AfterGiven(T instance)
+		{
+		}
+
 		public virtual void AfterSpec(T instance)
 		{
 		}

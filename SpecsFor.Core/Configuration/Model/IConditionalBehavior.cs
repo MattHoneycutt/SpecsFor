@@ -6,6 +6,7 @@ namespace SpecsFor.Core.Configuration.Model
 	{
 		bool CanBeAppliedTo(Type targetType);
 		void ApplyGivenTo(object specs);
+		void ApplyAfterGivenTo(object specs);
 		void ApplyAfterSpecTo(object specs);
 		void ApplySpecInitTo(object specs);
 		void ApplyAfterClassUnderTestInitializedTo(object specs);
