@@ -73,17 +73,6 @@ namespace SpecsFor.StructureMap.Tests.ComposingContext
 			{
 				CalledBySpecInit.ShouldContain(typeof(ProvideMagicForEveryone).Name);
 			}
-			
-			// This no longer works. I assume it did at some point. I don't see a quick way to restore this check inside a spec.
-			// protected override void AfterSpec()
-			//    {
-			//        //At this point, all the AfterSpec contexts should be applied.
-			//        CalledByAfterTest.ShouldContain(typeof(ProvideMagicByInterface).Name);
-			//        CalledByAfterTest.ShouldContain(typeof(ProvideMagicByConcreteType).Name);
-			//        CalledByAfterTest.ShouldContain(typeof(ProvideMagicByTypeName).Name);
-			//        CalledByAfterTest.ShouldContain(typeof(ProvideMagicForEveryone).Name);
-			//        CalledByAfterTest.ShouldNotContain(typeof(DoNotProvideMagic).Name);
-			//    }
 		}
 	}
 }
