@@ -11,9 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SpecsFor.Autofac\SpecsFor.Autofac.csproj" />
+    <ProjectReference Include="..\SpecsFor.Shouldly\SpecsFor.Shouldly.csproj" />
+    <ProjectReference Include="..\SpecsFor.StructureMap\SpecsFor.StructureMap.csproj" />
     <ProjectReference Include="..\SpecsFor.Core\SpecsFor.Core.csproj" />
-    <ProjectReference Include="..\SpecsFor.Should\SpecsFor.Should.csproj" />
   </ItemGroup>
 
 </Project>

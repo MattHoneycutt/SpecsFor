@@ -15,6 +15,7 @@
     <tags>TDD;Testing;BDD;Test Driven Development;NET Core;NUnit</tags>
     <dependencies>
 	   <dependency id="SpecsFor.StructureMap" version="7.0.0" />
+     <dependency id="SpecsFor.Should" version="7.0.0" />
     </dependencies>
   </metadata>
 </package>
