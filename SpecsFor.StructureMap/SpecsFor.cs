@@ -1,5 +1,5 @@
-﻿using SpecsFor.Core;
-using StructureMap;
+﻿using Lamar;
+using SpecsFor.Core;
 
 namespace SpecsFor.StructureMap
 {

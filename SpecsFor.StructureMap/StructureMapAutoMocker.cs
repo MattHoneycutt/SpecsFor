@@ -13,6 +13,7 @@ namespace SpecsFor.StructureMap
         {
             _specsFor = (SpecsFor<TSut>)specsFor;
 
+            // TODO: Create MoqAutoMocker class that doesn't implement AutoMocker?
             MoqAutoMocker = new MoqAutoMocker<TSut>();
         }
 
