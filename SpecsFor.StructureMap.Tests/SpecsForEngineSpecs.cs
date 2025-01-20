@@ -5,7 +5,6 @@ using Should;
 using SpecsFor.Core;
 using SpecsFor.Core.Configuration.Model;
 using SpecsFor.Core.Validation;
-using StructureMap;
 
 namespace SpecsFor.StructureMap.Tests
 {
