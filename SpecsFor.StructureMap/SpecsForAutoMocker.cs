@@ -14,16 +14,16 @@ public class SpecsForAutoMocker<TSut> where TSut : class
     {
         var instance = Container.TryGetInstance<T>();
 
-        if (instance == null)
+        if (instance != null)
         {
-            var mockedInstance = Mock.Of<T>();
-
-            Container.Configure(x => x.AddTransient(typeof(T), _ => mockedInstance));
-
-            return mockedInstance;
+            return instance;
         }
 
-        return instance;
+        var mockedInstance = Mock.Of<T>();
+
+        Container.Configure(x => x.AddTransient(typeof(T), _ => mockedInstance));
+
+        return mockedInstance;
     }
 
     public TSut ClassUnderTest => Container.GetInstance<TSut>();
@@ -35,21 +35,24 @@ public class SpecsForAutoMocker<TSut> where TSut : class
             config.For<TSut>().Use<TSut>();
 
             var constructor = typeof(TSut).GetConstructors()
-                .OrderByDescending(c => c.GetParameters().Length)
-                .FirstOrDefault();
+                                          .OrderByDescending(c => c.GetParameters().Length)
+                                          .FirstOrDefault();
 
             if (constructor == null)
             {
                 return;
             }
 
+            // Register dependencies
             foreach (var parameter in constructor.GetParameters()
                          .Where(x => x.ParameterType is { IsValueType: false, IsPointer: false }))
             {
                 var parameterType = parameter.ParameterType;
                 var mockType = typeof(Mock<>).MakeGenericType(parameterType);
                 var mockInstance = Activator.CreateInstance(mockType);
-                var instanceValue = mockType.GetProperties().First(x => x.Name == "Object").GetValue(mockInstance);
+                var instanceValue = mockType.GetProperties()
+                                            .First(x => x.Name == nameof(Mock.Object))
+                                            .GetValue(mockInstance);
 
                 config.AddTransient(parameterType, _ => instanceValue);
             }
