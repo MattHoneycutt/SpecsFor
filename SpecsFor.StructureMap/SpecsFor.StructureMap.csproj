@@ -18,11 +18,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;</TargetFrameworks>
+    <TargetFrameworks>net6.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lamar" Version="13.1.0" />
     <PackageReference Include="StructureMap" Version="4.7.0" />
   </ItemGroup>
 
