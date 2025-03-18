@@ -5,8 +5,7 @@ using NUnit.Framework;
 using Should;
 using SpecsFor.Core;
 using SpecsFor.StructureMap.Tests.TestObjects;
-using Lamar;
-using Microsoft.Extensions.DependencyInjection;
+using StructureMap;
 
 namespace SpecsFor.StructureMap.Tests
 {
@@ -111,7 +110,7 @@ namespace SpecsFor.StructureMap.Tests
 
             public override void ConfigureContainer(Container container)
             {
-                container.Configure(x => x.AddTransient<IFoo, Foo>());
+                container.Configure(x => x.For<IFoo>().Use<Foo>());
             }
 
             protected override void When()

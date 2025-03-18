@@ -5,7 +5,7 @@ namespace SpecsFor.StructureMap
 {
     public class StructureMapAutoMocker<TSut> : IAutoMocker where TSut : class
     {
-        public SpecsForAutoMocker<TSut> MoqAutoMocker { get; }
+        public MoqAutoMocker<TSut> MoqAutoMocker { get; }
 
         private readonly SpecsFor<TSut> _specsFor;
 
@@ -13,7 +13,8 @@ namespace SpecsFor.StructureMap
         {
             _specsFor = (SpecsFor<TSut>)specsFor;
 
-            MoqAutoMocker = new SpecsForAutoMocker<TSut>();
+            // TODO: Create MoqAutoMocker class that doesn't implement AutoMocker?
+            MoqAutoMocker = new MoqAutoMocker<TSut>();
         }
 
         T IAutoMocker.CreateSUT<T>()
