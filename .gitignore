@@ -36,3 +36,4 @@ _ReSharper*/
 packages/
 ResharperTemplates/*.nupkg
 .vs
+*.nupkg

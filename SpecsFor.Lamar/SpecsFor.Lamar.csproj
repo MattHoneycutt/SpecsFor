@@ -1,4 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>SpecsFor.Lamar</PackageId>
+    <Version>8.0.0-rc1</Version>
+    <Authors>Matt Honeycutt</Authors>
+    <Company>Heroic Applications</Company>
+
+    <PackageLicenseUrl>https://github.com/MattHoneycutt/SpecsFor/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageProjectUrl>http://specsfor.com</PackageProjectUrl>
+    <PackageIconUrl>http://specsfor.com/images/specsfor-icon-128x128.png</PackageIconUrl>
+    <Description>SpecsFor is another Behavior-Driven Development framework that focuses on ease of use for *developers* by minimizing testing friction.</Description>
+    <PackageReleaseNotes>
+      Initial release of Lamar support!
+    </PackageReleaseNotes>
+    <Copyright>Copyright 2025</Copyright>
+    <PackageTags>TDD;Testing;BDD;Test Driven Development;NET Core;NUnit</PackageTags>
+  </PropertyGroup>
+
+
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
