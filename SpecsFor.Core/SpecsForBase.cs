@@ -79,20 +79,29 @@ namespace SpecsFor.Core
 		protected virtual void When()
 		{
 		}
-
+        
+        [SetUp]
+        protected void BeforeTest()
+        {
+	        _engine.BeforeTest();
+		}
+        
         /// <summary>
         /// Runs before each individual test case.  Use carefully!
         /// </summary>
-        [SetUp]
 	    protected virtual void BeforeEachTest()
 	    {
-	        
 	    }
 
-        /// <summary>
-        /// Runs after each individual test case.  Use carefully!
-        /// </summary>
-        [TearDown]
+	    [TearDown]
+	    protected void AfterTest()
+	    {
+		    _engine.AfterTest();
+	    }
+	    
+	    /// <summary>
+	    /// Runs after each individual test case.  Use carefully!
+	    /// </summary>
 		protected virtual void AfterEachTest()
 		{
 		}
@@ -141,6 +150,16 @@ namespace SpecsFor.Core
 		void ISpecs.AfterSpec()
 		{
 			AfterSpec();
+		}
+
+		void ISpecs.AfterTest()
+		{
+			AfterEachTest();
+		}
+
+		void ISpecs.BeforeTest()
+		{
+			BeforeEachTest();
 		}
         
         #endregion

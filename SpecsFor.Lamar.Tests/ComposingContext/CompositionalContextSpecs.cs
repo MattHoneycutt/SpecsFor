@@ -12,7 +12,9 @@ public class CompositionalContextSpecs
         public List<string> CalledByApplyAfterClassUnderTestInitialized { get; set; }
         public List<string> CalledByDuringGiven { get; set; }
         public List<string> CalledByAfterGiven { get; set; }
+        public List<string> CalledByAfterSpec { get; set; }
         public List<string> CalledByAfterTest { get; set; }
+        public List<string> CalledByBeforeTest { get; set; }
 
         protected given_the_default_state()
         {
@@ -20,7 +22,9 @@ public class CompositionalContextSpecs
             CalledByApplyAfterClassUnderTestInitialized = new List<string>();
             CalledByDuringGiven = new List<string>();
             CalledByAfterGiven = new List<string>();
+            CalledByAfterSpec = new List<string>();
             CalledByAfterTest = new List<string>();
+            CalledByBeforeTest = new List<string>();
         }
     }
 
@@ -71,6 +75,26 @@ public class CompositionalContextSpecs
         public void then_it_invokes_the_class_initialized_phase()
         {
             CalledBySpecInit.ShouldContain(typeof(ProvideMagicForEveryone).Name);
+        }
+        
+        [Test]
+        public void then_it_invokes_the_after_test_phase()
+        {
+            CalledByAfterTest.ShouldContain(typeof(ProvideMagicForEveryone).Name);
+            CalledByAfterTest.ShouldContain(typeof(ProvideMagicByInterface).Name);
+            CalledByAfterTest.ShouldContain(typeof(ProvideMagicByConcreteType).Name);
+            CalledByAfterTest.ShouldContain(typeof(ProvideMagicByTypeName).Name);
+            CalledByAfterTest.ShouldNotContain(typeof(DoNotProvideMagic).Name);
+        }
+
+        [Test]
+        public void then_it_invokes_the_before_test_phase()
+        {
+            CalledByBeforeTest.ShouldContain(typeof(ProvideMagicForEveryone).Name);
+            CalledByBeforeTest.ShouldContain(typeof(ProvideMagicByInterface).Name);
+            CalledByBeforeTest.ShouldContain(typeof(ProvideMagicByConcreteType).Name);
+            CalledByBeforeTest.ShouldContain(typeof(ProvideMagicByTypeName).Name);
+            CalledByBeforeTest.ShouldNotContain(typeof(DoNotProvideMagic).Name);
         }
     }
 }

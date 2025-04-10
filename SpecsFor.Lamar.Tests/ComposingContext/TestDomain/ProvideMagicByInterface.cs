@@ -16,6 +16,16 @@ public class ProvideMagicByInterface : Behavior<ILikeMagic>
 
     public override void AfterSpec(ILikeMagic instance)
     {
+        instance.CalledByAfterSpec.Add(GetType().Name);
+    }
+    
+    public override void AfterTest(ILikeMagic instance)
+    {
         instance.CalledByAfterTest.Add(GetType().Name);
+    }
+    
+    public override void BeforeTest(ILikeMagic instance)
+    {
+        instance.CalledByBeforeTest.Add(GetType().Name);
     }
 }

@@ -21,5 +21,13 @@ namespace SpecsFor.Core.Configuration
 		public virtual void AfterSpec(T instance)
 		{
 		}
+
+		public virtual void AfterTest(T instance)
+		{
+		}
+
+		public virtual void BeforeTest(T instance)
+		{
+		}
 	}
 }

@@ -17,6 +17,10 @@ namespace SpecsFor.Core
 		void When();
 
 		void AfterSpec();
+		
+		void AfterTest();
+
+		void BeforeTest();
 	}
 
 	public interface ISpecs<T> : ISpecs

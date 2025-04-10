@@ -16,6 +16,16 @@ public class ProvideMagicByConcreteType : Behavior<SpecsFor<Widget>>
 
     public override void AfterSpec(SpecsFor<Widget> instance)
     {
+        ((ILikeMagic)instance).CalledByAfterSpec.Add(GetType().Name);
+    }
+    
+    public override void AfterTest(SpecsFor<Widget> instance)
+    {
         ((ILikeMagic)instance).CalledByAfterTest.Add(GetType().Name);
+    }
+    
+    public override void BeforeTest(SpecsFor<Widget> instance)
+    {
+        ((ILikeMagic)instance).CalledByBeforeTest.Add(GetType().Name);
     }
 }
