@@ -19,5 +19,15 @@ namespace SpecsFor.StructureMap.Tests.ComposingContext.TestDomain
 		{
 			Console.WriteLine(_stopwatch.Elapsed.TotalSeconds);
 		}
+
+		public override void AfterTest(ISpecs instance)
+		{
+			Console.WriteLine("After test");
+		}
+		
+		public override void BeforeTest(ISpecs instance)
+		{
+			Console.WriteLine("Before test");
+		}
 	}
 }

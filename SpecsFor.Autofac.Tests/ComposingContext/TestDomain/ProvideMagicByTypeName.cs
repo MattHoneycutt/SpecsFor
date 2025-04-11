@@ -12,7 +12,17 @@ namespace SpecsFor.Autofac.Tests.ComposingContext.TestDomain
 
 		public override void AfterSpec(ISpecs instance)
 		{
+			((ILikeMagic)instance).CalledByAfterSpec.Add(GetType().Name);
+		}
+		
+		public override void AfterTest(ISpecs instance)
+		{
 			((ILikeMagic)instance).CalledByAfterTest.Add(GetType().Name);
+		}
+		
+		public override void BeforeTest(ISpecs instance)
+		{
+			((ILikeMagic)instance).CalledByBeforeTest.Add(GetType().Name);
 		}
 	}
 }

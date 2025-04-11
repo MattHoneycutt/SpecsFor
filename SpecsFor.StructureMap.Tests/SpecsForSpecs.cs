@@ -120,7 +120,7 @@ namespace SpecsFor.StructureMap.Tests
             }
 
             [Test]
-            public void then_it_uses_the_conrete_class()
+            public void then_it_uses_the_concrete_class()
             {
                 _result.ShouldEqual(6);
             }

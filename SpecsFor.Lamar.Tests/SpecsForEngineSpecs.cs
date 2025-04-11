@@ -360,4 +360,32 @@ internal class SpecsForEngineSpecs
                 .Verify(d => d.Dispose());
         }
     }
+
+    internal class when_running_the_after_test_stage : SpecsFor<SpecsForEngine<object>>
+    {
+        protected override void When()
+        {
+            SUT.AfterTest();
+        }
+
+        [Test]
+        public void then_it_runs_the_after_test_callback_on_the_behaviors()
+        {
+            GetMockFor<IBehaviorStack>().Verify(m => m.ApplyAfterTestTo(It.IsAny<ISpecs<object>>()));
+        }
+    }
+
+    internal class when_running_the_before_test_stage : SpecsFor<SpecsForEngine<object>>
+    {
+        protected override void When()
+        {
+            SUT.BeforeTest();
+        }
+
+        [Test]
+        public void then_it_runs_the_before_test_callback_on_the_behaviors()
+        {
+            GetMockFor<IBehaviorStack>().Verify(m => m.ApplyBeforeTestTo(It.IsAny<ISpecs<object>>()));
+        }
+    }
 }

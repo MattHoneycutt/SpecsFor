@@ -33,6 +33,16 @@ namespace SpecsFor.Core.Configuration.Model
 			_behavior.AfterSpec((TSpec)specs);
 		}
 
+		public void ApplyAfterTestTo(object specs)
+		{
+			_behavior.AfterTest((TSpec) specs);
+		}
+		
+		public void ApplyBeforeTestTo(object specs)
+		{
+			_behavior.BeforeTest((TSpec) specs);
+		}
+
 		public void ApplySpecInitTo(object specs)
 		{
 			_behavior.SpecInit((TSpec)specs);

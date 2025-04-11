@@ -119,6 +119,40 @@ namespace SpecsFor.Core
 			}
 		}
 
+		public void AfterTest()
+		{
+			try
+			{
+				_specs.AfterTest();
+
+				_currentBehaviors.ApplyAfterTestTo(_specs);
+			}
+			catch (Exception ex)
+			{
+				_exceptions.Add(ex);
+				HandleError();
+				TryDisposeSUT();
+				throw new GivenSpecificationException(_exceptions.ToArray());
+			}
+		}
+
+		public void BeforeTest()
+		{
+			try
+			{
+				_specs.BeforeTest();
+
+				_currentBehaviors.ApplyBeforeTestTo(_specs);
+			}
+			catch (Exception ex)
+			{
+				_exceptions.Add(ex);
+				HandleError();
+				TryDisposeSUT();
+				throw new GivenSpecificationException(_exceptions.ToArray());
+			}
+		}
+
 		private void TryDisposeSUT()
 		{
 		    if (!(SUT is IDisposable sut)) return;

@@ -79,6 +79,26 @@ namespace SpecsFor.Core.Configuration.Model
 			}
 		}
 
+		public void ApplyAfterTestTo(ISpecs specs)
+		{
+			var behaviors = FindBehaviorsFor(specs);
+
+			foreach (var behavior in behaviors)
+			{
+				behavior.ApplyAfterTestTo(specs);
+			}
+		}
+
+		public void ApplyBeforeTestTo(ISpecs specs)
+		{
+			var behaviors = FindBehaviorsFor(specs);
+
+			foreach (var behavior in behaviors)
+			{
+				behavior.ApplyBeforeTestTo(specs);
+			}
+		}
+
 		public void ApplySpecInitTo(ISpecs specs)
 		{
 			var behaviors = FindBehaviorsFor(specs);

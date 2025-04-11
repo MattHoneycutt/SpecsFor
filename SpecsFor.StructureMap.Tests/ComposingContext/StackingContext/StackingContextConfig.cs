@@ -27,7 +27,17 @@ namespace SpecsFor.StructureMap.Tests.ComposingContext.StackingContext
 
 		public override void AfterSpec(ILikeMagic instance)
 		{
+			instance.CalledByAfterSpec.Add(this.GetType().Name);
+		}
+		
+		public override void AfterTest(ILikeMagic instance)
+		{
 			instance.CalledByAfterTest.Add(this.GetType().Name);
+		}
+		
+		public override void BeforeTest(ILikeMagic instance)
+		{
+			instance.CalledByBeforeTest.Add(this.GetType().Name);
 		}
 	}
 }
