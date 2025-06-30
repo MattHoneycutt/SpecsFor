@@ -1,12 +1,15 @@
 ﻿using Lamar;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using System.Reflection;
 
 namespace SpecsFor.Lamar;
 
 public class SpecsForAutoMocker<TSut> where TSut : class
 {
     public Container Container { get; protected set; }
+
+    private readonly HashSet<Type> _registeredTypes = new();
 
     public T Get<T>() where T : class
     {
@@ -28,32 +31,56 @@ public class SpecsForAutoMocker<TSut> where TSut : class
 
     public SpecsForAutoMocker()
     {
-        Container = new Container(config =>
+        var registry = new ServiceRegistry();
+        RegisterType(typeof(TSut), registry);
+        Container = new Container(registry);
+    }
+
+    private void RegisterType(Type type, ServiceRegistry registry)
+    {
+        if (_registeredTypes.Contains(type))
         {
-            config.For<TSut>().Use<TSut>();
+            return;
+        }
 
-            var constructor = typeof(TSut).GetConstructors()
-                .OrderByDescending(c => c.GetParameters().Length)
-                .FirstOrDefault();
+        _registeredTypes.Add(type);
 
-            if (constructor == null)
-            {
-                return;
-            }
+        if (type.IsInterface || type.IsAbstract)
+        {
+            var mockType = typeof(Mock<>).MakeGenericType(type);
+            var mockInstance = Activator.CreateInstance(mockType)!;
 
-            // Register dependencies
-            foreach (var parameter in constructor.GetParameters()
-                         .Where(x => x.ParameterType is { IsValueType: false, IsPointer: false }))
-            {
-                var parameterType = parameter.ParameterType;
-                var mockType = typeof(Mock<>).MakeGenericType(parameterType);
-                var mockInstance = Activator.CreateInstance(mockType);
-                var instanceValue = mockType.GetProperties()
-                    .First(x => x.Name == nameof(Mock.Object))
-                    .GetValue(mockInstance);
+            var mockObject = mockType
+                .GetProperty("Object",
+                    BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public)!
+                .GetValue(mockInstance);
+            registry.AddTransient(type, _ => mockObject);
+            return;
+        }
 
-                config.AddTransient(parameterType, _ => instanceValue);
-            }
-        });
+        if (type.IsPrimitive || type == typeof(string))
+        {
+            registry.AddTransient(type, _ => Activator.CreateInstance(type));
+            return;
+        }
+
+        var constructor = type.GetConstructors(BindingFlags.Public | BindingFlags.Instance)
+            .OrderByDescending(c => c.GetParameters().Length)
+            .FirstOrDefault();
+
+        if (constructor == null)
+        {
+            throw new InvalidOperationException(
+                $"Cannot construct type '{type.FullName}' — no public constructors found.");
+        }
+
+        var parameters = constructor.GetParameters();
+
+        foreach (var param in parameters)
+        {
+            RegisterType(param.ParameterType, registry);
+        }
+
+        registry.For(type).Use(type);
     }
 }
