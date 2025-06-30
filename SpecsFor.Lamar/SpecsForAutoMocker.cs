@@ -70,8 +70,8 @@ public class SpecsForAutoMocker<TSut> where TSut : class
 
         if (constructor == null)
         {
-            throw new InvalidOperationException(
-                $"Cannot construct type '{type.FullName}' — no public constructors found.");
+            // No public constructor found, cannot register type
+            return;
         }
 
         var parameters = constructor.GetParameters();
