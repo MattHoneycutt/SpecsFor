@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>SpecsFor.StructureMap</PackageId>
-    <Version>8.0.0-rc1</Version>
+    <Version>8.0.0-rc1a</Version>
     <Authors>Matt Honeycutt</Authors>
     <Company>Heroic Applications</Company>
 
