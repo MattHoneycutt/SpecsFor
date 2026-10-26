@@ -23,7 +23,7 @@ public class LamarAutoMocker<TSut> : IAutoMocker where TSut : class
 
     public Mock<T> GetMockFor<T>() where T : class
     {
-        return Mock.Get(MoqAutoMocker.Get<T>());
+        return MoqAutoMocker.GetMock<T>();
     }
 
     public void ConfigureContainer()
