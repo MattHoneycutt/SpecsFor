@@ -1,8 +1,9 @@
-﻿using Moq;
+﻿using System;
+using Moq;
 
 namespace SpecsFor.Core
 {
-    public interface IAutoMocker
+    public interface IAutoMocker : IDisposable
     {
         TSut CreateSUT<TSut>() where TSut : class;
 

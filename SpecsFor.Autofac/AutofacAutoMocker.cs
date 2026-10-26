@@ -31,5 +31,10 @@ namespace SpecsFor.Autofac
         {
             _specsFor.ConfigureMocker(InternalMocker);
         }
+
+        public void Dispose()
+        {
+            InternalMocker.Dispose();
+        }
     }
 }

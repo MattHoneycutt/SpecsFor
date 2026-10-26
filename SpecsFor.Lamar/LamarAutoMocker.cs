@@ -30,4 +30,9 @@ public class LamarAutoMocker<TSut> : IAutoMocker where TSut : class
     {
         _specsFor.ConfigureContainer(MoqAutoMocker.Container);
     }
+
+    public void Dispose()
+    {
+        MoqAutoMocker.Container.Dispose();
+    }
 }

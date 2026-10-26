@@ -116,6 +116,7 @@ namespace SpecsFor.Core
 			finally
 			{
 				TryDisposeSUT();
+				TryDisposeMocker();
 			}
 		}
 
@@ -160,6 +161,20 @@ namespace SpecsFor.Core
 			try
 			{
 				sut.Dispose();
+			}
+			catch (Exception ex)
+			{
+				_exceptions.Add(ex);
+			}
+		}
+
+		private void TryDisposeMocker()
+		{
+			if (Mocker == null) return;
+
+			try
+			{
+				Mocker.Dispose();
 			}
 			catch (Exception ex)
 			{

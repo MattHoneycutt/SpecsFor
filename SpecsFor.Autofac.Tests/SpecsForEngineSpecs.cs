@@ -88,6 +88,10 @@ namespace SpecsFor.Autofac.Tests
 			protected override void Given()
 			{
 				GetMockFor<ISpecs<object>>()
+					.Setup(s => s.CreateAutoMocker())
+					.Returns(GetMockFor<IAutoMocker>().Object);
+
+				GetMockFor<ISpecs<object>>()
 					.Setup(s => s.InitializeClassUnderTest())
 					.Throws(new Exception());
 			}
@@ -108,6 +112,13 @@ namespace SpecsFor.Autofac.Tests
 			{
 				GetMockFor<IBehaviorStack>()
 					.Verify(s => s.ApplyAfterSpecTo(It.IsAny<ISpecs>()));
+			}
+
+			[Test]
+			public void then_it_does_not_dispose_the_mocker()
+			{
+				GetMockFor<IAutoMocker>()
+					.Verify(m => m.Dispose(), Times.Never());
 			}
 		}
 
@@ -197,6 +208,7 @@ namespace SpecsFor.Autofac.Tests
 				protected override void When()
 				{
 					SUT.SUT = GetMockFor<IDisposable>().Object;
+					SUT.Mocker = GetMockFor<IAutoMocker>().Object;
 					_exception = Assert.Throws<GivenSpecificationException>(() => SUT.Given());
 				}
 
@@ -218,6 +230,13 @@ namespace SpecsFor.Autofac.Tests
 				{
 					GetMockFor<IDisposable>()
 						.Verify(d => d.Dispose());
+				}
+
+				[Test]
+				public void then_it_does_not_dispose_the_mocker()
+				{
+					GetMockFor<IAutoMocker>()
+						.Verify(m => m.Dispose(), Times.Never());
 				}
 			}
 
@@ -280,6 +299,7 @@ namespace SpecsFor.Autofac.Tests
 				protected override void When()
 				{
 					SUT.SUT = GetMockFor<IDisposable>().Object;
+					SUT.Mocker = GetMockFor<IAutoMocker>().Object;
 					_exception = Assert.Throws<WhenSpecificationException>(() => SUT.When());
 				}
 
@@ -294,6 +314,13 @@ namespace SpecsFor.Autofac.Tests
 				{
 					GetMockFor<IDisposable>()
 						.Verify(d => d.Dispose());
+				}
+
+				[Test]
+				public void then_it_does_not_dispose_the_mocker()
+				{
+					GetMockFor<IAutoMocker>()
+						.Verify(m => m.Dispose(), Times.Never());
 				}
 
 				[Test]
@@ -337,6 +364,7 @@ namespace SpecsFor.Autofac.Tests
 			protected override void When()
 			{
 				SUT.SUT = GetMockFor<IDisposable>().Object;
+				SUT.Mocker = GetMockFor<IAutoMocker>().Object;
 				SUT.TearDown();
 			}
 
@@ -359,6 +387,37 @@ namespace SpecsFor.Autofac.Tests
 			{
 				GetMockFor<IDisposable>()
 					.Verify(d => d.Dispose());
+			}
+
+			[Test]
+			public void then_it_disposes_the_mocker()
+			{
+				GetMockFor<IAutoMocker>()
+					.Verify(m => m.Dispose());
+			}
+		}
+
+		internal class when_running_the_tear_down_stage_after_the_when_stage_failed : SpecsFor<SpecsForEngine<object>>
+		{
+			protected override void Given()
+			{
+				GetMockFor<ISpecs<object>>()
+					.Setup(s => s.When())
+					.Throws(new Exception());
+			}
+
+			protected override void When()
+			{
+				SUT.Mocker = GetMockFor<IAutoMocker>().Object;
+				Assert.Throws<WhenSpecificationException>(() => SUT.When());
+				SUT.TearDown();
+			}
+
+			[Test]
+			public void then_it_disposes_the_mocker()
+			{
+				GetMockFor<IAutoMocker>()
+					.Verify(m => m.Dispose(), Times.Once());
 			}
 		}
 		
