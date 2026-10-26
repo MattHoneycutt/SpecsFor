@@ -10,7 +10,7 @@ namespace SpecsFor.Core.Validation
 	public class NUnitSpecValidator : ISpecValidator
 	{
 		//Used to cache validation results for an assembly. 
-		private static readonly ConcurrentDictionary<string, bool> _validationResults = new ConcurrentDictionary<string, bool>();
+		private static readonly ConcurrentDictionary<string, bool> ValidationResults = new ConcurrentDictionary<string, bool>();
 
 		public void ValidateSpec(ISpecs spec)
 		{
@@ -19,7 +19,7 @@ namespace SpecsFor.Core.Validation
 			//		from SpecsForConfiguration has the correct attribute.
 			var assembly = spec.GetType().Assembly;
 
-			_validationResults.GetOrAdd(assembly.FullName, _ => ValidateAssembly(assembly));
+			ValidationResults.GetOrAdd(assembly.FullName, _ => ValidateAssembly(assembly));
 		}
 
 		private bool ValidateAssembly(Assembly assembly)

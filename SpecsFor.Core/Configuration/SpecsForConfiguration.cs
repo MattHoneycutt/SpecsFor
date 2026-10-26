@@ -20,7 +20,7 @@ namespace SpecsFor.Core.Configuration
 		public virtual void ApplyConfiguration()
 		{
 			BeforeConfigurationApplied();
-			BehaviorStack.Push(this);
+			BehaviorStack.RegisterConfiguration(this);
 			AfterConfigurationApplied();
 		}
 
@@ -38,7 +38,6 @@ namespace SpecsFor.Core.Configuration
 		public virtual void RemoveConfiguration()
 		{
 			BeforeConfigurationRemoved();
-			BehaviorStack.Pop();
 			AfterConfigurationRemoved();
 		}
 
