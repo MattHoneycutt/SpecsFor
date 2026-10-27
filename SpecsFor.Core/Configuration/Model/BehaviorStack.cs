@@ -1,52 +1,87 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SpecsFor.Core.Configuration.Model
 {
 	internal class BehaviorStack : IBehaviorStack
 	{
-		[ThreadStatic]
-		private static BehaviorStack _current;
+		private static readonly ConcurrentDictionary<string, ConcurrentBag<SpecsForConfiguration>> ConfigurationsByNamespace = new ConcurrentDictionary<string, ConcurrentBag<SpecsForConfiguration>>();
 
-		private readonly Stack<SpecsForConfiguration> _stack = new Stack<SpecsForConfiguration>();
+		private static readonly ConcurrentHashSet<Type> ProcessedConfigurationTypes = new ConcurrentHashSet<Type>();
 
-		private static readonly BehaviorStack Empty = new BehaviorStack();
-
-		public static BehaviorStack Current
-		{
-			get { return _current ?? Empty; }
-		}
+		public static BehaviorStack Current { get; } = new BehaviorStack();
 
 		private BehaviorStack()
 		{
 			//Prevents the class from being instantiated from outside.
 		}
 
-		public static void Push(SpecsForConfiguration config)
+		public static void RegisterConfiguration(SpecsForConfiguration config)
 		{
-			if (_current == null)
-			{
-				_current = new BehaviorStack();
-			}
+			var configType = config.GetType();
 
-			_current._stack.Push(config);
-		}
+			if (!ProcessedConfigurationTypes.Add(configType)) return;
 
-		public static void Pop()
-		{
-			if (_current == null)
-			{
-				throw new InvalidOperationException("Pop called without a corresponding Push call.  Call Push to push configuration on to the stack first.");
-			}
+			var configNamespace = configType.Namespace ?? string.Empty;
 
-			_current._stack.Pop();
+			ConfigurationsByNamespace.AddOrUpdate(configNamespace,
+				new ConcurrentBag<SpecsForConfiguration> { config },
+				(_, existing) =>
+				{
+					existing.Add(config);
+					return existing;
+				});
 		}
 
 		private IEnumerable<IConditionalBehavior> FindBehaviorsFor(object specs)
 		{
-			var behaviors = _stack.Reverse().SelectMany(c => c.GetBehaviorsFor(specs.GetType()));
+			var specType = specs.GetType();
+			var testNamespace = specType.Namespace ?? string.Empty;
+			var namespaces = BuildNamespaceHierarchy(testNamespace);
+			var behaviors = new List<IConditionalBehavior>();
+
+			foreach (var ns in namespaces)
+			{
+				if (!ConfigurationsByNamespace.TryGetValue(ns, out var configs)) continue;
+
+				foreach (var config in configs)
+				{
+					behaviors.AddRange(config.GetBehaviorsFor(specType));
+				}
+			}
+
 			return behaviors;
+		}
+
+		private List<string> BuildNamespaceHierarchy(string testNamespace)
+		{
+			var hierarchy = new List<string>();
+
+			if (string.IsNullOrEmpty(testNamespace))
+			{
+				hierarchy.Add(string.Empty);
+				return hierarchy;
+			}
+
+			var parts = testNamespace.Split('.');
+			var current = "";
+
+			for (var i = 0; i < parts.Length; i++)
+			{
+				if (i == 0)
+				{
+					current = parts[0];
+				}
+				else
+				{
+					current = current + "." + parts[i];
+				}
+
+				hierarchy.Add(current);
+			}
+
+			return hierarchy;
 		}
 
 		public void ApplyGivenTo(ISpecs specs)
@@ -58,7 +93,7 @@ namespace SpecsFor.Core.Configuration.Model
 				behavior.ApplyGivenTo(specs);
 			}
 		}
-		
+
 		public void ApplyAfterGivenTo(ISpecs specs)
 		{
 			var behaviors = FindBehaviorsFor(specs);
@@ -121,7 +156,22 @@ namespace SpecsFor.Core.Configuration.Model
 
 		public Func<object> GetInitializationMethodFor(ISpecs specs)
 		{
-			return _stack.Reverse().Select(c => c.GetInitializationMethodFor(specs.GetType())).FirstOrDefault(i => i != null);
+			var specType = specs.GetType();
+			var testNamespace = specType.Namespace ?? string.Empty;
+
+			foreach (var ns in BuildNamespaceHierarchy(testNamespace))
+			{
+				if (!ConfigurationsByNamespace.TryGetValue(ns, out var configs)) continue;
+
+				foreach (var config in configs)
+				{
+					var initializer = config.GetInitializationMethodFor(specType);
+
+					if (initializer != null) return initializer;
+				}
+			}
+
+			return null;
 		}
 	}
 }

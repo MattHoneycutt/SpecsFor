@@ -30,5 +30,10 @@ namespace SpecsFor.StructureMap
         {
             _specsFor.ConfigureContainer(MoqAutoMocker.Container);
         }
+
+        public void Dispose()
+        {
+            MoqAutoMocker.Container.Dispose();
+        }
     }
 }
